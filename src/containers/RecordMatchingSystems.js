@@ -1,20 +1,14 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-
-import { fetchRMSIfNeeded } from '../actions/recordMatchingSystems';
+import React, { Component } from 'react';
+import ListRecordMatchingSystems from '../components/ListRecordMatchingSystems';
+import NewRecordMatchingSystem from '../components/NewRecordMatchingSystem';
 
 class RecordMatchingSystems extends Component {
-  componentDidMount() {
-    this.props.fetchRMSIfNeeded();
-  }
   
   render() {
     return (        
     <div className="container">
-        <h1>List of record matching systems</h1>
-        <ul>
-          {this.props.recordMatchingSystems.map(rms => <li>{rms.name}</li>)}
-        </ul>
+      <ListRecordMatchingSystems/>
+      <NewRecordMatchingSystem/>
     </div>
     );
   }
@@ -22,19 +16,4 @@ class RecordMatchingSystems extends Component {
 
 RecordMatchingSystems.displayName = 'RecordMatchingSystems';
 
-RecordMatchingSystems.propTypes = {
-  recordMatchingSystems: PropTypes.array.isRequired,
-  fetchRMSIfNeeded: PropTypes.func
-};
-
-const mapStateToProps = (state) => {
-  var props = {};
-  if (state.recordMatchingSystems) {
-    props.recordMatchingSystems = state.recordMatchingSystems;
-  } else {
-    props.recordMatchingSystems = [];
-  }
-  return props;
-};
-
-export default connect(mapStateToProps, { fetchRMSIfNeeded })(RecordMatchingSystems);
+export default RecordMatchingSystems;

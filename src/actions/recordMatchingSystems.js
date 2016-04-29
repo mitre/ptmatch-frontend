@@ -35,3 +35,17 @@ export function fetchRMSIfNeeded() {
     }
   };
 }
+
+export function createRMS(rms) {
+  return (dispatch) => {
+    fetch('/RecordMatchSystemInterface', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(rms)    
+    });
+    return dispatch(retrieve(RECEIVE_RMS, '/RecordMatchSystemInterface'));
+  };
+}
