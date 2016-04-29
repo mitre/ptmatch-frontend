@@ -1,22 +1,8 @@
 import fetch from 'isomorphic-fetch';
+import {retrieve} from './index';
 
 export const REQUEST_RMS = 'REQUEST_RMS';
 export const RECEIVE_RMS = 'RECEIVE_RMS';
-
-export function receiveResponse(eventType, json) {
-  return {
-    type: eventType,
-    payload: json
-  };
-}
-
-function retrieve(event, url) {
-  return dispatch => {
-    return fetch(url, {credentials: 'same-origin'})
-      .then(req => req.json())
-      .then(json => dispatch(receiveResponse(event, json)));
-  };
-}
 
 function shouldFetchRMS(state) {
   const rms = state.recordMatchingSystems;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ListRecordMatchingSystems from '../components/ListRecordMatchingSystems';
 import NewRecordMatchingSystem from '../components/NewRecordMatchingSystem';
+import ListRecordSets from '../components/ListRecordSets';
 
 class RecordMatchingSystems extends Component {
   
@@ -9,6 +10,7 @@ class RecordMatchingSystems extends Component {
     <div className="container">
       <ListRecordMatchingSystems/>
       <NewRecordMatchingSystem/>
+      <ListRecordSets/>
     </div>
     );
   }
