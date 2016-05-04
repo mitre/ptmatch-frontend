@@ -16,7 +16,7 @@ class ListRecordSets extends Component {
         </div>
         <div className="panel-body">  
           <ul>
-            {this.props.recordSets.map(recordSet => <li>{recordSet.name}</li>)}
+            {this.props.recordSets.map(recordSet => <li key={recordSet.id}>{recordSet.name}</li>)}
           </ul>
         </div>
       </div>

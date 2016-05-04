@@ -16,7 +16,7 @@ class ListRecordMatchingSystems extends Component {
         </div>
         <div className="panel-body">  
           <ul>
-            {this.props.recordMatchingSystems.map(rms => <li>{rms.name}</li>)}
+            {this.props.recordMatchingSystems.map(rms => <li key={rms.id}>{rms.name}</li>)}
           </ul>
         </div>
       </div>
