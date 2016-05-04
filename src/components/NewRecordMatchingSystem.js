@@ -12,14 +12,16 @@ class NewRecordMatchingSystem extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.createRMS(this.state);
+    var newRms = {};
+    var fields = ['name', 'description', 'destinationEndpoint', 'serverEndpoint', 'responseEndpoint'];
+    for (var i = 0; i < fields.length; i++) {
+      var field = fields[i];
+      newRms[field] = e.target[field].value;
+    }
+    
+    this.props.createRMS(newRms);
   }
   
-  handleFieldChange(e, field) {
-    let newState = {};
-    newState[field] =  e.target.value;
-    this.setState(newState);
-  }
   
   render() {
     return (        
@@ -30,46 +32,31 @@ class NewRecordMatchingSystem extends Component {
             <div className="row">
               <label>
                 Name
-                <input
-                  type="text"
-                  onChange={(e) => this.handleFieldChange(e, 'name')}
-                />
+                <input type="text" name="name"/>
               </label>
             </div>
             <div className="row">
               <label>
                 Description
-                <input
-                  type="text"
-                  onChange={(e) => this.handleFieldChange(e, 'description')}
-                />
+                <input type="text" name="description"/>
               </label>
             </div>
             <div className="row">
               <label>
                 Destination Endpoint
-                <input
-                  type="text"
-                  onChange={(e) => this.handleFieldChange(e, 'destinationEndpoint')}
-                />
+                <input type="text" name="destinationEndpoint"/>
               </label>
             </div>
             <div className="row">
               <label>
                 Server Endpoint
-                <input
-                  type="text"
-                  onChange={(e) => this.handleFieldChange(e, 'serverEndpoint')}
-                />
+                <input type="text" name="serverEndpoint"/>
               </label>
             </div>
             <div className="row">
               <label>
                 Response Endpoint
-                <input
-                  type="text"
-                  onChange={(e) => this.handleFieldChange(e, 'responseEndpoint')}
-                />
+                <input type="text" name="responseEndpoint"/>
               </label>
             </div>
             <div className="row">
