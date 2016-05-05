@@ -1,6 +1,45 @@
 // 3rd party resources
-//@import "variables";
+@import "variables";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/font-awesome/scss/font-awesome";
 
-body { padding-top: 70px; }
+// application styles
+body {
+  background-color: $brand-primary;
+  padding-top: 70px;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-base;
+  color: $text-color;
+}
+
+.navbar {
+  background-color: $brand-secondary;
+  border: none;
+  height: 60px;
+
+  a {
+    color: $white;
+  }
+
+  .navbar-brand {
+    font-size: 20px;
+    font-weight: 100;
+    line-height: 30px;
+  }
+
+  .navbar-nav {
+    float: right;
+
+    a {
+      line-height: 30px;
+
+      &:hover, &:visited {
+        background-color: lighten($brand-secondary, 10%);
+      }
+    }
+  }
+}
+
+.header-logo {
+  margin: 0 10px 0 20px;
+}
