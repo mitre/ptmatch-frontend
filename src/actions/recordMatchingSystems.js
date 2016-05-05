@@ -3,6 +3,7 @@ import {retrieve} from './index';
 
 export const REQUEST_RMS = 'REQUEST_RMS';
 export const RECEIVE_RMS = 'RECEIVE_RMS';
+export const SELECT_RMS = 'SELECT_RMS';
 
 function shouldFetchRMS(state) {
   const rms = state.recordMatchingSystems;
@@ -30,8 +31,14 @@ export function createRMS(rms) {
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify(rms)    
+      body: JSON.stringify(rms)
     });
     return dispatch(retrieve(RECEIVE_RMS, '/RecordMatchSystemInterface'));
+  };
+}
+
+export function selectRMS(rms) {
+  return (dispatch) => {
+    return dispatch({type: SELECT_RMS, recordMatchingSystem: rms});
   };
 }

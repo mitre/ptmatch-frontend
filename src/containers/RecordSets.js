@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import ListRecordSets from '../components/ListRecordSets';
-import NewRecordSet from '../components/NewRecordSet';
+import RecordSetSelector from '../components/RecordSetSelector';
 
 class RecordMatchingSystems extends Component {
-  
+
   render() {
-    return (        
+    return (
     <div className="container">
-      <ListRecordSets/>
-      <NewRecordSet/>
+      <RecordSetSelector/>
     </div>
     );
   }

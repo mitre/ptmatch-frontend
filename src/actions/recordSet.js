@@ -3,6 +3,7 @@ import {retrieve} from './index';
 
 export const REQUEST_RECORD_SET = 'REQUEST_RECORD_SET';
 export const RECEIVE_RECORD_SET = 'RECEIVE_RECORD_SET';
+export const SELECT_RECORD_SET = 'SELECT_RECORD_SET';
 
 function shouldFetchRecordSet(state) {
   const recordSets = state.recordSets;
@@ -30,8 +31,14 @@ export function createRecordSet(recordSet) {
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify(recordSet)    
+      body: JSON.stringify(recordSet)
     });
     return dispatch(retrieve(RECEIVE_RECORD_SET, '/RecordSet'));
+  };
+}
+
+export function selectRecordSet(recordSet) {
+  return (dispatch) => {
+    return dispatch({type: SELECT_RECORD_SET, recordSet: recordSet});
   };
 }
