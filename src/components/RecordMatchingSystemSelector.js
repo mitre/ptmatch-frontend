@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
 };
 
 function toggleChevron() {
-  $(".record-matching-system-selector.rotate").toggleClass("right");
+  $("#record-matching-system-selector .rotate").toggleClass("right");
 }
 
 export default connect(mapStateToProps, { fetchRMSIfNeeded, selectRMS })(RecordMatchingSystemSelector);

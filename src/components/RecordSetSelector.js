@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
 };
 
 function toggleChevron() {
-  $(".record-set-selector.rotate").toggleClass("right");
+  $("#record-set-selector .rotate").toggleClass("right");
 }
 
 export default connect(mapStateToProps, { fetchRecordSetsIfNeeded, selectRecordSet })(RecordSetSelector);
