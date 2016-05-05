@@ -3,6 +3,9 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/font-awesome/scss/font-awesome";
 
+// application imports
+@import "panels";
+
 // application styles
 body {
   background-color: $brand-primary;
@@ -42,4 +45,17 @@ body {
 
 .header-logo {
   margin: 0 10px 0 20px;
+}
+
+.rotate {
+  -moz-transition: all 0.3s linear;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+
+.rotate.right {
+  -ms-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
