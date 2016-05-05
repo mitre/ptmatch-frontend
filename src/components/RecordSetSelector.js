@@ -4,8 +4,22 @@ import { connect } from 'react-redux';
 import { fetchRecordSetsIfNeeded, selectRecordSet } from '../actions/recordSet';
 
 class RecordSetSelector extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {chevronClass: "rotate fa fa-chevron-right pull-right"};
+  }
+
   componentDidMount() {
     this.props.fetchRecordSetsIfNeeded();
+  }
+
+  toggleChevron() {
+    let chevronClass = this.state.chevronClass;
+    if (chevronClass === "rotate fa fa-chevron-right pull-right") {
+      this.setState({chevronClass: "rotate fa fa-chevron-right pull-right right"});
+    } else {
+      this.setState({chevronClass: "rotate fa fa-chevron-right pull-right"});
+    }
   }
 
   render() {
@@ -17,7 +31,8 @@ class RecordSetSelector extends Component {
                href="#recordSetList"
                role="tab"
                id="recordSetHeading"
-               onClick={toggleChevron}>
+               onClick={() => this.toggleChevron()}>
+
             <div className="col-xs-3 panel-heading-label">
               <i className="fa fa-cogs" aria-hidden="true"></i>
               <span>SETUPS</span>
@@ -25,7 +40,7 @@ class RecordSetSelector extends Component {
 
             <div className="col-xs-9 panel-heading-selection">
               {this.props.selectedRecordSetName}
-              <i className="rotate fa fa-chevron-right pull-right" aria-hidden="true"></i>
+              <i className={this.state.chevronClass} aria-hidden="true"></i>
             </div>
           </div>
 
@@ -70,8 +85,8 @@ const mapStateToProps = (state) => {
   return props;
 };
 
-function toggleChevron() {
-  $("#record-set-selector .rotate").toggleClass("right");
-}
+// function toggleChevron() {
+//   $("#record-set-selector .rotate").toggleClass("right");
+// }
 
 export default connect(mapStateToProps, { fetchRecordSetsIfNeeded, selectRecordSet })(RecordSetSelector);

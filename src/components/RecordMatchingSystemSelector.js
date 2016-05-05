@@ -4,8 +4,22 @@ import { connect } from 'react-redux';
 import { fetchRMSIfNeeded, selectRMS } from '../actions/recordMatchingSystems';
 
 class RecordMatchingSystemSelector extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {chevronClass: "rotate fa fa-chevron-right pull-right"};
+  }
+
   componentDidMount() {
     this.props.fetchRMSIfNeeded();
+  }
+
+  toggleChevron() {
+    let chevronClass = this.state.chevronClass;
+    if (chevronClass === "rotate fa fa-chevron-right pull-right") {
+      this.setState({chevronClass: "rotate fa fa-chevron-right pull-right right"});
+    } else {
+      this.setState({chevronClass: "rotate fa fa-chevron-right pull-right"});
+    }
   }
 
   render() {
@@ -17,7 +31,7 @@ class RecordMatchingSystemSelector extends Component {
                href="#matchingSystemList"
                role="tab"
                id="matchingSystemHeading"
-               onClick={toggleChevron}>
+               onClick={() => this.toggleChevron()}>
             <div className="col-xs-3 panel-heading-label">
               <i className="fa fa-sitemap" aria-hidden="true"></i>
               <span>MATCHING SYSTEMS</span>
@@ -25,7 +39,7 @@ class RecordMatchingSystemSelector extends Component {
 
             <div className="col-xs-9 panel-heading-selection">
               {this.props.selectedRMS}
-              <i className="rotate fa fa-chevron-right pull-right" aria-hidden="true"></i>
+              <i className={this.state.chevronClass} aria-hidden="true"></i>
             </div>
           </div>
 
@@ -69,9 +83,5 @@ const mapStateToProps = (state) => {
   }
   return props;
 };
-
-function toggleChevron() {
-  $("#record-matching-system-selector .rotate").toggleClass("right");
-}
 
 export default connect(mapStateToProps, { fetchRMSIfNeeded, selectRMS })(RecordMatchingSystemSelector);

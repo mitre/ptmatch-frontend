@@ -7,18 +7,11 @@ class ListRecordMatchingSystems extends Component {
   componentDidMount() {
     this.props.fetchRMSIfNeeded();
   }
-  
+
   render() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">List of record matching systems</h3>
-        </div>
-        <div className="panel-body">  
-          <ul>
-            {this.props.recordMatchingSystems.map(rms => <li key={rms.id}>{rms.name}</li>)}
-          </ul>
-        </div>
+      <div className="row">
+        {this.props.recordMatchingSystems.map(rms => <div className="col-md-4" key={rms.id}><p>{rms.name}</p></div>)}
       </div>
     );
   }

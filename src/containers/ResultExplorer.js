@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RecordSetSelector from '../components/RecordSetSelector';
 import RecordMatchingSystemSelector from '../components/RecordMatchingSystemSelector';
+import SetupToMatchSystemList from './SetupToMatchSystemList';
 
 class ResultExplorer extends Component {
 
@@ -9,6 +10,7 @@ class ResultExplorer extends Component {
     <div className="container">
       <RecordSetSelector/>
       <RecordMatchingSystemSelector/>
+      <SetupToMatchSystemList/>
     </div>
     );
   }
