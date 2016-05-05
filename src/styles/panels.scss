@@ -24,4 +24,14 @@
       }
     }
   }
+
+  .panel-collapse {
+    .list-group {
+      .list-group-item {
+        &:hover {
+          background-color: $very-light-gray;
+        }
+      }
+    }
+  }
 }
