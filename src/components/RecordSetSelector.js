@@ -10,14 +10,25 @@ class RecordSetSelector extends Component {
 
   render() {
     return (
-      <div className="panel-group" role="tablist">
+      <div className="panel-group" role="tablist" id="record-set-selector">
         <div className="panel panel-default">
-          <div className="panel-heading" role="tab" id="recordSetHeading">
-            <h4 className="panel-title">Data Set: {this.props.selectedRecordSetName}</h4>
-            <a role="button" data-toggle="collapse" href="#recordSetList">
-             Open
-            </a>
+          <div className="panel-heading"
+               data-toggle="collapse"
+               href="#recordSetList"
+               role="tab"
+               id="recordSetHeading"
+               onClick={toggleChevron}>
+            <div className="col-xs-3 panel-heading-label">
+              <i className="fa fa-cogs" aria-hidden="true"></i>
+              <span>SETUPS</span>
+            </div>
+
+            <div className="col-xs-9 panel-heading-selection">
+              {this.props.selectedRecordSetName}
+              <i className="rotate fa fa-chevron-right pull-right" aria-hidden="true"></i>
+            </div>
           </div>
+
           <div id="recordSetList" className="panel-collapse collapse" role="tabpanel">
             <ul className="list-group">
               {this.props.recordSets.map(recordSet => {
@@ -58,5 +69,9 @@ const mapStateToProps = (state) => {
   }
   return props;
 };
+
+function toggleChevron() {
+  $("#record-set-selector .rotate").toggleClass("right");
+}
 
 export default connect(mapStateToProps, { fetchRecordSetsIfNeeded, selectRecordSet })(RecordSetSelector);

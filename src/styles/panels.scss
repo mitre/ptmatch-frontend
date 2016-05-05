@@ -1,0 +1,37 @@
+.panel-group .panel {
+  border-radius: 0;
+  border: none;
+  margin-top: 20px;
+
+  .panel-heading {
+    height: 40px;
+    padding: 0;
+    line-height: 40px;
+
+    .panel-heading-label {
+      background-color: $very-light-gray;
+
+      i {
+        margin-right: 10px;
+      }
+    }
+
+    .panel-heading-selection {
+      background-color: $white;
+
+      i {
+        line-height: 40px;
+      }
+    }
+  }
+
+  .panel-collapse {
+    .list-group {
+      .list-group-item {
+        &:hover {
+          background-color: $very-light-gray;
+        }
+      }
+    }
+  }
+}
