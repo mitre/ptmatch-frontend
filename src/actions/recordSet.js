@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import {retrieve} from './index';
+import { fetchMetricsIfNeeded } from './jobMetrics';
+
 
 export const REQUEST_RECORD_SET = 'REQUEST_RECORD_SET';
 export const RECEIVE_RECORD_SET = 'RECEIVE_RECORD_SET';
@@ -39,6 +41,7 @@ export function createRecordSet(recordSet) {
 
 export function selectRecordSet(recordSet) {
   return (dispatch) => {
+    dispatch(fetchMetricsIfNeeded(recordSet.id));
     return dispatch({type: SELECT_RECORD_SET, recordSet: recordSet});
   };
 }

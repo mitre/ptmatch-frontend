@@ -48,7 +48,10 @@ function metrics(state = {}, action) {
   switch (action.type) {
     case RECEIVE_METRICS:
       let metricsClone = Object.assign({}, state);
-      metricsClone[action.payload.masterRecordSetId] = Object.assign({}, action.payload);
+      //masterRecordSetId will be the same across the entire array, so we can
+      //just grab the first one
+      let masterRecordSetId = action.payload[0].masterRecordSetId; 
+      metricsClone[masterRecordSetId] = action.payload.slice(0);
       return metricsClone;
     default:
       return state;

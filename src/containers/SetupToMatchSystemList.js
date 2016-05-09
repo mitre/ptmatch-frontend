@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import ListRecordMatchingSystems from '../components/ListRecordMatchingSystems';
+import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
 
 class SetupToMatchSystemList extends Component {
   isMatchingSystemSelected() {
@@ -14,7 +14,14 @@ class SetupToMatchSystemList extends Component {
 
   body() {
     if (this.isRecordSetSelected()) {
-      return (<ListRecordMatchingSystems/>);
+      if (this.props.metrics.length > 0) {
+        return this.props.metrics.map(function(m) {
+          let rms = this.props.recordMatchingSystems.find((r) => r.id === m.recordMatchSystemInterfaceId);
+          return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms}/>);
+          }, this);        
+      } else {
+        return (<p>Loading matching metrics</p>);  
+      }
     } else {
       return (<p>Please select a record set</p>);
     }
@@ -53,7 +60,14 @@ const mapStateToProps = (state) => {
   }
   if (state.selectedRecordSet.name !== undefined) {
     props.selectedRecordSet = state.selectedRecordSet;
+    let m = state.metrics[props.selectedRecordSet.id];
+    if (m !== undefined) {
+      props.metrics = m;
+    } else {
+      props.metrics = [];  
+    }
   } else {
+    props.metrics = [];
     props.selectedRecordSet = {};
   }
   return props;
@@ -63,6 +77,7 @@ SetupToMatchSystemList.propTypes = {
   recordMatchingSystems: PropTypes.array.isRequired,
   selectedRMS: PropTypes.object,
   recordSets: PropTypes.array.isRequired,
+  metrics: PropTypes.array,
   selectedRecordSet: PropTypes.object
 };
 
