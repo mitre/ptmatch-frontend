@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
-class MatchingSystemThumbnail extends Component {
+import { selectJobAndRMS } from '../actions/matchJob';
+
+class MatchingSystemThumbnail extends Component {  
   render() {
     return (
-      <div className="col-md-4" key={this.props.recordMatchingSystem.id}>
+      <div className="col-md-4" key={this.props.recordMatchingSystem.id} onClick={() => this.props.selectJobAndRMS(this.props.jobId, this.props.recordMatchingSystem)}>
         <p>F: {this.props.metrics.F}</p>
         <p>F-Precision: {this.props.metrics.FPrecision}</p>
         <p>F-Recall: {this.props.metrics.FRecall}</p>
@@ -26,7 +29,9 @@ MatchingSystemThumbnail.propTypes = {
   recordMatchingSystem: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string
-  })
+  }),
+  jobId: PropTypes.string,
+  selectJobAndRMS: PropTypes.func
 };
 
-export default MatchingSystemThumbnail;
+export default connect(null, {selectJobAndRMS})(MatchingSystemThumbnail);

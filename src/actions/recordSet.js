@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import {retrieve} from './index';
-import { fetchMetricsIfNeeded } from './jobMetrics';
+import { fetchMetricsIfNeeded } from './matchJob';
 
 
 export const REQUEST_RECORD_SET = 'REQUEST_RECORD_SET';

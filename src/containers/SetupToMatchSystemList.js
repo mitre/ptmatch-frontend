@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
+import IndividualResult from '../components/IndividualResult';
 
 class SetupToMatchSystemList extends Component {
   isMatchingSystemSelected() {
@@ -14,13 +15,23 @@ class SetupToMatchSystemList extends Component {
 
   body() {
     if (this.isRecordSetSelected()) {
-      if (this.props.metrics.length > 0) {
-        return this.props.metrics.map(function(m) {
-          let rms = this.props.recordMatchingSystems.find((r) => r.id === m.recordMatchSystemInterfaceId);
-          return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms}/>);
-          }, this);        
+      if (this.isMatchingSystemSelected()) {
+        if (this.props.selectedJob.note !== undefined) {
+          return (<IndividualResult recordSet={this.props.selectedRecordSet}
+                                    recordMatchingSystem={this.props.selectedRMS}
+                                    job={this.props.selectedJob}/>);
+        } else {
+          return (<p>Loading Job</p>);  
+        }
       } else {
-        return (<p>Loading matching metrics</p>);  
+        if (this.props.metrics.length > 0) {
+          return this.props.metrics.map(function(m) {
+            let rms = this.props.recordMatchingSystems.find((r) => r.id === m.recordMatchSystemInterfaceId);
+            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id}/>);
+            }, this);        
+        } else {
+          return (<p>Loading matching metrics</p>);  
+        }
       }
     } else {
       return (<p>Please select a record set</p>);
@@ -58,6 +69,11 @@ const mapStateToProps = (state) => {
   } else {
     props.recordSets = [];
   }
+  if (state.selectedJob) {
+    props.selectedJob = state.selectedJob;
+  } else {
+    props.selectedJob = {};
+  }
   if (state.selectedRecordSet.name !== undefined) {
     props.selectedRecordSet = state.selectedRecordSet;
     let m = state.metrics[props.selectedRecordSet.id];
@@ -78,7 +94,8 @@ SetupToMatchSystemList.propTypes = {
   selectedRMS: PropTypes.object,
   recordSets: PropTypes.array.isRequired,
   metrics: PropTypes.array,
-  selectedRecordSet: PropTypes.object
+  selectedRecordSet: PropTypes.object,
+  selectedJob: PropTypes.object
 };
 
 SetupToMatchSystemList.displayName = 'SetupToMatchSystemList';

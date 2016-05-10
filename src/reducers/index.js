@@ -3,7 +3,7 @@ import { routeReducer } from 'react-router-redux';
 //import immutable from 'immutable';
 import { RECEIVE_RMS, SELECT_RMS } from '../actions/recordMatchingSystems';
 import { RECEIVE_RECORD_SET, SELECT_RECORD_SET } from '../actions/recordSet';
-import { RECEIVE_METRICS } from '../actions/jobMetrics';
+import { RECEIVE_METRICS, RECEIVE_MATCH_JOB } from '../actions/matchJob';
 
 
 function recordMatchingSystems(state = [], action) {
@@ -58,12 +58,22 @@ function metrics(state = {}, action) {
   }  
 }
 
+function selectedJob(state = {}, action) {
+  switch (action.type) {
+    case RECEIVE_MATCH_JOB:
+      return Object.assign({}, action.payload);
+    default:
+      return state;
+  }  
+}
+
 const rootReducer = combineReducers({
   recordMatchingSystems,
   recordSets,
   selectedRecordSet,
   selectedRecordMatchingSystem,
   metrics,
+  selectedJob,
   routing: routeReducer
 });
 
