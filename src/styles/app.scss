@@ -59,3 +59,9 @@ body {
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
 }
+
+.btn-primary {
+  background-color: $red;
+  margin: 12px;
+  border: none;
+}

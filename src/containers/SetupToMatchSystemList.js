@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 
 import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
 import IndividualResult from '../components/IndividualResult';
@@ -15,8 +14,6 @@ class SetupToMatchSystemList extends Component {
   }
 
   formatParams() {
-    console.debug(this.props.selectedRecordSet.parameters.parameter[0].name);
-
     return this.props.selectedRecordSet.parameters.parameter.map((param) => {
       return <div key={param.name}>{param.name} : {param.valueString}</div>;
     });
@@ -34,7 +31,7 @@ class SetupToMatchSystemList extends Component {
             {this.formatParams()}
           </div>
 
-          <Link
+          <button className="btn btn-primary pull-right">New Run</button>
         </div>
       );
     }
