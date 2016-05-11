@@ -5,6 +5,31 @@ import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
 import IndividualResult from '../components/IndividualResult';
 
 class SetupToMatchSystemList extends Component {
+  constructor() {
+    super();
+    this.state = {
+      setups: [],
+      matchingSystems: []
+    };
+    this.updateSetups = this.updateSetups.bind(this);
+    this.updateMatchingSystems = this.updateMatchingSystems.bind(this);
+  }
+
+  updateSetups(setup) {
+    let setupSelected = this.state.setups.indexOf(setup) != -1;
+
+    if (setupSelected) { addItem(setup) } else { removeItem(setup) };
+    this.setState({
+      setups: {
+        return [...setup, 0];
+      }
+    })
+  }
+
+  updateMatchingSystems(rms) {
+
+  }
+
   isMatchingSystemSelected() {
     return this.props.selectedRMS.name !== undefined;
   }
@@ -40,20 +65,33 @@ class SetupToMatchSystemList extends Component {
 
   render() {
     return (
-    <div className="panel panel-default">
-      <div className="panel-heading">
-        <h3 className="panel-title">{this.props.selectedRecordSet.name ? this.props.selectedRecordSet.name : ""}</h3>
+      <div className="panel panel-default setup-to-match-system-list">
+        {isRecordSetSelected ?
+          <div className="panel-heading setup">
+            <h3 className="panel-title">
+              {this.props.selectedRecordSet.name ? this.props.selectedRecordSet.name : ""}
+            </h3>
+          </div>
+        }
+
+        {isMatchingSystemSelected ?
+          <div className="panel-heading matching-system">
+            <h3 className="panel-title">
+              {this.props.selectedRMS.name ? this.props.selectedRMS.name : ""}
+            </h3>
+          </div>
+        }
+
+        <div className="panel-body">
+          {this.body()}
+        </div>
       </div>
-      <div className="panel-body">
-        {this.body()}
-      </div>
-    </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  var props = {};
+  let props = {};
   if (state.recordMatchingSystems) {
     props.recordMatchingSystems = state.recordMatchingSystems;
   } else {
@@ -88,6 +126,19 @@ const mapStateToProps = (state) => {
   }
   return props;
 };
+
+const addItem = (list, itemToAdd) => {
+  return [...list, itemToAdd];
+};
+
+const removeItem = (list, itemToRemove) => {
+  let index = list.indexOf(itemToRemove);
+
+  return [
+    ...list.slice(0, index),
+    ...list.slice(index + 1)
+  ];
+}
 
 SetupToMatchSystemList.propTypes = {
   recordMatchingSystems: PropTypes.array.isRequired,

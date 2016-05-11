@@ -1,6 +1,8 @@
 @import "variables";
 
-.panel-group .panel {
+//-------------------------- PANELS -----------------------------------------//
+
+.panel {
   border-radius: 0;
   border: none;
   margin-top: 20px;
@@ -34,6 +36,19 @@
           background-color: $very-light-gray;
         }
       }
+    }
+  }
+}
+
+//-------------------------- PAGE SPECIFIC ----------------------------------//
+
+.setup-to-match-system-list.panel {
+  .panel-heading {
+    height: 60px;
+    border: none;
+
+    .panel-title {
+
     }
   }
 }
