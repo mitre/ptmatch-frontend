@@ -35,7 +35,7 @@ class RecordSetSelector extends Component {
 
             <div className="col-xs-3 panel-heading-label">
               <i className="fa fa-cogs" aria-hidden="true"></i>
-              <span>SETUPS</span>
+              <span>FORMATS</span>
             </div>
 
             <div className="col-xs-9 panel-heading-selection">

@@ -1,89 +1,90 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
 import IndividualResult from '../components/IndividualResult';
 
 class SetupToMatchSystemList extends Component {
-  constructor() {
-    super();
-    this.state = {
-      setups: [],
-      matchingSystems: []
-    };
-    this.updateSetups = this.updateSetups.bind(this);
-    this.updateMatchingSystems = this.updateMatchingSystems.bind(this);
-  }
-
-  updateSetups(setup) {
-    let setupSelected = this.state.setups.indexOf(setup) != -1;
-
-    if (setupSelected) { addItem(setup) } else { removeItem(setup) };
-    this.setState({
-      setups: {
-        return [...setup, 0];
-      }
-    })
-  }
-
-  updateMatchingSystems(rms) {
-
-  }
-
   isMatchingSystemSelected() {
     return this.props.selectedRMS.name !== undefined;
   }
 
-  isRecordSetSelected() {
+  isFormatSelected() {
     return this.props.selectedRecordSet.name !== undefined;
   }
 
-  body() {
-    if (this.isRecordSetSelected()) {
+  formatParams() {
+    console.debug(this.props.selectedRecordSet.parameters.parameter[0].name);
+
+    return this.props.selectedRecordSet.parameters.parameter.map((param) => {
+      return <div key={param.name}>{param.name} : {param.valueString}</div>;
+    });
+  }
+
+  displayFormatHeader() {
+    if (this.isFormatSelected()) {
+      return (
+        <div className="panel-heading row">
+          <h3 className="panel-title col-xs-3">
+            {this.props.selectedRecordSet.name}
+          </h3>
+
+          <div className="format-piece col-xs-3">
+            {this.formatParams()}
+          </div>
+
+          <Link
+        </div>
+      );
+    }
+  }
+
+  displayRMSHeader() {
+    if (this.isMatchingSystemSelected()) {
+      return (
+        <div className="panel-heading">
+          <h3 className="panel-title">
+            {this.props.selectedRMS.name}
+          </h3>
+        </div>
+      );
+    }
+  }
+
+  displayBody() {
+    if (this.isFormatSelected()) {
       if (this.isMatchingSystemSelected()) {
         if (this.props.selectedJob.note !== undefined) {
           return (<IndividualResult recordSet={this.props.selectedRecordSet}
                                     recordMatchingSystem={this.props.selectedRMS}
                                     job={this.props.selectedJob}/>);
         } else {
-          return (<p>Loading Job</p>);  
+          return (<p>Loading Job...</p>);
         }
       } else {
         if (this.props.metrics.length > 0) {
           return this.props.metrics.map(function(m) {
             let rms = this.props.recordMatchingSystems.find((r) => r.id === m.recordMatchSystemInterfaceId);
-            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id}/>);
-            }, this);        
+            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id} key={m.id} />);
+            }, this);
         } else {
-          return (<p>Loading matching metrics</p>);  
+          return (<p>Loading matching metrics...</p>);
         }
       }
     } else {
-      return (<p>Please select a record set</p>);
+      return (<p>Please select a format.</p>);
     }
   }
 
   render() {
     return (
       <div className="panel panel-default setup-to-match-system-list">
-        {isRecordSetSelected ?
-          <div className="panel-heading setup">
-            <h3 className="panel-title">
-              {this.props.selectedRecordSet.name ? this.props.selectedRecordSet.name : ""}
-            </h3>
-          </div>
-        }
-
-        {isMatchingSystemSelected ?
-          <div className="panel-heading matching-system">
-            <h3 className="panel-title">
-              {this.props.selectedRMS.name ? this.props.selectedRMS.name : ""}
-            </h3>
-          </div>
-        }
+        {this.displayFormatHeader()}
+        {this.displayRMSHeader()}
 
         <div className="panel-body">
-          {this.body()}
+          {this.displayBody()}
         </div>
       </div>
     );
@@ -118,7 +119,7 @@ const mapStateToProps = (state) => {
     if (m !== undefined) {
       props.metrics = m;
     } else {
-      props.metrics = [];  
+      props.metrics = [];
     }
   } else {
     props.metrics = [];
@@ -126,19 +127,6 @@ const mapStateToProps = (state) => {
   }
   return props;
 };
-
-const addItem = (list, itemToAdd) => {
-  return [...list, itemToAdd];
-};
-
-const removeItem = (list, itemToRemove) => {
-  let index = list.indexOf(itemToRemove);
-
-  return [
-    ...list.slice(0, index),
-    ...list.slice(index + 1)
-  ];
-}
 
 SetupToMatchSystemList.propTypes = {
   recordMatchingSystems: PropTypes.array.isRequired,
