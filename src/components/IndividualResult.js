@@ -9,23 +9,38 @@ class IndividualResult extends Component {
     });
     return matchResponses[0].message.entry.filter((e) => e.link !== undefined);
   }
-  
+
   render() {
     return (
       <div key={this.props.job.id}>
-        <p>Record Set Name: {this.props.recordSet.name}</p>
-        <p>F: {this.props.job.metrics.F}</p>
-        <p>F-Precision: {this.props.job.metrics.FPrecision}</p>
-        <p>F-Recall: {this.props.job.metrics.FRecall}</p>
-        <p>MAP: {this.props.job.metrics.MAP}</p>
-        <p>{this.props.recordMatchingSystem.name}</p>
-        {this.recordMatches().map((rm) => {
-            return (<div>
-               <p>Record A: {rm.fullUrl}</p>
-               <p>Score: {rm.search.score}</p>
-               <p>Record B: {rm.link.find((l) => l.relation === "related").url}</p>
-            </div>);
-        })}
+        <div className="results-overview">
+          <p>F: {this.props.job.metrics.F}</p>
+          <p>F-Precision: {this.props.job.metrics.FPrecision}</p>
+          <p>F-Recall: {this.props.job.metrics.FRecall}</p>
+          <p>MAP: {this.props.job.metrics.MAP}</p>
+        </div>
+
+        <table className="table table-hover results-detail">
+          <thead>
+            <tr>
+              <th>Record URL</th>
+              <th>Record URL</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {this.recordMatches().map((rm) => {
+              return (
+                <tr key={rm.fullUrl}>
+                  <td>Record A: {rm.fullUrl}</td>
+                  <td>Record B: {rm.link.find((l) => l.relation === "related").url}</td>
+                  <td>Score: {rm.search.score}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     );
   }
