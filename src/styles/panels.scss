@@ -1,9 +1,16 @@
 @import "variables";
 
-.panel-group .panel {
-  border-radius: 0;
-  border: none;
-  margin-top: 20px;
+//-------------------------- PANELS -----------------------------------------//
+
+.panel-group {
+  margin-bottom: 10px;
+}
+
+.panel {
+  &.panel-default {
+    border-radius: 0;
+    border: none;
+  }
 
   .panel-heading {
     height: 40px;
@@ -28,12 +35,40 @@
   }
 
   .panel-collapse {
+    border-radius: 0;
+
     .list-group {
       .list-group-item {
         &:hover {
           background-color: $very-light-gray;
         }
       }
+    }
+  }
+}
+
+//-------------------------- PAGE SPECIFIC ----------------------------------//
+
+.setup-to-match-system-list.panel {
+  .panel-heading {
+    height: 60px;
+    border: none;
+    margin: 0 0 3px 0;
+
+    .panel-title {
+      padding: 20px;
+      font-weight: 400;
+      font-size: 18px;
+    }
+
+    .format-piece {
+      display: block;
+      border: 1px solid $light-gray;
+      background-color: $white;
+      margin-top: 15px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 4px;
     }
   }
 }

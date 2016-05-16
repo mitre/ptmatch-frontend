@@ -9,51 +9,87 @@ class SetupToMatchSystemList extends Component {
     return this.props.selectedRMS.name !== undefined;
   }
 
-  isRecordSetSelected() {
+  isFormatSelected() {
     return this.props.selectedRecordSet.name !== undefined;
   }
 
-  body() {
-    if (this.isRecordSetSelected()) {
+  formatParams() {
+    return this.props.selectedRecordSet.parameters.parameter.map((param) => {
+      return <div key={param.name}>{param.name} : {param.valueString}</div>;
+    });
+  }
+
+  displayFormatHeader() {
+    if (this.isFormatSelected()) {
+      return (
+        <div className="panel-heading row">
+          <h3 className="panel-title col-xs-3">
+            {this.props.selectedRecordSet.name}
+          </h3>
+
+          <div className="format-piece col-xs-3">
+            {this.formatParams()}
+          </div>
+
+          <button className="btn btn-primary pull-right">New Run</button>
+        </div>
+      );
+    }
+  }
+
+  displayRMSHeader() {
+    if (this.isMatchingSystemSelected()) {
+      return (
+        <div className="panel-heading">
+          <h3 className="panel-title">
+            {this.props.selectedRMS.name}
+          </h3>
+        </div>
+      );
+    }
+  }
+
+  displayBody() {
+    if (this.isFormatSelected()) {
       if (this.isMatchingSystemSelected()) {
         if (this.props.selectedJob.note !== undefined) {
           return (<IndividualResult recordSet={this.props.selectedRecordSet}
                                     recordMatchingSystem={this.props.selectedRMS}
                                     job={this.props.selectedJob}/>);
         } else {
-          return (<p>Loading Job</p>);  
+          return (<p>Loading Job...</p>);
         }
       } else {
         if (this.props.metrics.length > 0) {
           return this.props.metrics.map(function(m) {
             let rms = this.props.recordMatchingSystems.find((r) => r.id === m.recordMatchSystemInterfaceId);
-            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id}/>);
-            }, this);        
+            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id} key={m.id} />);
+            }, this);
         } else {
-          return (<p>Loading matching metrics</p>);  
+          return (<p>Loading matching metrics...</p>);
         }
       }
     } else {
-      return (<p>Please select a record set</p>);
+      return (<p>Please select a format.</p>);
     }
   }
 
   render() {
     return (
-    <div className="panel panel-default">
-      <div className="panel-heading">
-        <h3 className="panel-title">{this.props.selectedRecordSet.name ? this.props.selectedRecordSet.name : ""}</h3>
+      <div className="panel panel-default setup-to-match-system-list">
+        {this.displayFormatHeader()}
+        {this.displayRMSHeader()}
+
+        <div className="panel-body">
+          {this.displayBody()}
+        </div>
       </div>
-      <div className="panel-body">
-        {this.body()}
-      </div>
-    </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  var props = {};
+  let props = {};
   if (state.recordMatchingSystems) {
     props.recordMatchingSystems = state.recordMatchingSystems;
   } else {
@@ -80,7 +116,7 @@ const mapStateToProps = (state) => {
     if (m !== undefined) {
       props.metrics = m;
     } else {
-      props.metrics = [];  
+      props.metrics = [];
     }
   } else {
     props.metrics = [];
