@@ -7,16 +7,17 @@ class IndividualResult extends Component {
       let matchEvent = resourceEntries.find((e) => e.resource.event !== undefined && e.resource.event.code === "record-match");
       return matchEvent !== undefined;
     });
-    return matchResponses[0].message.entry.filter((e) => e.link !== undefined);
+    let allEntries = matchResponses.reduce((acc, currentValue) => acc.concat(...currentValue.message.entry), []);
+    return allEntries.filter((e) => e.link !== undefined);
   }
 
   render() {
     return (
       <div key={this.props.job.id}>
         <div className="results-overview">
-          <p>F: {this.props.job.metrics.F}</p>
-          <p>F-Precision: {this.props.job.metrics.FPrecision}</p>
-          <p>F-Recall: {this.props.job.metrics.FRecall}</p>
+          <p>F: {this.props.job.metrics.f1}</p>
+          <p>Precision: {this.props.job.metrics.precision}</p>
+          <p>Recall: {this.props.job.metrics.recall}</p>
           <p>MAP: {this.props.job.metrics.MAP}</p>
         </div>
 
