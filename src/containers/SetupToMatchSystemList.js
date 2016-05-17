@@ -15,7 +15,7 @@ class SetupToMatchSystemList extends Component {
 
   formatParams() {
     return this.props.selectedRecordSet.parameters.parameter.map((param) => {
-      return <div key={param.name}>{param.name} : {param.valueString}</div>;
+      return <div key={param.name}>{param.name} : {param.valueString.substr(0,20)}</div>;
     });
   }
 
@@ -52,7 +52,7 @@ class SetupToMatchSystemList extends Component {
   displayBody() {
     if (this.isFormatSelected()) {
       if (this.isMatchingSystemSelected()) {
-        if (this.props.selectedJob.note !== undefined) {
+        if (this.props.selectedJob.masterRecordSetId !== undefined) {
           return (<IndividualResult recordSet={this.props.selectedRecordSet}
                                     recordMatchingSystem={this.props.selectedRMS}
                                     job={this.props.selectedJob}/>);

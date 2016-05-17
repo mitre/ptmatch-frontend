@@ -7,9 +7,9 @@ class MatchingSystemThumbnail extends Component {
   render() {
     return (
       <div className="col-md-3 rms-thumbnail" key={this.props.recordMatchingSystem.id} onClick={() => this.props.selectJobAndRMS(this.props.jobId, this.props.recordMatchingSystem)}>
-        <p>F: {this.props.metrics.F}</p>
-        <p>F-Precision: {this.props.metrics.FPrecision}</p>
-        <p>F-Recall: {this.props.metrics.FRecall}</p>
+        <p>F: {this.props.metrics.f1}</p>
+        <p>Precision: {this.props.metrics.precision}</p>
+        <p>Recall: {this.props.metrics.recall}</p>
         <p>MAP: {this.props.metrics.MAP}</p>
         <p className="rms-name">{this.props.recordMatchingSystem.name}</p>
       </div>
@@ -21,9 +21,9 @@ MatchingSystemThumbnail.displayName = 'MatchingSystemThumbnail';
 
 MatchingSystemThumbnail.propTypes = {
   metrics: PropTypes.shape({
-    F: PropTypes.number,
-    FPrecision: PropTypes.number,
-    FRecall: PropTypes.number,
+    f1: PropTypes.number,
+    precision: PropTypes.number,
+    recall: PropTypes.number,
     MAP: PropTypes.number
   }),
   recordMatchingSystem: PropTypes.shape({
