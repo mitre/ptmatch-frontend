@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 
 import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
 import IndividualResult from '../components/IndividualResult';
+import NewJobModal from '../components/NewJobModal';
+
+import { selectRMS } from '../actions/recordMatchingSystems';
 
 class SetupToMatchSystemList extends Component {
   isMatchingSystemSelected() {
@@ -31,7 +34,9 @@ class SetupToMatchSystemList extends Component {
             {this.formatParams()}
           </div>
 
-          <button className="btn btn-primary pull-right">New Run</button>
+          <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newJobModal">New Run</button>
+          <NewJobModal recordSet={this.props.selectedRecordSet} recordMatchingSystems={this.props.recordMatchingSystems}
+                       selectedRecordMatchingSystem={this.props.selectedRMS} selectRMSFunc={this.props.selectRMS}/>
         </div>
       );
     }
@@ -131,9 +136,10 @@ SetupToMatchSystemList.propTypes = {
   recordSets: PropTypes.array.isRequired,
   metrics: PropTypes.array,
   selectedRecordSet: PropTypes.object,
-  selectedJob: PropTypes.object
+  selectedJob: PropTypes.object,
+  selectRMS: PropTypes.func
 };
 
 SetupToMatchSystemList.displayName = 'SetupToMatchSystemList';
 
-export default connect(mapStateToProps)(SetupToMatchSystemList);
+export default connect(mapStateToProps, {selectRMS})(SetupToMatchSystemList);
