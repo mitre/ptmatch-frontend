@@ -6,7 +6,7 @@ import { RECEIVE_RECORD_SET, SELECT_RECORD_SET } from '../actions/recordSet';
 import { RECEIVE_METRICS, RECEIVE_MATCH_JOB } from '../actions/matchJob';
 
 
-function recordMatchingSystems(state = [], action) {
+export function recordMatchingSystems(state = [], action) {
   switch (action.type) {
     case RECEIVE_RMS:
       // calling slice(0) creates a clone of the array

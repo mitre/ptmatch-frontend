@@ -54,8 +54,7 @@ IndividualResult.propTypes = {
   recordMatchingSystem: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string
-  }),
-  recordSet: PropTypes.object
+  })
 };
 
 export default IndividualResult;
