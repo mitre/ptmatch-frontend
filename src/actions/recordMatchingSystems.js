@@ -38,7 +38,5 @@ export function createRMS(rms) {
 }
 
 export function selectRMS(rms) {
-  return (dispatch) => {
-    return dispatch({type: SELECT_RMS, recordMatchingSystem: rms});
-  };
+  return {type: SELECT_RMS, recordMatchingSystem: rms};
 }
