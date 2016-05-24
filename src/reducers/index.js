@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 import { routeReducer } from 'react-router-redux';
 //import immutable from 'immutable';
-import { RECEIVE_RMS, SELECT_RMS } from '../actions/recordMatchingSystems';
-import { RECEIVE_RECORD_SET, SELECT_RECORD_SET } from '../actions/recordSet';
-import { RECEIVE_METRICS, RECEIVE_MATCH_JOB } from '../actions/matchJob';
+import { RECEIVE_RMS, SELECT_RMS, RECEIVE_RECORD_SET,
+         SELECT_RECORD_SET, RECEIVE_METRICS,
+         RECEIVE_MATCH_JOB } from '../actions/types';
+
 
 
 export function recordMatchingSystems(state = [], action) {
@@ -50,12 +51,12 @@ function metrics(state = {}, action) {
       let metricsClone = Object.assign({}, state);
       //masterRecordSetId will be the same across the entire array, so we can
       //just grab the first one
-      let masterRecordSetId = action.payload[0].masterRecordSetId; 
+      let masterRecordSetId = action.payload[0].masterRecordSetId;
       metricsClone[masterRecordSetId] = action.payload.slice(0);
       return metricsClone;
     default:
       return state;
-  }  
+  }
 }
 
 function selectedJob(state = {}, action) {
@@ -64,7 +65,7 @@ function selectedJob(state = {}, action) {
       return Object.assign({}, action.payload);
     default:
       return state;
-  }  
+  }
 }
 
 const rootReducer = combineReducers({

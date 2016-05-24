@@ -3,12 +3,10 @@ import fetch from 'isomorphic-fetch';
 import {retrieve} from './index';
 import {selectRMS} from './recordMatchingSystems';
 
-export const REQUEST_METRICS = 'REQUEST_METRICS';
-export const RECEIVE_METRICS = 'RECEIVE_METRICS';
-
-export const RECEIVE_MATCH_JOB = 'RECEIVE_MATCH_JOB';
-
-export const RECEIVE_CONFIGURATIONS = 'RECEIVE_CONFIGURATIONS';
+import {
+  RECEIVE_METRICS,
+  RECEIVE_MATCH_JOB
+} from './types';
 
 function shouldFetchJobMetrics(state, recordSetId) {
   const metrics = state.metrics;
@@ -22,7 +20,6 @@ function shouldFetchJobMetrics(state, recordSetId) {
 export function fetchMetricsIfNeeded(recordSetId) {
   return (dispatch, getState) => {
     if (shouldFetchJobMetrics(getState(), recordSetId)) {
-      dispatch({type: REQUEST_METRICS});
       return dispatch(retrieve(RECEIVE_METRICS, `/RecordMatchJobMetrics?recordSetId=${recordSetId}`));
     }
   };
@@ -31,7 +28,7 @@ export function fetchMetricsIfNeeded(recordSetId) {
 export function fetchMatchJob(jobId) {
   return (dispatch) => {
     return dispatch(retrieve(RECEIVE_MATCH_JOB, `/RecordMatchJob/${jobId}`));
-  };  
+  };
 }
 
 export function selectJobAndRMS(jobId, rms) {
@@ -55,6 +52,6 @@ export function createJob(rmsId, recordSetId) {
             method: 'POST',
             body: JSON.stringify({recordMatchConfigurationId: config.id})
           });
-        } 
+        }
       });
 }

@@ -1,9 +1,10 @@
 import fetch from 'isomorphic-fetch';
 import {retrieve} from './index';
 
-export const REQUEST_RMS = 'REQUEST_RMS';
-export const RECEIVE_RMS = 'RECEIVE_RMS';
-export const SELECT_RMS = 'SELECT_RMS';
+import {
+  SELECT_RMS,
+  RECEIVE_RMS
+} from './types';
 
 function shouldFetchRMS(state) {
   const rms = state.recordMatchingSystems;
@@ -17,7 +18,6 @@ function shouldFetchRMS(state) {
 export function fetchRMSIfNeeded() {
   return (dispatch, getState) => {
     if (shouldFetchRMS(getState())) {
-      dispatch({type: REQUEST_RMS});
       return dispatch(retrieve(RECEIVE_RMS, '/RecordMatchSystemInterface'));
     }
   };

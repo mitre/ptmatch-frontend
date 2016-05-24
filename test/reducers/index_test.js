@@ -1,5 +1,5 @@
 import { expect } from '../test_helper';
-import { RECEIVE_RMS } from '../../src/actions/recordMatchingSystems';
+import { RECEIVE_RMS } from '../../src/actions/types';
 import { recordMatchingSystems } from '../../src/reducers';
 
 

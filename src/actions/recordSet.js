@@ -2,10 +2,10 @@ import fetch from 'isomorphic-fetch';
 import {retrieve} from './index';
 import { fetchMetricsIfNeeded } from './matchJob';
 
-
-export const REQUEST_RECORD_SET = 'REQUEST_RECORD_SET';
-export const RECEIVE_RECORD_SET = 'RECEIVE_RECORD_SET';
-export const SELECT_RECORD_SET = 'SELECT_RECORD_SET';
+import {
+  RECEIVE_RECORD_SET,
+  SELECT_RECORD_SET
+} from './types';
 
 function shouldFetchRecordSet(state) {
   const recordSets = state.recordSets;
@@ -19,7 +19,6 @@ function shouldFetchRecordSet(state) {
 export function fetchRecordSetsIfNeeded() {
   return (dispatch, getState) => {
     if (shouldFetchRecordSet(getState())) {
-      dispatch({type: REQUEST_RECORD_SET});
       return dispatch(retrieve(RECEIVE_RECORD_SET, '/RecordSet'));
     }
   };
