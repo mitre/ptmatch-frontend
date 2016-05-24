@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchRecordSetsIfNeeded, selectRecordSet } from '../actions/recordSet';
+import { fetchMetricsIfNeeded } from '../actions/matchJob';
 
 class RecordSetSelector extends Component {
   constructor(props) {
@@ -50,7 +51,10 @@ class RecordSetSelector extends Component {
                 return (
                 <li className="list-group-item"
                     key={recordSet.id}
-                    onClick={() => this.props.selectRecordSet(recordSet)}>{recordSet.name}</li>
+                    onClick={() => {
+                      this.props.selectRecordSet(recordSet);
+                      this.props.fetchMetricsIfNeeded(recordSet.id);
+                    }}>{recordSet.name}</li>
                 );
               })}
             </ul>
@@ -67,6 +71,7 @@ RecordSetSelector.propTypes = {
   recordSets: PropTypes.array.isRequired,
   selectedRecordSetName: PropTypes.string,
   fetchRecordSetsIfNeeded: PropTypes.func,
+  fetchMetricsIfNeeded: PropTypes.func,
   selectRecordSet: PropTypes.func
 };
 
@@ -89,4 +94,4 @@ const mapStateToProps = (state) => {
 //   $("#record-set-selector .rotate").toggleClass("right");
 // }
 
-export default connect(mapStateToProps, { fetchRecordSetsIfNeeded, selectRecordSet })(RecordSetSelector);
+export default connect(mapStateToProps, { fetchRecordSetsIfNeeded, selectRecordSet, fetchMetricsIfNeeded })(RecordSetSelector);

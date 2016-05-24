@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
 import { routeReducer } from 'react-router-redux';
 //import immutable from 'immutable';
-import { RECEIVE_RMS, SELECT_RMS, RECEIVE_RECORD_SET,
-         SELECT_RECORD_SET, RECEIVE_METRICS,
-         RECEIVE_MATCH_JOB } from '../actions/types';
+import { REQUEST_RMS_FULFILLED, SELECT_RMS, REQUEST_RECORD_SET_FULFILLED,
+         SELECT_RECORD_SET, REQUEST_METRICS_FULFILLED,
+         REQUEST_MATCH_JOB_FULFILLED } from '../actions/types';
 
 
 
 export function recordMatchingSystems(state = [], action) {
   switch (action.type) {
-    case RECEIVE_RMS:
+    case REQUEST_RMS_FULFILLED:
       // calling slice(0) creates a clone of the array
       return action.payload.slice(0);
     default:
@@ -19,7 +19,7 @@ export function recordMatchingSystems(state = [], action) {
 
 function recordSets(state = [], action) {
   switch (action.type) {
-    case RECEIVE_RECORD_SET:
+    case REQUEST_RECORD_SET_FULFILLED:
       // calling slice(0) creates a clone of the array
       return action.payload.slice(0);
     default:
@@ -47,7 +47,7 @@ function selectedRecordMatchingSystem(state = {}, action) {
 
 function metrics(state = {}, action) {
   switch (action.type) {
-    case RECEIVE_METRICS:
+    case REQUEST_METRICS_FULFILLED:
       let metricsClone = Object.assign({}, state);
       //masterRecordSetId will be the same across the entire array, so we can
       //just grab the first one
@@ -61,7 +61,7 @@ function metrics(state = {}, action) {
 
 function selectedJob(state = {}, action) {
   switch (action.type) {
-    case RECEIVE_MATCH_JOB:
+    case REQUEST_MATCH_JOB_FULFILLED:
       return Object.assign({}, action.payload);
     default:
       return state;

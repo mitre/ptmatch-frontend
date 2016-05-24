@@ -1,12 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { selectJobAndRMS } from '../actions/matchJob';
+import { fetchMatchJob } from '../actions/matchJob';
+import { selectRMS } from '../actions/recordMatchingSystems';
 
 class MatchingSystemThumbnail extends Component {
   render() {
     return (
-      <div className="col-md-3 rms-thumbnail" key={this.props.recordMatchingSystem.id} onClick={() => this.props.selectJobAndRMS(this.props.jobId, this.props.recordMatchingSystem)}>
+      <div className="col-md-3 rms-thumbnail" key={this.props.recordMatchingSystem.id}
+           onClick={() => {
+             this.props.fetchMatchJob(this.props.jobId);
+             this.props.selectRMS(this.props.recordMatchingSystem);
+           }}>
         <p>F: {this.props.metrics.f1}</p>
         <p>Precision: {this.props.metrics.precision}</p>
         <p>Recall: {this.props.metrics.recall}</p>
@@ -31,7 +36,8 @@ MatchingSystemThumbnail.propTypes = {
     name: PropTypes.string
   }),
   jobId: PropTypes.string,
-  selectJobAndRMS: PropTypes.func
+  fetchMatchJob: PropTypes.func,
+  selectRMS: PropTypes.func
 };
 
-export default connect(null, {selectJobAndRMS})(MatchingSystemThumbnail);
+export default connect(null, { fetchMatchJob, selectRMS })(MatchingSystemThumbnail);

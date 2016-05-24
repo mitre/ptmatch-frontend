@@ -1,41 +1,20 @@
 import fetch from 'isomorphic-fetch';
 
-import {retrieve} from './index';
-import {selectRMS} from './recordMatchingSystems';
+import { retrieve } from './index';
 
 import {
-  RECEIVE_METRICS,
-  RECEIVE_MATCH_JOB
+  REQUEST_METRICS,
+  REQUEST_MATCH_JOB
 } from './types';
 
-function shouldFetchJobMetrics(state, recordSetId) {
-  const metrics = state.metrics;
-  if (metrics !== undefined && metrics[recordSetId] !== undefined) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
 export function fetchMetricsIfNeeded(recordSetId) {
-  return (dispatch, getState) => {
-    if (shouldFetchJobMetrics(getState(), recordSetId)) {
-      return dispatch(retrieve(RECEIVE_METRICS, `/RecordMatchJobMetrics?recordSetId=${recordSetId}`));
-    }
-  };
+  return {type: REQUEST_METRICS,
+          payload: retrieve(`/RecordMatchJobMetrics?recordSetId=${recordSetId}`)};
 }
 
 export function fetchMatchJob(jobId) {
-  return (dispatch) => {
-    return dispatch(retrieve(RECEIVE_MATCH_JOB, `/RecordMatchJob/${jobId}`));
-  };
-}
-
-export function selectJobAndRMS(jobId, rms) {
-  return (dispatch) => {
-    dispatch(selectRMS(rms));
-    dispatch(fetchMatchJob(jobId));
-  };
+  return {type: REQUEST_MATCH_JOB,
+          payload: retrieve(`/RecordMatchJob/${jobId}`)};
 }
 
 export function createJob(rmsId, recordSetId) {
