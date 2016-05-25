@@ -5,8 +5,6 @@ import { REQUEST_RMS_FULFILLED, SELECT_RMS, REQUEST_RECORD_SET_FULFILLED,
          SELECT_RECORD_SET, REQUEST_METRICS_FULFILLED,
          REQUEST_MATCH_JOB_FULFILLED } from '../actions/types';
 
-
-
 export function recordMatchingSystems(state = [], action) {
   switch (action.type) {
     case REQUEST_RMS_FULFILLED:
