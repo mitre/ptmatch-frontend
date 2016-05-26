@@ -1,16 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
 class IndividualResult extends Component {
-  recordMatches() {
-    let matchResponses = this.props.job.responses.filter((resp) => {
-      let resourceEntries = resp.message.entry.filter((e) => e.resource !== undefined);
-      let matchEvent = resourceEntries.find((e) => e.resource.event !== undefined && e.resource.event.code === "record-match");
-      return matchEvent !== undefined;
-    });
-    let allEntries = matchResponses.reduce((acc, currentValue) => acc.concat(...currentValue.message.entry), []);
-    return allEntries.filter((e) => e.link !== undefined);
-  }
-
   render() {
     return (
       <div key={this.props.job.id}>
@@ -31,12 +21,12 @@ class IndividualResult extends Component {
           </thead>
 
           <tbody>
-            {this.recordMatches().map((rm) => {
+            {this.props.job.links.map((l) => {
               return (
-                <tr key={rm.fullUrl}>
-                  <td>Record A: {rm.fullUrl}</td>
-                  <td>Record B: {rm.link.find((l) => l.relation === "related").url}</td>
-                  <td>Score: {rm.search.score}</td>
+                <tr key={l.source}>
+                  <td>Record A: {l.source}</td>
+                  <td>Record B: {l.target}</td>
+                  <td>Score: {l.score}</td>
                 </tr>
               );
             })}

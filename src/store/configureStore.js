@@ -5,6 +5,7 @@ import DevTools from '../containers/DevTools';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 import promiseMiddleware from 'redux-promise-middleware';
+import restructureResults from '../middlewares/restructure_results';
 
 const reduxRouterMiddleware = syncHistory(browserHistory);
 
@@ -13,7 +14,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(promiseMiddleware(), reduxRouterMiddleware, createLogger()),
+      applyMiddleware(promiseMiddleware(), restructureResults, reduxRouterMiddleware, createLogger()),
       DevTools.instrument()
     )
   );
