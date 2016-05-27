@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { fetchRMSIfNeeded, selectRMS } from '../actions/recordMatchingSystems';
 import { fetchRecordSetsIfNeeded, selectRecordSet } from '../actions/recordSet';
-import { fetchMetricsIfNeeded } from '../actions/matchJob';
+import { fetchMetricsIfNeeded } from '../actions/matchRun';
 
 class ResultExplorer extends Component {
   componentDidMount() {

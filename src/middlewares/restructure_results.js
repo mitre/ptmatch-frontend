@@ -1,4 +1,4 @@
-// This bundle restructures the response of the ReordMatchJob endpoint. When
+// This bundle restructures the response of the ReordmatchRun endpoint. When
 // responses from this endpoint contain match results, they are nested deeply
 // in FHIR bundles, and may span multiple FHIR bundles. This middleware
 // flattens things out into something that should be easier for components to

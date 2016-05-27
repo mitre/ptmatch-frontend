@@ -9,12 +9,12 @@ import {
 
 export function fetchMetricsIfNeeded(recordSetId) {
   return {type: REQUEST_METRICS,
-          payload: retrieve(`/RecordMatchJobMetrics?recordSetId=${recordSetId}`)};
+          payload: retrieve(`/RecordMatchRunMetrics?recordSetId=${recordSetId}`)};
 }
 
-export function fetchMatchJob(jobId) {
+export function fetchmatchRun(jobId) {
   return {type: REQUEST_MATCH_JOB,
-          payload: retrieve(`/RecordMatchJob/${jobId}`)};
+          payload: retrieve(`/RecordMatchRun/${jobId}`)};
 }
 
 export function createJob(rmsId, recordSetId) {
@@ -23,7 +23,7 @@ export function createJob(rmsId, recordSetId) {
       .then(json => {
         let config = json.find(c => c.recordMatchSystemInterfaceId === rmsId && c.masterRecordSetId === recordSetId);
         if (config !== undefined) {
-          fetch('/RecordMatchJob', {
+          fetch('/RecordMatchRun', {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'

@@ -1,4 +1,4 @@
-const matchJob = {
+const matchRun = {
     "_id" : "572cd5771cd462994f3be600",
     "meta" : {
         "createdOn" : new Date("2016-05-06T17:33:43.037Z"),
@@ -184,4 +184,4 @@ const matchJob = {
     "masterRecordSetId" : "572a18ae1cd46222f049108e"
 };
 
-export default matchJob;
+export default matchRun;
