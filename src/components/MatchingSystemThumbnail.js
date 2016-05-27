@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Radar } from "react-chartjs";
+import moment from 'moment';
 
 import { fetchmatchRun } from '../actions/matchRun';
 import { selectRMS } from '../actions/recordMatchingSystems';
@@ -19,6 +20,7 @@ class MatchingSystemThumbnail extends Component {
                            this.props.metrics.MAP, this.props.metrics.recall],
                       fillColor:"rgba(112,218,201,0.5)"}]}}/>
         <p className="rms-name">{this.props.recordMatchingSystem.name}</p>
+        <p className="last-run-age"><i className="fa fa-clock-o" aria-hidden="true"></i> {moment(this.props.createdOn).fromNow().toUpperCase()}</p>
       </div>
     );
   }
@@ -39,7 +41,8 @@ MatchingSystemThumbnail.propTypes = {
   }),
   jobId: PropTypes.string,
   fetchmatchRun: PropTypes.func,
-  selectRMS: PropTypes.func
+  selectRMS: PropTypes.func,
+  createdOn: PropTypes.string.isRequired
 };
 
 export default connect(null, { fetchmatchRun, selectRMS })(MatchingSystemThumbnail);

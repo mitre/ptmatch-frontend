@@ -78,7 +78,7 @@ export class SetupToMatchSystemList extends Component {
         if (this.props.metrics.length > 0) {
           return this.latestMetrics().map(function(m) {
             let rms = this.props.recordMatchingSystems.find((r) => r.id === m.recordMatchSystemInterfaceId);
-            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id} key={m.id} />);
+            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id} key={m.id} createdOn={m.meta.createdOn}/>);
             }, this);
         } else {
           return (<p>Loading matching metrics...</p>);
