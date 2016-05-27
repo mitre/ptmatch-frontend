@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Radar } from "react-chartjs";
 
 import { fetchmatchRun } from '../actions/matchRun';
 import { selectRMS } from '../actions/recordMatchingSystems';
@@ -12,10 +13,11 @@ class MatchingSystemThumbnail extends Component {
              this.props.fetchmatchRun(this.props.jobId);
              this.props.selectRMS(this.props.recordMatchingSystem);
            }}>
-        <p>F: {this.props.metrics.f1}</p>
-        <p>Precision: {this.props.metrics.precision}</p>
-        <p>Recall: {this.props.metrics.recall}</p>
-        <p>MAP: {this.props.metrics.MAP}</p>
+        <Radar data={{
+          labels : ["F", "Precision", "MAP", "Recall"],
+          datasets: [{data: [this.props.metrics.f1, this.props.metrics.precision,
+                           this.props.metrics.MAP, this.props.metrics.recall],
+                      fillColor:"rgba(112,218,201,0.5)"}]}}/>
         <p className="rms-name">{this.props.recordMatchingSystem.name}</p>
       </div>
     );

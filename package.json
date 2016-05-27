@@ -60,7 +60,9 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "chart.js": "^1.1.1",
     "lodash": "^4.12.0",
+    "react-chartjs": "^0.7.3",
     "redux-promise-middleware": "^3.0.0"
   }
 }
