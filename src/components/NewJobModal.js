@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { createJob } from '../actions/matchJob';
+import { createJob } from '../actions/matchRun';
 
 class NewJobModal extends Component {
   classForRMS(matchingSystem) {

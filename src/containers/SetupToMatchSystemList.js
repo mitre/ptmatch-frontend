@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
 import IndividualResult from '../components/IndividualResult';
 import NewJobModal from '../components/NewJobModal';
+import _ from 'lodash';
 
 import { selectRMS } from '../actions/recordMatchingSystems';
 
-class SetupToMatchSystemList extends Component {
+export class SetupToMatchSystemList extends Component {
   isMatchingSystemSelected() {
     return this.props.selectedRMS.name !== undefined;
   }
@@ -54,6 +55,15 @@ class SetupToMatchSystemList extends Component {
     }
   }
 
+  latestMetrics() {
+    const byRMS = _.groupBy(this.props.metrics, (m) => m.recordMatchSystemInterfaceId);
+    const latestByRMS = _.mapValues(byRMS, (metricsList) => {
+      const sortedML = _.sortBy(metricsList, (item) => new Date(item.meta.createdOn));
+      return _.last(sortedML);
+    });
+    return _.values(latestByRMS);
+  }
+
   displayBody() {
     if (this.isFormatSelected()) {
       if (this.isMatchingSystemSelected()) {
@@ -66,9 +76,9 @@ class SetupToMatchSystemList extends Component {
         }
       } else {
         if (this.props.metrics.length > 0) {
-          return this.props.metrics.map(function(m) {
+          return this.latestMetrics().map(function(m) {
             let rms = this.props.recordMatchingSystems.find((r) => r.id === m.recordMatchSystemInterfaceId);
-            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id} key={m.id} />);
+            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id} key={m.id} createdOn={m.meta.createdOn}/>);
             }, this);
         } else {
           return (<p>Loading matching metrics...</p>);
