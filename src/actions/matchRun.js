@@ -4,7 +4,7 @@ import { retrieve } from './index';
 
 import {
   REQUEST_METRICS,
-  REQUEST_MATCH_JOB
+  REQUEST_MATCH_RUN
 } from './types';
 
 export function fetchMetricsIfNeeded(recordSetId) {
@@ -12,8 +12,8 @@ export function fetchMetricsIfNeeded(recordSetId) {
           payload: retrieve(`/RecordMatchRunMetrics?recordSetId=${recordSetId}`)};
 }
 
-export function fetchmatchRun(jobId) {
-  return {type: REQUEST_MATCH_JOB,
+export function fetchMatchRun(jobId) {
+  return {type: REQUEST_MATCH_RUN,
           payload: retrieve(`/RecordMatchRun/${jobId}`)};
 }
 

@@ -1,24 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Radar } from "react-chartjs";
+import PerformanceRadar from "./PerformanceRadar";
 import moment from 'moment';
-
-import { fetchmatchRun } from '../actions/matchRun';
-import { selectRMS } from '../actions/recordMatchingSystems';
 
 class MatchingSystemThumbnail extends Component {
   render() {
     return (
-      <div className="col-md-3 rms-thumbnail" key={this.props.recordMatchingSystem.id}
-           onClick={() => {
-             this.props.fetchmatchRun(this.props.jobId);
-             this.props.selectRMS(this.props.recordMatchingSystem);
-           }}>
-        <Radar data={{
-          labels : ["F", "Precision", "MAP", "Recall"],
-          datasets: [{data: [this.props.metrics.f1, this.props.metrics.precision,
-                           this.props.metrics.MAP, this.props.metrics.recall],
-                      fillColor:"rgba(112,218,201,0.5)"}]}}/>
+      <div onClick={this.props.onClick} className="col-md-3 rms-thumbnail" key={this.props.recordMatchingSystem.id}>
+        <PerformanceRadar datasets={[{data: [this.props.metrics.f1, this.props.metrics.precision,
+                         this.props.metrics.MAP, this.props.metrics.recall],
+                         backgroundColor: "rgba(112,218,201,0.5)"}]}/>
         <p className="rms-name">{this.props.recordMatchingSystem.name}</p>
         <p className="last-run-age"><i className="fa fa-clock-o" aria-hidden="true"></i> {moment(this.props.createdOn).fromNow().toUpperCase()}</p>
       </div>
@@ -40,9 +30,8 @@ MatchingSystemThumbnail.propTypes = {
     name: PropTypes.string
   }),
   jobId: PropTypes.string,
-  fetchmatchRun: PropTypes.func,
-  selectRMS: PropTypes.func,
+  onClick: PropTypes.func,
   createdOn: PropTypes.string.isRequired
 };
 
-export default connect(null, { fetchmatchRun, selectRMS })(MatchingSystemThumbnail);
+export default MatchingSystemThumbnail;

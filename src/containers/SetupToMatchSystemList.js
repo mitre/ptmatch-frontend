@@ -2,11 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
-import IndividualResult from '../components/IndividualResult';
+import RunList from '../components/RunList';
 import NewJobModal from '../components/NewJobModal';
 import _ from 'lodash';
 
 import { selectRMS } from '../actions/recordMatchingSystems';
+import { fetchMatchRun } from '../actions/matchRun';
+
 
 export class SetupToMatchSystemList extends Component {
   isMatchingSystemSelected() {
@@ -67,18 +69,16 @@ export class SetupToMatchSystemList extends Component {
   displayBody() {
     if (this.isFormatSelected()) {
       if (this.isMatchingSystemSelected()) {
-        if (this.props.selectedJob.masterRecordSetId !== undefined) {
-          return (<IndividualResult recordSet={this.props.selectedRecordSet}
-                                    recordMatchingSystem={this.props.selectedRMS}
-                                    job={this.props.selectedJob}/>);
-        } else {
-          return (<p>Loading Job...</p>);
-        }
+        return (<RunList runs={this.props.metrics} recordMatchingSystem={this.props.selectedRMS} matchRuns={this.props.matchRuns}/>);
       } else {
         if (this.props.metrics.length > 0) {
           return this.latestMetrics().map(function(m) {
             let rms = this.props.recordMatchingSystems.find((r) => r.id === m.recordMatchSystemInterfaceId);
-            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms} jobId={m.id} key={m.id} createdOn={m.meta.createdOn}/>);
+            return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms}
+                                             jobId={m.id} key={m.id} createdOn={m.meta.createdOn}
+                                             onClick={() => {
+                                               this.props.fetchMatchRun(m.id);
+                                               this.props.selectRMS(rms);}}/>);
             }, this);
         } else {
           return (<p>Loading matching metrics...</p>);
@@ -105,25 +105,13 @@ export class SetupToMatchSystemList extends Component {
 
 const mapStateToProps = (state) => {
   let props = {};
-  if (state.recordMatchingSystems) {
-    props.recordMatchingSystems = state.recordMatchingSystems;
-  } else {
-    props.recordMatchingSystems = [];
-  }
+  props.recordMatchingSystems = state.recordMatchingSystems;
+  props.recordSets = state.recordSets;
+  props.matchRuns = state.matchRuns;
   if (state.selectedRecordMatchingSystem.name !== undefined) {
     props.selectedRMS = state.selectedRecordMatchingSystem;
   } else {
     props.selectedRMS = {};
-  }
-  if (state.recordSets) {
-    props.recordSets = state.recordSets;
-  } else {
-    props.recordSets = [];
-  }
-  if (state.selectedJob) {
-    props.selectedJob = state.selectedJob;
-  } else {
-    props.selectedJob = {};
   }
   if (state.selectedRecordSet.name !== undefined) {
     props.selectedRecordSet = state.selectedRecordSet;
@@ -145,11 +133,12 @@ SetupToMatchSystemList.propTypes = {
   selectedRMS: PropTypes.object,
   recordSets: PropTypes.array.isRequired,
   metrics: PropTypes.array,
+  matchRuns: PropTypes.object,
   selectedRecordSet: PropTypes.object,
-  selectedJob: PropTypes.object,
-  selectRMS: PropTypes.func
+  selectRMS: PropTypes.func,
+  fetchMatchRun: PropTypes.func
 };
 
 SetupToMatchSystemList.displayName = 'SetupToMatchSystemList';
 
-export default connect(mapStateToProps, {selectRMS})(SetupToMatchSystemList);
+export default connect(mapStateToProps, {selectRMS, fetchMatchRun})(SetupToMatchSystemList);
