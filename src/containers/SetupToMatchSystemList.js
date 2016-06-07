@@ -68,7 +68,7 @@ export class SetupToMatchSystemList extends Component {
 
   displayBody() {
     if (this.isFormatSelected()) {
-      if (this.isMatchingSystemSelected()) {
+      if (this.isMatchingSystemSelected() && this.props.metrics.length > 0) {
         return (<RunList runs={this.props.metrics} recordMatchingSystem={this.props.selectedRMS} matchRuns={this.props.matchRuns}/>);
       } else {
         if (this.props.metrics.length > 0) {
