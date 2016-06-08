@@ -3,11 +3,11 @@
 // in FHIR bundles, and may span multiple FHIR bundles. This middleware
 // flattens things out into something that should be easier for components to
 // use.
-import { REQUEST_MATCH_JOB_FULFILLED } from '../actions/types';
+import { REQUEST_MATCH_RUN_FULFILLED } from '../actions/types';
 
 export default function() {
   return next => action => {
-    if (action.type === REQUEST_MATCH_JOB_FULFILLED &&
+    if (action.type === REQUEST_MATCH_RUN_FULFILLED &&
         action.payload.responses !== undefined) {
       let newPayload = {
         id: action.payload.id,

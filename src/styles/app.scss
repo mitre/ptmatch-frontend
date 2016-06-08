@@ -66,6 +66,16 @@ body {
   border: none;
 }
 
+.results-overview {
+  width: 300px;
+  height: 300px;
+}
+
+.run-history-chart {
+  width: 600px;
+  height: 300px;
+}
+
 .rms-thumbnail {
   padding: 5px;
   background-color: $very-light-gray;
