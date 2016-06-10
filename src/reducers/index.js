@@ -1,25 +1,30 @@
 import { combineReducers } from 'redux';
 import { routeReducer } from 'react-router-redux';
-//import immutable from 'immutable';
+import _ from 'lodash';
 import { REQUEST_RMS_FULFILLED, SELECT_RMS, REQUEST_RECORD_SET_FULFILLED,
          SELECT_RECORD_SET, REQUEST_METRICS_FULFILLED,
+         REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT,
          REQUEST_MATCH_RUN_FULFILLED } from '../actions/types';
 
-export function recordMatchingSystems(state = [], action) {
+function idReducer(payloadArray) {
+  return _.reduce(payloadArray, (state, obj) => {
+    state[obj.id] = obj;
+    return state;}, {});
+}
+
+export function recordMatchingSystems(state = {}, action) {
   switch (action.type) {
     case REQUEST_RMS_FULFILLED:
-      // calling slice(0) creates a clone of the array
-      return action.payload.slice(0);
+      return idReducer(action.payload);
     default:
       return state;
   }
 }
 
-function recordSets(state = [], action) {
+function recordSets(state = {}, action) {
   switch (action.type) {
     case REQUEST_RECORD_SET_FULFILLED:
-      // calling slice(0) creates a clone of the array
-      return action.payload.slice(0);
+      return idReducer(action.payload);
     default:
       return state;
   }
@@ -69,6 +74,19 @@ function matchRuns(state = {}, action) {
   }
 }
 
+export function contexts(state = {}, action) {
+  switch (action.type) {
+    case REQUEST_CONTEXT_FULFILLED:
+      return idReducer(action.payload);
+    case SELECT_CONTEXT:
+      let clonedState = Object.assign({}, state);
+      clonedState[action.contextId].selected = true;
+      return clonedState;
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   recordMatchingSystems,
   recordSets,
@@ -76,6 +94,7 @@ const rootReducer = combineReducers({
   selectedRecordMatchingSystem,
   metrics,
   matchRuns,
+  contexts,
   routing: routeReducer
 });
 

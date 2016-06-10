@@ -38,7 +38,7 @@ export class SetupToMatchSystemList extends Component {
           </div>
 
           <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newJobModal">New Run</button>
-          <NewJobModal recordSet={this.props.selectedRecordSet} recordMatchingSystems={this.props.recordMatchingSystems}
+          <NewJobModal recordSet={this.props.selectedRecordSet} recordMatchingSystems={_.values(this.props.recordMatchingSystems)}
                        selectedRecordMatchingSystem={this.props.selectedRMS} selectRMSFunc={this.props.selectRMS}/>
         </div>
       );
@@ -74,7 +74,7 @@ export class SetupToMatchSystemList extends Component {
       } else {
         if (this.props.metrics.length > 0) {
           return this.latestMetrics().map(function(m) {
-            let rms = this.props.recordMatchingSystems.find((r) => r.id === m.recordMatchSystemInterfaceId);
+            let rms = this.props.recordMatchingSystems[m.recordMatchSystemInterfaceId];
             return (<MatchingSystemThumbnail metrics={m.metrics} recordMatchingSystem={rms}
                                              jobId={m.id} key={m.id} createdOn={m.meta.createdOn}
                                              onClick={() => {
@@ -130,9 +130,9 @@ const mapStateToProps = (state) => {
 };
 
 SetupToMatchSystemList.propTypes = {
-  recordMatchingSystems: PropTypes.array.isRequired,
+  recordMatchingSystems: PropTypes.object.isRequired,
   selectedRMS: PropTypes.object,
-  recordSets: PropTypes.array.isRequired,
+  recordSets: PropTypes.object.isRequired,
   metrics: PropTypes.array,
   matchRuns: PropTypes.object,
   selectedRecordSet: PropTypes.object,
