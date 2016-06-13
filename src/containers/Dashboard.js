@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { fetchContexts, selectContext } from '../actions/context';
 import { fetchRecordSetsIfNeeded } from '../actions/recordSet';
@@ -8,6 +9,7 @@ import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
 
+import ChallengeContext from './ChallengeContext';
 import ContextList from '../components/ContextList';
 import RecordSetList from '../components/RecordSetList';
 import MatchingSystemList from '../components/MatchingSystemList';
@@ -21,8 +23,16 @@ class Dashboard extends Component {
                 <MatchingSystemList recordMatchingSystems={this.props.recordMatchingSystems} />
               </div>
               <div className="col-md-8">
+                {this.selectedChallengeContexts().map((sc) => {
+                  return (<ChallengeContext context={sc} key={sc.id} recordSets={this.props.recordSets}
+                                            recordMatchingSystems={this.props.recordMatchingSystems}/>);
+                })}
               </div>
             </div>);
+  }
+
+  selectedChallengeContexts() {
+    return _.values(this.props.contexts).filter((c) => c.selected === true && c.type === 'challenge');
   }
 
   componentWillMount() {
