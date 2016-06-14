@@ -4,7 +4,8 @@ import _ from 'lodash';
 import { REQUEST_RMS_FULFILLED, SELECT_RMS, REQUEST_RECORD_SET_FULFILLED,
          SELECT_RECORD_SET, REQUEST_METRICS_FULFILLED,
          REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT,
-         REQUEST_MATCH_RUN_FULFILLED } from '../actions/types';
+         REQUEST_MATCH_RUN_FULFILLED,
+         REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED } from '../actions/types';
 
 function idReducer(payloadArray) {
   return _.reduce(payloadArray, (state, obj) => {
@@ -69,6 +70,8 @@ function matchRuns(state = {}, action) {
       let matchRunId = action.payload.id;
       matchRunClone[matchRunId] = Object.assign({}, action.payload);
       return matchRunClone;
+    case REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED:
+      return idReducer(action.payload);
     default:
       return state;
   }

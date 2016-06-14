@@ -24,8 +24,7 @@ class Dashboard extends Component {
               </div>
               <div className="col-md-8">
                 {this.selectedChallengeContexts().map((sc) => {
-                  return (<ChallengeContext context={sc} key={sc.id} recordSets={this.props.recordSets}
-                                            recordMatchingSystems={this.props.recordMatchingSystems}/>);
+                  return (<ChallengeContext context={sc} key={sc.id} />);
                 })}
               </div>
             </div>);

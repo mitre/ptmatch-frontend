@@ -8,14 +8,6 @@ class RunList extends Component {
     return _.last(this.props.runs);
   }
 
-  mostRecentDetailRun() {
-    let detailRun = this.props.matchRuns[this.mostRecentRun().id];
-    if (detailRun === undefined) {
-      detailRun = {links: []};
-    }
-    return detailRun;
-  }
-
   lineChartData() {
     let data = {};
     data.labels = _.times(this.props.runs.length, (i) => `Run ${i + 1}`);
@@ -49,7 +41,7 @@ class RunList extends Component {
           </thead>
 
           <tbody>
-            {this.mostRecentDetailRun().links.map((l) => {
+            {this.mostRecentRun().links.map((l) => {
               return (
                 <tr key={l.source}>
                   <td>Record A: {l.source}</td>
@@ -85,8 +77,7 @@ RunList.propTypes = {
   recordMatchingSystem: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string
-  }),
-  matchRuns: PropTypes.object
+  })
 };
 
 export default RunList;
