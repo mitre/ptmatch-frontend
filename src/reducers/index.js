@@ -65,6 +65,7 @@ export function contexts(state = {}, action) {
       return idReducer(action.payload);
     case SELECT_CONTEXT:
       let clonedState = Object.assign({}, state);
+      _.values(clonedState).forEach((ctx) => ctx.selected = false);
       clonedState[action.contextId].selected = !clonedState[action.contextId].selected;
       return clonedState;
     default:
