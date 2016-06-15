@@ -78,7 +78,7 @@ ChallengeContext.displayName = 'ChallengeContext';
 
 ChallengeContext.propTypes = {
   context: contextProps.isRequired,
-  recordSet: PropTypes.arrayOf(recordSetProps),
+  recordSet: recordSetProps,
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRunsByRMS: PropTypes.objectOf(PropTypes.arrayOf(runProps)),
   fetchMatchRunsByContext: PropTypes.func

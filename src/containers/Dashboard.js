@@ -10,6 +10,7 @@ import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
 
 import ChallengeContext from './ChallengeContext';
+import BenchmarkContext from './BenchmarkContext';
 import ContextList from '../components/ContextList';
 import RecordSetList from '../components/RecordSetList';
 import MatchingSystemList from '../components/MatchingSystemList';
@@ -26,12 +27,19 @@ class Dashboard extends Component {
                 {this.selectedChallengeContexts().map((sc) => {
                   return (<ChallengeContext context={sc} key={sc.id} />);
                 })}
+                {this.selectedBenchmarkContexts().map((sc) => {
+                  return (<BenchmarkContext context={sc} key={sc.id} />);
+                })}
               </div>
             </div>);
   }
 
   selectedChallengeContexts() {
     return _.values(this.props.contexts).filter((c) => c.selected === true && c.type === 'challenge');
+  }
+
+  selectedBenchmarkContexts() {
+    return _.values(this.props.contexts).filter((c) => c.selected === true && c.type === 'benchmark');
   }
 
   componentWillMount() {
