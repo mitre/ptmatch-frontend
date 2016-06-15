@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { routeReducer } from 'react-router-redux';
 import _ from 'lodash';
-import { REQUEST_RMS_FULFILLED, SELECT_RMS, REQUEST_RECORD_SET_FULFILLED,
-         SELECT_RECORD_SET, REQUEST_METRICS_FULFILLED,
+import { REQUEST_RMS_FULFILLED, REQUEST_RECORD_SET_FULFILLED,
+         REQUEST_METRICS_FULFILLED,
          REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT,
          REQUEST_MATCH_RUN_FULFILLED,
          REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED } from '../actions/types';
@@ -26,24 +26,6 @@ function recordSets(state = {}, action) {
   switch (action.type) {
     case REQUEST_RECORD_SET_FULFILLED:
       return idReducer(action.payload);
-    default:
-      return state;
-  }
-}
-
-function selectedRecordSet(state = {}, action) {
-  switch (action.type) {
-    case SELECT_RECORD_SET:
-      return Object.assign({}, action.recordSet);
-    default:
-      return state;
-  }
-}
-
-function selectedRecordMatchingSystem(state = {}, action) {
-  switch (action.type) {
-    case SELECT_RMS:
-      return Object.assign({}, action.recordMatchingSystem);
     default:
       return state;
   }
@@ -93,8 +75,6 @@ export function contexts(state = {}, action) {
 const rootReducer = combineReducers({
   recordMatchingSystems,
   recordSets,
-  selectedRecordSet,
-  selectedRecordMatchingSystem,
   metrics,
   matchRuns,
   contexts,
