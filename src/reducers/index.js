@@ -3,7 +3,7 @@ import { routeReducer } from 'react-router-redux';
 import _ from 'lodash';
 import { REQUEST_RMS_FULFILLED, REQUEST_RECORD_SET_FULFILLED,
          REQUEST_METRICS_FULFILLED,
-         REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT,
+         REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT, CREATE_CONTEXT_FULFILLED,
          REQUEST_MATCH_RUN_FULFILLED,
          REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED } from '../actions/types';
 
@@ -60,13 +60,18 @@ function matchRuns(state = {}, action) {
 }
 
 export function contexts(state = {}, action) {
+  let clonedState = null;
   switch (action.type) {
     case REQUEST_CONTEXT_FULFILLED:
       return idReducer(action.payload);
+    case CREATE_CONTEXT_FULFILLED:
+      clonedState = Object.assign({}, state);
+      clonedState[action.payload.id] = action.payload;
+      return clonedState;
     case SELECT_CONTEXT:
-      let clonedState = Object.assign({}, state);
+      clonedState = Object.assign({}, state);
       _.values(clonedState).forEach((ctx) => ctx.selected = false);
-      clonedState[action.contextId].selected = !clonedState[action.contextId].selected;
+      clonedState[action.contextId].selected = true;
       return clonedState;
     default:
       return state;

@@ -10,7 +10,8 @@ describe('ContextList', () => {
     const props = {
       contexts: {'1': {id: '1', name: 'Test Context', type: 'challenge'},
                  '2': {id: '2', name: 'Selected Context', type: 'challenge', selected: true}},
-      selector: (id) => selectedId = id
+      selector: (id) => selectedId = id,
+      contextCreator: () => 1 + 1 //do nothing
     };
     component = renderComponent(ContextList, props);
   });

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { fetchContexts, selectContext } from '../actions/context';
+import { fetchContexts, selectContext, createContext } from '../actions/context';
 import { fetchRecordSetsIfNeeded } from '../actions/recordSet';
 import { fetchRMSIfNeeded } from '../actions/recordMatchingSystems';
 import contextProps from '../prop-types/context';
@@ -19,7 +19,9 @@ class Dashboard extends Component {
   render() {
     return (<div className="row">
               <div className="col-md-4">
-                <ContextList contexts={this.props.contexts} selector={this.props.selectContext}/>
+                <ContextList contexts={this.props.contexts}
+                             selector={this.props.selectContext}
+                             contextCreator={this.props.createContext}/>
                 <RecordSetList recordSets={this.props.recordSets} />
                 <MatchingSystemList recordMatchingSystems={this.props.recordMatchingSystems} />
               </div>
@@ -56,6 +58,7 @@ Dashboard.propTypes = {
   fetchRecordSetsIfNeeded: PropTypes.func,
   fetchRMSIfNeeded: PropTypes.func,
   selectContext: PropTypes.func,
+  createContext: PropTypes.func,
   contexts: PropTypes.objectOf(contextProps),
   recordSets: PropTypes.objectOf(recordSetProps),
   recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps)
@@ -68,4 +71,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { fetchContexts,
-        fetchRecordSetsIfNeeded, fetchRMSIfNeeded, selectContext })(Dashboard);
+        fetchRecordSetsIfNeeded, fetchRMSIfNeeded, selectContext,
+        createContext })(Dashboard);

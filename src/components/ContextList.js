@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import contextProps from '../prop-types/context';
+import NewContextModal from './NewContextModal';
 import _ from 'lodash';
 
 class ContextList extends Component {
@@ -19,6 +20,8 @@ class ContextList extends Component {
                     return (<li className={className} key={c.id} onClick={() => this.props.selector(c.id)}>{c.name}</li>);
                   })}
                 </ul>
+                <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newContextModal">New Context</button>
+                <NewContextModal contextCreator={this.props.contextCreator}/>
               </div>
             </div>);
   }
@@ -28,7 +31,8 @@ ContextList.displayName = "ContextList";
 
 ContextList.propTypes = {
   contexts: PropTypes.objectOf(contextProps).isRequired,
-  selector: PropTypes.func.isRequired
+  selector: PropTypes.func.isRequired,
+  contextCreator: PropTypes.func.isRequired
 };
 
 export default ContextList;
