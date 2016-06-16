@@ -2,8 +2,7 @@ import fetch from 'isomorphic-fetch';
 import {retrieve} from './index';
 
 import {
-  REQUEST_RECORD_SET,
-  SELECT_RECORD_SET
+  REQUEST_RECORD_SET
 } from './types';
 
 export function fetchRecordSetsIfNeeded() {
@@ -20,8 +19,4 @@ export function createRecordSet(recordSet) {
     body: JSON.stringify(recordSet)
   });
   return {type: REQUEST_RECORD_SET, payload: retrieve('/RecordSet')};
-}
-
-export function selectRecordSet(recordSet) {
-  return {type: SELECT_RECORD_SET, recordSet: recordSet};
 }

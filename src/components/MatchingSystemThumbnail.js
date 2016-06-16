@@ -29,7 +29,6 @@ MatchingSystemThumbnail.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string
   }),
-  jobId: PropTypes.string,
   onClick: PropTypes.func,
   createdOn: PropTypes.string.isRequired
 };
