@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { REQUEST_RMS_FULFILLED, REQUEST_RECORD_SET_FULFILLED,
          REQUEST_METRICS_FULFILLED,
          REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT, CREATE_CONTEXT_FULFILLED,
-         REQUEST_MATCH_RUN_FULFILLED,
+         REQUEST_MATCH_RUN_FULFILLED, SELECT_RMS, SELECT_RECORD_SET,
          REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED } from '../actions/types';
 
 function idReducer(payloadArray) {
@@ -13,10 +13,19 @@ function idReducer(payloadArray) {
     return state;}, {});
 }
 
+function resetSelect(state, ids) {
+  let clonedState = Object.assign({}, state);
+  _.values(clonedState).forEach((obj) => obj.selected = false);
+  ids.forEach((id) => clonedState[id].selected = true);
+  return clonedState;
+}
+
 export function recordMatchingSystems(state = {}, action) {
   switch (action.type) {
     case REQUEST_RMS_FULFILLED:
       return idReducer(action.payload);
+    case SELECT_RMS:
+      return resetSelect(state, action.payload);
     default:
       return state;
   }
@@ -26,6 +35,8 @@ function recordSets(state = {}, action) {
   switch (action.type) {
     case REQUEST_RECORD_SET_FULFILLED:
       return idReducer(action.payload);
+    case SELECT_RECORD_SET:
+      return resetSelect(state, action.payload);
     default:
       return state;
   }

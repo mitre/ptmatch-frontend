@@ -61,7 +61,7 @@ BenchmarkContext.displayName = 'BenchmarkContext';
 BenchmarkContext.propTypes = {
   context: contextProps.isRequired,
   recordSets: PropTypes.arrayOf(recordSetProps),
-  recordMatchingSystem: recordMatchingSystemProps,
+  recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRuns: PropTypes.arrayOf(runProps),
   fetchMatchRunsByContext: PropTypes.func
 };
@@ -73,15 +73,13 @@ export function mapStateToProps(state, ownProps) {
     (mr) => new Date(mr.meta.createdOn));
   // All runs should have the same matching system, so we can grab the id for the
   // first one
-  let recordMatchingSystem = {};
+  let recordMatchingSystems = _.values(state.recordMatchingSystems);
   let recordSets = [];
   if (matchRuns.length > 0) {
-    const rmsId = matchRuns[0].recordMatchSystemInterfaceId;
-    recordMatchingSystem = state.recordMatchingSystems[rmsId];
     recordSets = matchRuns.map((r) => state.recordSets[r.masterRecordSetId]);
   }
 
-  return {matchRuns, recordMatchingSystem, recordSets};
+  return {matchRuns, recordMatchingSystems, recordSets};
 }
 
 export default connect(mapStateToProps, { fetchMatchRunsByContext })(BenchmarkContext);

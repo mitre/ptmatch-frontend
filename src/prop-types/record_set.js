@@ -15,7 +15,8 @@ const recordSetProps = {
   description: PropTypes.string,
   parameters: PropTypes.shape({
     parameter: PropTypes.arrayOf(PropTypes.shape(parameter))
-  })
+  }),
+  selected: PropTypes.bool
 };
 
 export default PropTypes.shape(recordSetProps);

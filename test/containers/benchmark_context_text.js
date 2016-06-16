@@ -32,7 +32,6 @@ describe('BenchmarkContext', () => {
   it('will map state to props', () => {
     const stateProps = mapStateToProps(state, {context: {id: '1', name: 'Test Context'}});
     expect(stateProps.recordSets.length).to.equal(3);
-    expect(stateProps.recordMatchingSystem.name).to.equal('Match System 1');
   });
 
   it('provides data to the line chart', () => {

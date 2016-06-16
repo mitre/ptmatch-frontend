@@ -12,7 +12,11 @@ class RecordSetList extends Component {
               <div className="panel-body">
                 <ul className="list-group">
                   {_.values(this.props.recordSets).map((rs) => {
-                    return (<li className="list-group-item" key={rs.id}>{rs.name}</li>);
+                    let className = "list-group-item";
+                    if (rs.selected) {
+                      className += " active";
+                    }
+                    return (<li className={className} key={rs.id}>{rs.name}</li>);
                   })}
                 </ul>
               </div>

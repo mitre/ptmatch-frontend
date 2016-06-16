@@ -10,7 +10,8 @@ const recordMatchingSystemProps = {
   description: PropTypes.string,
   destinationEndpoint: PropTypes.string,
   serverEndpoint: PropTypes.string,
-  responseEndpoint: PropTypes.string
+  responseEndpoint: PropTypes.string,
+  selected: PropTypes.bool
 };
 
 export default PropTypes.shape(recordMatchingSystemProps);

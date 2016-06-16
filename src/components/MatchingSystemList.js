@@ -12,7 +12,11 @@ class MatchingSystemList extends Component {
               <div className="panel-body">
                 <ul className="list-group">
                   {_.values(this.props.recordMatchingSystems).map((rms) => {
-                    return (<li className="list-group-item" key={rms.id}>{rms.name}</li>);
+                    let className = "list-group-item";
+                    if (rms.selected) {
+                      className += " active";
+                    }
+                    return (<li className={className} key={rms.id}>{rms.name}</li>);
                   })}
                 </ul>
               </div>
