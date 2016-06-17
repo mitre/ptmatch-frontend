@@ -5,9 +5,6 @@ import NewContextModal from './NewContextModal';
 import CollapsiblePanel from './CollapsiblePanel';
 import _ from 'lodash';
 
-
-
-
 class ContextList extends Component {
   constructor(...args) {
     super(...args);
@@ -17,20 +14,22 @@ class ContextList extends Component {
 
   render() {
     return (
-      <CollapsiblePanel panelTitle="Context">
-        <ul className="list-group">
-          {_.values(this.props.contexts).map((c) => {
-            let className = "list-group-item";
-            if (c.selected) {
-              className += " active";
-            }
-            return (<li className={className} key={c.id} onClick={() => this.props.selector(c.id)}>{c.name}</li>);
-          })}
-        </ul>
+      <CollapsiblePanel panelTitle="Context" panelIcon="key">
+        <div>
+          <ul className="list-group">
+            {_.values(this.props.contexts).map((c) => {
+              let className = "list-group-item";
+              if (c.selected) {
+                className += " active";
+              }
+              return (<li className={className} key={c.id} onClick={() => this.props.selector(c.id)}>{c.name}</li>);
+            })}
+          </ul>
 
-        <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newContextModal">New Context</button>
+          <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newContextModal">New Context</button>
 
-        <NewContextModal contextCreator={this.props.contextCreator}/>
+          <NewContextModal contextCreator={this.props.contextCreator}/>
+        </div>
       </CollapsiblePanel>
     );
   }

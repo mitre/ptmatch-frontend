@@ -7,7 +7,7 @@ import _ from 'lodash';
 class MatchingSystemList extends Component {
   render() {
     return (
-      <CollapsiblePanel panelTitle="Matching Systems">
+      <CollapsiblePanel panelTitle="Matching Systems" panelIcon="sitemap">
         <ul className="list-group">
           {_.values(this.props.recordMatchingSystems).map((rms) => {
             let className = "list-group-item";

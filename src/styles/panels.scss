@@ -14,30 +14,37 @@
   }
 
   .panel-heading {
-    height: 40px;
     padding: 0;
-    line-height: 40px;
+    height: 60px;
+    line-height: 60px;
     background-color: $brand-secondary;
     border-radius: 0;
     cursor: pointer;
+    border-bottom: 1px solid $white;
 
     a {
       display: block;
       text-decoration: none;
       color: $white;
-      padding: 0 10px;
+      padding: 0 20px;
+      font-size: 18px;
 
       &:hover {
 
       }
 
       .panel-title {
+        font-size: 18px;
+        font-weight: 100;
+        letter-spacing: 1.2px;
 
+        i {
+          margin-right: 5px;
+        }
       }
 
       i {
-        line-height: 40px;
-        padding-right: 10px;
+        line-height: 60px;
       }
     }
   }

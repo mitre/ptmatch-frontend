@@ -7,7 +7,7 @@ import _ from 'lodash';
 class RecordSetList extends Component {
   render() {
     return (
-      <CollapsiblePanel panelTitle="Record Sets">
+      <CollapsiblePanel panelTitle="Record Sets" panelIcon="database">
         <ul className="list-group">
           {_.values(this.props.recordSets).map((rs) => {
             let className = "list-group-item";
