@@ -7,29 +7,37 @@
 }
 
 .panel {
-  &.panel-default {
-    border-radius: 0;
+  &.panel-collapsible {
     border: none;
+    box-shadow: none;
+    margin: 0;
   }
 
   .panel-heading {
     height: 40px;
     padding: 0;
     line-height: 40px;
+    background-color: $brand-secondary;
+    border-radius: 0;
+    cursor: pointer;
 
-    .panel-heading-label {
-      background-color: $very-light-gray;
+    a {
+      display: block;
+      text-decoration: none;
+      color: $white;
+      padding: 0 10px;
 
-      i {
-        margin-right: 10px;
+      &:hover {
+
       }
-    }
 
-    .panel-heading-selection {
-      background-color: $white;
+      .panel-title {
+
+      }
 
       i {
         line-height: 40px;
+        padding-right: 10px;
       }
     }
   }
