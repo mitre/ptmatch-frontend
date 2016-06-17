@@ -9,6 +9,7 @@ import { runProps } from '../prop-types/run';
 
 import RunHistoryChart from "../components/RunHistoryChart";
 import NewBenchmarkRunModal from "../components/NewBenchmarkRunModal";
+import MatchLinks from '../components/MatchLinks';
 
 import { fetchMatchRunsByContext } from '../actions/matchRun';
 
@@ -30,6 +31,14 @@ export class BenchmarkContext extends Component {
       return <RunHistoryChart data={this.lineChartData()} />;
     } else {
       return <p>Loading chart data</p>;
+    }
+  }
+
+  links() {
+    if (this.props.matchRuns.length > 0) {
+      return <MatchLinks links={_.last(this.props.matchRuns).links} />;
+    } else {
+      return <p>Loading links</p>;
     }
   }
 
@@ -55,6 +64,7 @@ export class BenchmarkContext extends Component {
           <div className="run-history-chart">
             {this.chart()}
           </div>
+          {this.links()}
         </div>
       </div>
     );
