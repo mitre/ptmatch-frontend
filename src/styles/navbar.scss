@@ -1,0 +1,29 @@
+@import "variables";
+
+.navbar {
+  background-color: $brand-secondary;
+  border: none;
+  height: 60px;
+
+  a {
+    color: $white;
+  }
+
+  .navbar-brand {
+    font-size: 20px;
+    font-weight: 100;
+    line-height: 30px;
+  }
+
+  .navbar-nav {
+    float: right;
+
+    a {
+      line-height: 30px;
+
+      &:hover, &:visited {
+        background-color: lighten($brand-secondary, 10%);
+      }
+    }
+  }
+}

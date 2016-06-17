@@ -11,79 +11,67 @@
     border: none;
     box-shadow: none;
     margin: 0;
-  }
 
-  .panel-heading {
-    padding: 0;
-    height: 60px;
-    line-height: 60px;
-    background-color: $brand-secondary;
-    border-radius: 0;
-    cursor: pointer;
-    border-bottom: 1px solid $white;
+    .panel-heading {
+      padding: 0;
+      height: 60px;
+      line-height: 60px;
+      background-color: $brand-secondary;
+      border-radius: 0;
+      cursor: pointer;
+      border-bottom: 1px solid $white;
 
-    a {
-      display: block;
-      text-decoration: none;
-      color: $white;
-      padding: 0 20px;
-      font-size: 18px;
-
-      &:hover {
-
-      }
-
-      .panel-title {
+      a {
+        display: block;
+        text-decoration: none;
+        color: $white;
+        padding: 0 20px;
         font-size: 18px;
-        font-weight: 100;
-        letter-spacing: 1.2px;
+
+        &:hover {
+
+        }
+
+        .panel-title {
+          font-size: 18px;
+          font-weight: 100;
+          letter-spacing: 1.2px;
+
+          i {
+            margin-right: 5px;
+          }
+        }
 
         i {
-          margin-right: 5px;
-        }
-      }
-
-      i {
-        line-height: 60px;
-      }
-    }
-  }
-
-  .panel-collapse {
-    border-radius: 0;
-
-    .list-group {
-      .list-group-item {
-        &:hover {
-          background-color: $very-light-gray;
+          line-height: 60px;
         }
       }
     }
-  }
-}
 
-//-------------------------- PAGE SPECIFIC ----------------------------------//
+    .panel-collapse {
+      padding: 5px;
 
-.setup-to-match-system-list.panel {
-  .panel-heading {
-    height: 60px;
-    border: none;
-    margin: 0 0 3px 0;
+      .list-group {
+        margin: 0;
 
-    .panel-title {
-      padding: 20px;
-      font-weight: 400;
-      font-size: 18px;
-    }
+        .list-group-item {
+          cursor: pointer;
 
-    .format-piece {
-      display: block;
-      border: 1px solid $light-gray;
-      background-color: $white;
-      margin-top: 15px;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 4px;
+          &:hover {
+            background-color: $very-light-gray;
+          }
+
+          &.active {
+            background-color: $brand-primary;
+            border: 1px solid $white;
+          }
+
+          &:first-child,
+          &:last-child {
+            border-radius: 0;
+          }
+        }
+      }
     }
   }
 }

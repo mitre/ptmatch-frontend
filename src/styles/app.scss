@@ -1,86 +1,54 @@
 // 3rd party resources
-@import "variables";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/font-awesome/scss/font-awesome";
+@import "variables";
 
 // application imports
-@import "panels";
 @import "animation";
+@import "buttons";
+@import "navbar";
+@import "panels";
 
 // application styles
 body {
   background-color: $brand-primary;
-  padding-top: 70px;
+  color: $text-color;
   font-family: $font-family-sans-serif;
   font-size: $font-size-base;
-  color: $text-color;
-}
-
-.navbar {
-  background-color: $brand-secondary;
-  border: none;
-  height: 60px;
-
-  a {
-    color: $white;
-  }
-
-  .navbar-brand {
-    font-size: 20px;
-    font-weight: 100;
-    line-height: 30px;
-  }
-
-  .navbar-nav {
-    float: right;
-
-    a {
-      line-height: 30px;
-
-      &:hover, &:visited {
-        background-color: lighten($brand-secondary, 10%);
-      }
-    }
-  }
+  padding-top: 70px;
 }
 
 .header-logo {
   margin: 0 10px 0 20px;
 }
 
-.btn-primary {
-  background-color: $red;
-  margin: 12px;
-  border: none;
-}
-
 .results-overview {
-  width: 300px;
   height: 300px;
+  width: 300px;
 }
 
 .run-history-chart {
-  width: 600px;
   height: 300px;
+  width: 600px;
 }
 
 .rms-thumbnail {
-  padding: 5px;
   background-color: $very-light-gray;
   border-radius: 10px;
-  cursor: pointer;
   border: 3px solid $very-light-gray;
+  cursor: pointer;
+  padding: 5px;
   text-align: center;
 
   &:hover {
-    border: 3px solid $brand-primary;
     background-color: darken($very-light-gray, 2%);
+    border: 3px solid $brand-primary;
   }
 
   .rms-name {
-    font-weight: 500;
-    font-size: 16px;
     border-top: 1px solid $light-gray;
+    font-size: 16px;
+    font-weight: 500;
     padding: 10px 0;
   }
 }
