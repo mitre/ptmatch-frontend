@@ -23,20 +23,15 @@ export function fetchMatchRunsByContext(contextId) {
           payload: retrieve(`/RecordMatchRun?recordMatchContextId=${contextId}`)};
 }
 
-export function createJob(rmsId, recordSetId) {
-  fetch("/RecordMatchConfiguration", {credentials: 'same-origin'})
-      .then(req => req.json())
-      .then(json => {
-        let config = json.find(c => c.recordMatchSystemInterfaceId === rmsId && c.masterRecordSetId === recordSetId);
-        if (config !== undefined) {
-          fetch('/RecordMatchRun', {
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({recordMatchConfigurationId: config.id})
-          });
-        }
-      });
+export function createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) {
+  fetch('/RecordMatchRun', {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify({recordMatchSystemInterfaceId, masterRecordSetId,
+                          recordMatchContextId, note,
+                          matchingMode: 'deduplication'})
+  });
 }

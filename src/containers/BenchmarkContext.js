@@ -8,6 +8,7 @@ import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import { runProps } from '../prop-types/run';
 
 import RunHistoryChart from "../components/RunHistoryChart";
+import NewBenchmarkRunModal from "../components/NewBenchmarkRunModal";
 
 import { fetchMatchRunsByContext } from '../actions/matchRun';
 
@@ -43,6 +44,10 @@ export class BenchmarkContext extends Component {
           <div className="format-piece col-xs-3">
 
           </div>
+          <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newBenchmarkRunModal">New Run</button>
+          <NewBenchmarkRunModal context={this.props.context}
+                                recordSets={this.props.allRecordSets}
+                                recordMatchingSystems={this.props.recordMatchingSystems}/>
         </div>
 
 
@@ -61,7 +66,8 @@ BenchmarkContext.displayName = 'BenchmarkContext';
 BenchmarkContext.propTypes = {
   context: contextProps.isRequired,
   recordSets: PropTypes.arrayOf(recordSetProps),
-  recordMatchingSystem: recordMatchingSystemProps,
+  allRecordSets: PropTypes.arrayOf(recordSetProps),
+  recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRuns: PropTypes.arrayOf(runProps),
   fetchMatchRunsByContext: PropTypes.func
 };
@@ -73,15 +79,14 @@ export function mapStateToProps(state, ownProps) {
     (mr) => new Date(mr.meta.createdOn));
   // All runs should have the same matching system, so we can grab the id for the
   // first one
-  let recordMatchingSystem = {};
+  let recordMatchingSystems = _.values(state.recordMatchingSystems);
   let recordSets = [];
   if (matchRuns.length > 0) {
-    const rmsId = matchRuns[0].recordMatchSystemInterfaceId;
-    recordMatchingSystem = state.recordMatchingSystems[rmsId];
     recordSets = matchRuns.map((r) => state.recordSets[r.masterRecordSetId]);
   }
+  const allRecordSets = _.values(state.recordSets);
 
-  return {matchRuns, recordMatchingSystem, recordSets};
+  return {matchRuns, recordMatchingSystems, recordSets, allRecordSets};
 }
 
 export default connect(mapStateToProps, { fetchMatchRunsByContext })(BenchmarkContext);
