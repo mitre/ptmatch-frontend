@@ -32,6 +32,6 @@ export function createRun(recordMatchSystemInterfaceId, masterRecordSetId, recor
     method: 'POST',
     body: JSON.stringify({recordMatchSystemInterfaceId, masterRecordSetId,
                           recordMatchContextId, note,
-                          matchingMode: 'deduplication'})
+                          matchingMode: 'deduplication', recordResourceType: 'Patient'})
   });
 }
