@@ -10,9 +10,13 @@ class RunHistoryChart extends Component {
   componentDidMount() {
     const el = ReactDOM.findDOMNode(this);
     const ctx = el.getContext("2d");
+
     this.chart = new Chart(ctx, {
       type: 'line',
-      data: this.props.data
+      data: this.props.data,
+      options: {
+        fillColor: '#658999'
+      }
     });
   }
 

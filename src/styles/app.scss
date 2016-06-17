@@ -6,6 +6,8 @@
 // application imports
 @import "animation";
 @import "buttons";
+@import "charts";
+@import "modals";
 @import "navbar";
 @import "panels";
 
@@ -27,11 +29,6 @@ body {
   width: 300px;
 }
 
-.run-history-chart {
-  height: 300px;
-  width: 600px;
-}
-
 .rms-thumbnail {
   background-color: $very-light-gray;
   border-radius: 10px;
@@ -51,4 +48,8 @@ body {
     font-weight: 500;
     padding: 10px 0;
   }
+}
+
+.loader {
+  text-align: center;
 }

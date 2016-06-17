@@ -1,0 +1,47 @@
+@import "variables";
+
+.modal {
+  .modal-dialog {
+    .modal-content {
+      border-radius: 0;
+      color: $brand-secondary;
+
+      .modal-header {
+        .modal-title {
+          font-size: 18px;
+          font-weight: 200;
+          letter-spacing: 1.2px;
+        }
+
+        button {
+
+        }
+      }
+
+      .modal-body {
+        .list-group {
+          .list-group-item {
+            border-radius: 0;
+            cursor: pointer;
+
+            &.active {
+              background-color: $brand-primary;
+              border: 1px solid $brand-primary;
+            }
+          }
+        }
+
+        input {
+          width: 570px;
+          height: 40px;
+        }
+      }
+
+      .modal-footer {
+        button {
+          margin: 15px;
+        }
+      }
+    }
+  }
+}

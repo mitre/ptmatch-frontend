@@ -51,17 +51,25 @@ class NewBenchmarkRunModal extends Component {
 
   rmsDisplay() {
     if (this.state.preselectedRMS) {
-      return <p>Record Matching System: {this.state.selectedRMS.name}</p>;
+      return (
+        <div>
+          <label>Record Matching System: </label>
+          <div>{this.state.selectedRMS.name}</div>
+          <br/>
+        </div>
+      );
     } else {
-      return <ul className="list-group">
-      {this.props.recordMatchingSystems.map(matchingSystem => {
-        return (
-        <li className={this.classForRMS(matchingSystem)}
-            onClick={() => this.selectRMS(matchingSystem)}
-            key={matchingSystem.id}>{matchingSystem.name}</li>
-        );
-      })}
-      </ul>;
+      return (
+        <ul className="list-group">
+          {this.props.recordMatchingSystems.map(matchingSystem => {
+            return (
+              <li className={this.classForRMS(matchingSystem)}
+                  onClick={() => this.selectRMS(matchingSystem)}
+                  key={matchingSystem.id}>{matchingSystem.name}</li>
+            );
+          })}
+        </ul>
+      );
     }
   }
 
@@ -86,18 +94,22 @@ class NewBenchmarkRunModal extends Component {
               <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 className="modal-title">New Record Match Run</h4>
             </div>
+
             <div className="modal-body">
               {this.rmsDisplay()}
+
+              <label>Choose Dataset:</label>
               <ul className="list-group">
-              {this.props.recordSets.map(recordSet => {
-                return (
-                <li className={this.classForRecordSet(recordSet)}
-                    onClick={() => this.selectRecordSet(recordSet)}
-                    key={recordSet.id}>{recordSet.name}</li>
-                );
-              })}
+                {this.props.recordSets.map(recordSet => {
+                  return (
+                    <li className={this.classForRecordSet(recordSet)}
+                        onClick={() => this.selectRecordSet(recordSet)}
+                        key={recordSet.id}>{recordSet.name}</li>
+                  );
+                })}
               </ul>
-              <p>Note: </p>
+
+              <label>Note:</label>
               <input type="text" value={this.state.note} onChange={(e) => this.handleNoteChange(e)} />
             </div>
             <div className="modal-footer">
