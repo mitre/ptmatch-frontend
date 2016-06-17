@@ -9,13 +9,13 @@ class MatchingSystemList extends Component {
     return (
       <CollapsiblePanel panelTitle="Matching Systems">
         <ul className="list-group">
-                  {_.values(this.props.recordMatchingSystems).map((rms) => {
-                    let className = "list-group-item";
-                    if (rms.selected) {
-                      className += " active";
-                    }
-                    return (<li className={className} key={rms.id}>{rms.name}</li>);
-                  })}
+          {_.values(this.props.recordMatchingSystems).map((rms) => {
+            let className = "list-group-item";
+            if (rms.selected) {
+              className += " active";
+            }
+            return (<li className={className} key={rms.id}>{rms.name}</li>);
+          })}
         </ul>
       </CollapsiblePanel>
     );
