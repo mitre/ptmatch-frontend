@@ -49,7 +49,7 @@ export class BenchmarkContext extends Component {
 
   render() {
     return (
-      <div className="panel panel-default">
+      <div className="panel panel-show">
         <div className="panel-heading">
           <div className="row">
             <h3 className="panel-title col-xs-5">

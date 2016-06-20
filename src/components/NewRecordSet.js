@@ -18,7 +18,7 @@ class NewRecordSet extends Component {
   handleParameterNameChange(e, i) {
     let parametersClone = this.state.parameters.parameter.slice(0);
     let newParameterName = e.target.value;
-    let oldParameterValue = parametersClone[i].valueString; 
+    let oldParameterValue = parametersClone[i].valueString;
     parametersClone[i] = {name: newParameterName, valueString: oldParameterValue};
     this.setState({parameters: {resourceType: 'Parameters', parameter: parametersClone}});
   }
@@ -26,11 +26,11 @@ class NewRecordSet extends Component {
   handleParameterValueChange(e, i) {
     let parametersClone = this.state.parameters.parameter.slice(0);
     let oldParameterName = parametersClone[i].name;
-    let newParameterValue = e.target.value; 
+    let newParameterValue = e.target.value;
     parametersClone[i] = {name: oldParameterName, valueString: newParameterValue};
     this.setState({parameters: {resourceType: 'Parameters', parameter: parametersClone}});
   }
-  
+
   handleAddParameter() {
     let parametersClone = this.state.parameters.parameter.slice(0);
     parametersClone[parametersClone.length] = {name: '', valueString: ''};
@@ -38,14 +38,14 @@ class NewRecordSet extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();    
+    e.preventDefault();
     this.props.createRecordSet(this.state);
   }
-  
-  
+
+
   render() {
-    return (        
-      <div className="panel panel-default">
+    return (
+      <div className="panel panel-show">
         <div className="panel-heading">New Record Matching System</div>
         <div className="panel-body">
           <form className="newRecordSet" onSubmit={(e) => this.handleSubmit(e)}>
