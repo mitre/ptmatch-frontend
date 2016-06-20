@@ -30,7 +30,12 @@ export class BenchmarkContext extends Component {
     if (this.props.matchRuns.length > 0) {
       return <RunHistoryChart data={this.lineChartData()} />;
     } else {
-      return <p>Loading chart data</p>;
+      return (
+        <div className="loader">
+          <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+          <span className="sr-only">Loading...</span>
+        </div>
+      );
     }
   }
 
@@ -44,19 +49,23 @@ export class BenchmarkContext extends Component {
 
   render() {
     return (
-      <div className="panel panel-default setup-to-match-system-list">
-        <div className="panel-heading row">
-          <h3 className="panel-title col-xs-3">
-            {this.props.context.name}
-          </h3>
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <div className="row">
+            <h3 className="panel-title col-xs-5">
+              {this.props.context.name}
+            </h3>
 
-          <div className="format-piece col-xs-3">
+            <div className="col-xs-3">
+              <span className="format-piece">Type: {this.props.context.type}</span>
+            </div>
 
+            <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newBenchmarkRunModal">New Run</button>
+
+            <NewBenchmarkRunModal context={this.props.context}
+                                  recordSets={this.props.allRecordSets}
+                                  recordMatchingSystems={this.props.recordMatchingSystems}/>
           </div>
-          <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newBenchmarkRunModal">New Run</button>
-          <NewBenchmarkRunModal context={this.props.context}
-                                recordSets={this.props.allRecordSets}
-                                recordMatchingSystems={this.props.recordMatchingSystems}/>
         </div>
 
 

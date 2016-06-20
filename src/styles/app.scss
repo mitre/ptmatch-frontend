@@ -1,98 +1,72 @@
 // 3rd party resources
-@import "variables";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/font-awesome/scss/font-awesome";
+@import "variables";
 
 // application imports
+@import "animation";
+@import "buttons";
+@import "charts";
+@import "modals";
+@import "navbar";
 @import "panels";
 
 // application styles
 body {
   background-color: $brand-primary;
-  padding-top: 70px;
+  color: $text-color;
   font-family: $font-family-sans-serif;
   font-size: $font-size-base;
-  color: $text-color;
+  padding-top: 70px;
 }
 
-.navbar {
-  background-color: $brand-secondary;
-  border: none;
-  height: 60px;
-
-  a {
-    color: $white;
-  }
-
-  .navbar-brand {
-    font-size: 20px;
-    font-weight: 100;
-    line-height: 30px;
-  }
-
-  .navbar-nav {
-    float: right;
-
-    a {
-      line-height: 30px;
-
-      &:hover, &:visited {
-        background-color: lighten($brand-secondary, 10%);
-      }
-    }
-  }
+a {
+  color: $brand-primary;
 }
 
 .header-logo {
   margin: 0 10px 0 20px;
 }
 
-.rotate {
-  -moz-transition: all 0.3s linear;
-  -webkit-transition: all 0.3s linear;
-  transition: all 0.3s linear;
-}
-
-.rotate.right {
-  -ms-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.btn-primary {
-  background-color: $red;
-  margin: 12px;
-  border: none;
-}
-
 .results-overview {
-  width: 300px;
   height: 300px;
+  width: 300px;
 }
 
-.run-history-chart {
-  width: 600px;
-  height: 300px;
+.results-detail {
+  .loader {
+    text-align: left;
+  }
 }
 
 .rms-thumbnail {
-  padding: 5px;
   background-color: $very-light-gray;
   border-radius: 10px;
-  cursor: pointer;
   border: 3px solid $very-light-gray;
+  cursor: pointer;
+  margin: 5px;
+  min-height: 250px;
+  min-width: 250px;
+  padding: 5px;
   text-align: center;
 
+  canvas {
+    margin-bottom: 10px;
+  }
+
   &:hover {
-    border: 3px solid $brand-primary;
     background-color: darken($very-light-gray, 2%);
+    border: 3px solid $brand-primary;
   }
 
   .rms-name {
-    font-weight: 500;
-    font-size: 16px;
     border-top: 1px solid $light-gray;
+    font-size: 16px;
+    font-weight: 500;
     padding: 10px 0;
   }
+}
+
+.loader {
+  text-align: center;
 }

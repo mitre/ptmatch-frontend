@@ -54,14 +54,16 @@ class ChallengeContext extends Component {
 
   render() {
     return (
-      <div className="panel panel-default setup-to-match-system-list">
-        <div className="panel-heading row">
-          <h3 className="panel-title col-xs-3">
-            {this.props.context.name}
-          </h3>
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <div className="row">
+            <h3 className="panel-title col-xs-5">
+              {this.props.context.name}
+            </h3>
 
-          <div className="format-piece col-xs-3">
-            {this.formatParams()}
+            <div className="col-xs-3">
+              <span className="format-piece">Type: {this.props.context.type}</span>
+            </div>
           </div>
         </div>
 

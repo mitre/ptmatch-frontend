@@ -19,7 +19,7 @@ describe('NewBenchmarkRunModal', () => {
   });
 
   it('will display the seleted record matching system', () => {
-    expect(component.find('.modal-body p').first()).to.have.text('Record Matching System: Matchy Matcherton');
+    expect(component.find('.modal-body div div').first()).to.have.text('Matchy Matcherton');
   });
 
   it('will display the record sets', () => {
