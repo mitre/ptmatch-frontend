@@ -57,7 +57,7 @@ class MatchLink extends Component {
               <div className="row">
                 <label className="col-xs-3">URL:</label>
                 <div className="col-xs-9">
-                  <a href={this.props.source}><i className="fa fa-link" aria-hidden="true"></i></a>
+                  <a href={this.props.source} target="_blank"><i className="fa fa-link" aria-hidden="true"></i></a>
                 </div>
               </div>
 
@@ -77,7 +77,7 @@ class MatchLink extends Component {
               <div className="row">
                 <label className="col-xs-3">URL:</label>
                 <div className="col-xs-9">
-                  <a href={this.props.target}><i className="fa fa-link" aria-hidden="true"></i></a>
+                  <a href={this.props.target} target="_blank"><i className="fa fa-link" aria-hidden="true"></i></a>
                 </div>
               </div>
 
@@ -105,10 +105,6 @@ class MatchLink extends Component {
         <span className="sr-only">Loading...</span>
       </div>
     );
-  }
-
-  nameTag(name, link) {
-    return <a href={link} target="_blank">{name}</a>;
   }
 }
 
