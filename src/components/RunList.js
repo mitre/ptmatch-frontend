@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import PerformanceRadar from "./PerformanceRadar";
 import RunHistoryChart from "./RunHistoryChart";
+import MatchLinks from "./MatchLinks";
 import _ from 'lodash';
 
 class RunList extends Component {
@@ -22,36 +23,15 @@ class RunList extends Component {
   render() {
     return (
       <div key={this.mostRecentRun().id}>
-      <div className="results-overview">
-        <PerformanceRadar datasets={[{data: [this.mostRecentRun().metrics.f1, this.mostRecentRun().metrics.precision,
-                           this.mostRecentRun().metrics.MAP, this.mostRecentRun().metrics.recall],
-                          backgroundColor:"rgba(112,218,201,0.5)"}]}/>
-      </div>
-      <div className="run-history-chart">
-        <RunHistoryChart data={this.lineChartData()} />
-      </div>
-
-        <table className="table table-hover results-detail">
-          <thead>
-            <tr>
-              <th>Record URL</th>
-              <th>Record URL</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {this.mostRecentRun().links.map((l) => {
-              return (
-                <tr key={l.source}>
-                  <td>Record A: {l.source}</td>
-                  <td>Record B: {l.target}</td>
-                  <td>Score: {l.score}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="results-overview">
+          <PerformanceRadar datasets={[{data: [this.mostRecentRun().metrics.f1, this.mostRecentRun().metrics.precision,
+                             this.mostRecentRun().metrics.MAP, this.mostRecentRun().metrics.recall],
+                            backgroundColor:"rgba(112,218,201,0.5)"}]}/>
+        </div>
+        <div className="run-history-chart">
+          <RunHistoryChart data={this.lineChartData()} />
+        </div>
+        <MatchLinks links={this.mostRecentRun().links} />
       </div>
     );
   }
