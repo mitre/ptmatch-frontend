@@ -20,6 +20,10 @@ body {
   padding-top: 70px;
 }
 
+a {
+  color: $brand-primary;
+}
+
 .header-logo {
   margin: 0 10px 0 20px;
 }
@@ -27,6 +31,12 @@ body {
 .results-overview {
   height: 300px;
   width: 300px;
+}
+
+.results-detail {
+  .loader {
+    text-align: left;
+  }
 }
 
 .rms-thumbnail {
