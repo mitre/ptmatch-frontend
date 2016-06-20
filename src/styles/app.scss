@@ -34,8 +34,15 @@ body {
   border-radius: 10px;
   border: 3px solid $very-light-gray;
   cursor: pointer;
+  margin: 5px;
+  min-height: 250px;
+  min-width: 250px;
   padding: 5px;
   text-align: center;
+
+  canvas {
+    margin-bottom: 10px;
+  }
 
   &:hover {
     background-color: darken($very-light-gray, 2%);

@@ -5,7 +5,9 @@ import moment from 'moment';
 class MatchingSystemThumbnail extends Component {
   render() {
     return (
-      <div onClick={this.props.onClick} className="col-md-3 rms-thumbnail" key={this.props.recordMatchingSystem.id}>
+      <div onClick={this.props.onClick}
+           className="col-md-3 rms-thumbnail"
+           key={this.props.recordMatchingSystem.id}>
         <PerformanceRadar datasets={[{data: [this.props.metrics.f1, this.props.metrics.precision,
                          this.props.metrics.MAP, this.props.metrics.recall],
                          backgroundColor: "rgba(112,218,201,0.5)"}]}/>
