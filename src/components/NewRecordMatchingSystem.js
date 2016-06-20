@@ -18,14 +18,14 @@ class NewRecordMatchingSystem extends Component {
       var field = fields[i];
       newRms[field] = e.target[field].value;
     }
-    
+
     this.props.createRMS(newRms);
   }
-  
-  
+
+
   render() {
-    return (        
-      <div className="panel panel-default">
+    return (
+      <div className="panel panel-show">
         <div className="panel-heading">New Record Matching System</div>
         <div className="panel-body">
           <form className="newSystemForm" onSubmit={(e) => this.handleSubmit(e)}>

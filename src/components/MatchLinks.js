@@ -4,29 +4,21 @@ import MatchLink from './MatchLink';
 class MatchLinks extends Component {
   render() {
     return (
-      <table className="table table-hover results-detail">
-        <thead>
-          <tr>
-            <th>Source Name</th>
-            <th>Source DOB</th>
-            <th>Source Address</th>
+      <div>
+        <div className="row links-header">
+          <div className="col-xs-5">Source</div>
+          <div className="col-xs-5">Target</div>
+          <div className="col-xs-2">Score</div>
+        </div>
 
-            <th>Target Name</th>
-            <th>Target DOB</th>
-            <th>Target Address</th>
-
-            <th>Score</th>
-          </tr>
-        </thead>
-
-        <tbody>
+        <div>
           {this.props.links.map((l) => {
             return (
               <MatchLink key={l.source} source={l.source} target={l.target} score={l.score} />
             );
           })}
-        </tbody>
-      </table>
+        </div>
+      </div>
     );
   }
 }

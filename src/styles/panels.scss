@@ -1,11 +1,5 @@
 @import "variables";
 
-//-------------------------- PANELS -----------------------------------------//
-
-.panel-group {
-  margin-bottom: 10px;
-}
-
 .panel {
 
   //------------------------ DEFAULT PANELS ---------------------------------//
@@ -14,7 +8,22 @@
     border: none;
     box-shadow: none;
 
-    .panel-heading {
+    & > .panel-heading {
+      border-radius: 0;
+
+      .panel-title {
+        font-size: 14px;
+      }
+    }
+  }
+
+  //------------------------ SHOW PANELS ------------------------------------//
+  &.panel-show {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+
+    & > .panel-heading {
       background-color: $brand-secondary;
       border-radius: 0;
       border: none;
@@ -41,10 +50,6 @@
         margin-top: 15px;
         padding-left: 10px;
       }
-    }
-
-    .panel-body {
-
     }
   }
 
@@ -116,5 +121,15 @@
         }
       }
     }
+  }
+}
+
+//-------------------------- GROUP PANELS -----------------------------------------//
+.panel-group {
+  margin-bottom: 2px;
+
+  //------------------------ LINK GROUP PANELS ------------------------------------//
+  .panel-link {
+
   }
 }
