@@ -8,7 +8,13 @@ class MatchLinks extends Component {
         <thead>
           <tr>
             <th>Source Name</th>
+            <th>Source DOB</th>
+            <th>Source Address</th>
+
             <th>Target Name</th>
+            <th>Target DOB</th>
+            <th>Target Address</th>
+
             <th>Score</th>
           </tr>
         </thead>

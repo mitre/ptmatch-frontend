@@ -8,7 +8,11 @@ class MatchLink extends Component {
       loadingSource: true,
       loadingTarget: true,
       sourceName: null,
-      targetName: null
+      sourceDOB: null,
+      sourceAddress: null,
+      targetName: null,
+      targetDOB: null,
+      targetAddress: null
     };
   }
 
@@ -16,6 +20,8 @@ class MatchLink extends Component {
     retrieve(this.props.source).then((response) => {
       this.setState({
         sourceName: extractName(response),
+        sourceDOB: extractDOB(response),
+        sourceAddress: extractAddress(response),
         loadingSource: false
       });
     });
@@ -23,6 +29,8 @@ class MatchLink extends Component {
     retrieve(this.props.target).then((response) => {
       this.setState({
         targetName: extractName(response),
+        targetDOB: extractDOB(response),
+        targetAddress: extractAddress(response),
         loadingTarget: false
       });
     });
@@ -32,7 +40,12 @@ class MatchLink extends Component {
     return (
       <tr>
         <td>{this.state.loadingSource ? this.loadingTag() : this.nameTag(this.state.sourceName, this.props.source)}</td>
+        <td>{this.state.loadingSource ? this.loadingTag() : this.state.sourceDOB}</td>
+        <td>{this.state.loadingSource ? this.loadingTag() : this.state.sourceAddress}</td>
+
         <td>{this.state.loadingTarget ? this.loadingTag() : this.nameTag(this.state.targetName, this.props.target)}</td>
+        <td>{this.state.loadingTarget ? this.loadingTag() : this.state.targetDOB}</td>
+        <td>{this.state.loadingTarget ? this.loadingTag() : this.state.targetAddress}</td>
         <td>{this.props.score}</td>
       </tr>
     );
@@ -48,9 +61,7 @@ class MatchLink extends Component {
   }
 
   nameTag(name, link) {
-    return (
-      <a href={link} target="_blank">{name}</a>
-    );
+    return <a href={link} target="_blank">{name}</a>;
   }
 }
 
@@ -69,4 +80,17 @@ function extractName(response) {
   let givenName = response.name[0].given[0];
 
   return `${familyName}, ${givenName}`;
+}
+
+function extractDOB(response) {
+  return response.birthDate;
+}
+
+function extractAddress(response) {
+  let street = response.address[0].line[0];
+  let city = response.address[0].city;
+  let state = response.address[0].state;
+  let postalCode = response.address[0].postalCode;
+
+  return `${street},\n${city}, ${state}\n${postalCode}`;
 }
