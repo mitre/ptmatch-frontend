@@ -13,4 +13,13 @@ describe('restructureResults', () => {
     };
     restructureResults()(next)(action);
   });
+
+  it('will return an empty array of links when there is no response', () => {
+    const mr = {id: '1233', note: 'test'};
+    const action = {type: REQUEST_MATCH_RUN_FULFILLED, payload: mr};
+    const next = (a) => {
+      expect(a.payload.links).to.be.empty;
+    };
+    restructureResults()(next)(action);
+  });
 });
