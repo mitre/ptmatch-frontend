@@ -23,7 +23,9 @@ const fetchLinks = store => next => action => {
 
 export function dispatchFetchLinks(store, links) {
   const ids = extractIdsToFetch(store, links);
-  store.dispatch(fetchPatients(ids));
+  if (ids.length > 0) {
+    store.dispatch(fetchPatients(ids));
+  }
 }
 
 export function extractIdsToFetch(store, links) {
