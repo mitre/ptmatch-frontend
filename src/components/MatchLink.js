@@ -1,54 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { Accordion, Panel } from 'react-bootstrap';
-import { retrieve } from '../actions/index';
+import patientProps from '../prop-types/patient';
+import { idFromLink } from '../middlewares/fetch_links';
 
 class MatchLink extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loadingSource: true,
-      loadingTarget: true,
-      sourceName: null,
-      sourceDOB: null,
-      sourceStreetAddress: null,
-      sourceCityStateZipAddress: null,
-      targetName: null,
-      targetDOB: null,
-      targetStreetAddress: null,
-      targetCityStateZipAddress: null
-    };
-  }
-
-  componentDidMount() {
-    retrieve(this.props.source).then((response) => {
-      this.setState({
-        sourceName: extractName(response),
-        sourceDOB: extractDOB(response),
-        sourceStreetAddress: extractStreetAddress(response),
-        sourceCityStateZipAddress: extractCityStateZipAddress(response),
-        loadingSource: false
-      });
-    });
-
-    retrieve(this.props.target).then((response) => {
-      this.setState({
-        targetName: extractName(response),
-        targetDOB: extractDOB(response),
-        targetStreetAddress: extractStreetAddress(response),
-        targetCityStateZipAddress: extractCityStateZipAddress(response),
-        loadingTarget: false
-      });
-    });
-  }
-
   render() {
     return (
       <Accordion className="panel-link">
         <Panel header={
                 <div className="row">
-                  <div className="col-xs-5">{this.state.loadingSource ? this.loadingTag() : this.state.sourceName}</div>
-                  <div className="col-xs-5">{this.state.loadingSource ? this.loadingTag() : this.state.targetName}</div>
-                  <div className="col-xs-2">{this.state.loadingSource ? this.loadingTag() : this.props.score}</div>
+                  <div className="col-xs-5">{extractName(this.sourcePatient())}</div>
+                  <div className="col-xs-5">{extractName(this.targetPatient())}</div>
+                  <div className="col-xs-2">{this.props.score}</div>
                 </div>
                }
                eventKey="1">
@@ -63,13 +26,13 @@ class MatchLink extends Component {
 
               <div className="row">
                 <label className="col-xs-3">DOB:</label>
-                <div className="col-xs-9">{this.state.loadingSource ? this.loadingTag() : this.state.sourceDOB}</div>
+                <div className="col-xs-9">{extractDOB(this.sourcePatient())}</div>
               </div>
 
               <div className="row">
                 <label className="col-xs-3">Address:</label>
-                <div className="col-xs-9">{this.state.loadingSource ? this.loadingTag() : this.state.sourceStreetAddress}</div>
-                <div className="col-xs-offset-3 col-xs-9">{this.state.loadingSource ? this.loadingTag() : this.state.sourceCityStateZipAddress}</div>
+                <div className="col-xs-9">{extractStreetAddress(this.sourcePatient())}</div>
+                <div className="col-xs-offset-3 col-xs-9">{extractCityStateZipAddress(this.sourcePatient())}</div>
               </div>
             </div>
 
@@ -83,13 +46,13 @@ class MatchLink extends Component {
 
               <div className="row">
                 <label className="col-xs-3">DOB:</label>
-                <div className="col-xs-9">{this.state.loadingSource ? this.loadingTag() : this.state.targetDOB}</div>
+                <div className="col-xs-9">{extractDOB(this.targetPatient())}</div>
               </div>
 
               <div className="row">
                 <label className="col-xs-3">Address:</label>
-                <div className="col-xs-9">{this.state.loadingSource ? this.loadingTag() : this.state.targetStreetAddress}</div>
-                <div className="col-xs-offset-3 col-xs-9">{this.state.loadingSource ? this.loadingTag() : this.state.targetCityStateZipAddress}</div>
+                <div className="col-xs-9">{extractStreetAddress(this.targetPatient())}</div>
+                <div className="col-xs-offset-3 col-xs-9">{extractCityStateZipAddress(this.targetPatient())}</div>
               </div>
             </div>
           </div>
@@ -98,13 +61,14 @@ class MatchLink extends Component {
     );
   }
 
-  loadingTag() {
-    return (
-      <div className="loader">
-        <i className="fa fa-spinner fa-spin fa-fw"></i>
-        <span className="sr-only">Loading...</span>
-      </div>
-    );
+  sourcePatient() {
+    const sourceId = idFromLink(this.props.source);
+    return this.props.patients[sourceId];
+  }
+
+  targetPatient() {
+    const targetId = idFromLink(this.props.target);
+    return this.props.patients[targetId];
   }
 }
 
@@ -113,30 +77,57 @@ MatchLink.displayName = 'MatchLink';
 MatchLink.propTypes = {
   source: PropTypes.string.isRequired,
   target: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired
+  score: PropTypes.number.isRequired,
+  patients: PropTypes.objectOf(patientProps).isRequired
 };
 
 export default MatchLink;
 
-function extractName(response) {
-  let familyName = response.name[0].family[0];
-  let givenName = response.name[0].given[0];
-
-  return `${familyName}, ${givenName}`;
+function loadingTag() {
+  return (
+    <div className="loader">
+      <i className="fa fa-spinner fa-spin fa-fw"></i>
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
 }
 
-function extractDOB(response) {
-  return response.birthDate;
+function extractName(patient) {
+  if (patient) {
+    let familyName = patient.name[0].family[0];
+    let givenName = patient.name[0].given[0];
+
+    return `${familyName}, ${givenName}`;
+  } else {
+    return loadingTag();
+  }
+
 }
 
-function extractStreetAddress(response) {
-  return response.address[0].line[0];
+function extractStreetAddress(patient) {
+  if (patient) {
+    return patient.address[0].line[0];
+  } else {
+    return loadingTag();
+  }
 }
 
-function extractCityStateZipAddress(response) {
-  let city = response.address[0].city;
-  let state = response.address[0].state;
-  let postalCode = response.address[0].postalCode;
+function extractDOB(patient) {
+  if (patient) {
+    return patient.birthDate;
+  } else {
+    return loadingTag();
+  }
+}
 
-  return `${city}, ${state} ${postalCode}`;
+function extractCityStateZipAddress(patient) {
+  if (patient) {
+    let city = patient.address[0].city;
+    let state = patient.address[0].state;
+    let postalCode = patient.address[0].postalCode;
+
+    return `${city}, ${state} ${postalCode}`;
+  } else {
+    return loadingTag();
+  }
 }

@@ -5,7 +5,8 @@ import { REQUEST_RMS_FULFILLED, REQUEST_RECORD_SET_FULFILLED,
          REQUEST_METRICS_FULFILLED,
          REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT, CREATE_CONTEXT_FULFILLED,
          REQUEST_MATCH_RUN_FULFILLED, SELECT_RMS, SELECT_RECORD_SET,
-         REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED } from '../actions/types';
+         REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED,
+         REQUEST_PATIENTS_FULFILLED } from '../actions/types';
 
 function idReducer(payloadArray) {
   return _.reduce(payloadArray, (state, obj) => {
@@ -89,12 +90,24 @@ export function contexts(state = {}, action) {
   }
 }
 
+export function patients(state = {}, action) {
+  switch (action.type) {
+    case REQUEST_PATIENTS_FULFILLED:
+      let clonedState = Object.assign({}, state);
+      action.payload.entry.forEach((e) => clonedState[e.resource.id] = e.resource);
+      return clonedState;
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   recordMatchingSystems,
   recordSets,
   metrics,
   matchRuns,
   contexts,
+  patients,
   routing: routeReducer
 });
 

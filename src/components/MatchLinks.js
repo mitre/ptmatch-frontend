@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import MatchLink from './MatchLink';
+import patientProps from '../prop-types/patient';
 
 class MatchLinks extends Component {
   render() {
@@ -14,7 +15,11 @@ class MatchLinks extends Component {
         <div>
           {this.props.links.map((l) => {
             return (
-              <MatchLink key={l.source} source={l.source} target={l.target} score={l.score} />
+              <MatchLink key={l.source}
+                         source={l.source}
+                         target={l.target}
+                         score={l.score}
+                         patients={this.props.patients}/>
             );
           })}
         </div>
@@ -30,7 +35,8 @@ MatchLinks.propTypes = {
     score: PropTypes.number.isRequired,
     source: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired
-  }))
+  })).isRequired,
+  patients: PropTypes.objectOf(patientProps).isRequired
 };
 
 export default MatchLinks;

@@ -5,6 +5,7 @@ import _ from 'lodash';
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
+import patientProps from '../prop-types/patient';
 import { runProps } from '../prop-types/run';
 
 import RunHistoryChart from "../components/RunHistoryChart";
@@ -41,7 +42,8 @@ export class BenchmarkContext extends Component {
 
   links() {
     if (this.props.matchRuns.length > 0) {
-      return <MatchLinks links={_.last(this.props.matchRuns).links} />;
+      return <MatchLinks links={_.last(this.props.matchRuns).links}
+                         patients={this.props.patients} />;
     } else {
       return <p>Loading links</p>;
     }
@@ -85,6 +87,7 @@ BenchmarkContext.displayName = 'BenchmarkContext';
 BenchmarkContext.propTypes = {
   context: contextProps.isRequired,
   recordSets: PropTypes.arrayOf(recordSetProps),
+  patients: PropTypes.objectOf(patientProps),
   allRecordSets: PropTypes.arrayOf(recordSetProps),
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRuns: PropTypes.arrayOf(runProps),
@@ -104,8 +107,9 @@ export function mapStateToProps(state, ownProps) {
     recordSets = matchRuns.map((r) => state.recordSets[r.masterRecordSetId]);
   }
   const allRecordSets = _.values(state.recordSets);
+  const patients = state.patients;
 
-  return {matchRuns, recordMatchingSystems, recordSets, allRecordSets};
+  return {matchRuns, recordMatchingSystems, recordSets, allRecordSets, patients};
 }
 
 export default connect(mapStateToProps, { fetchMatchRunsByContext })(BenchmarkContext);
