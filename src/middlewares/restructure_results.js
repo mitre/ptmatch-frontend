@@ -19,19 +19,23 @@ function restructure(payload) {
     recordMatchSystemInterfaceId: payload.recordMatchSystemInterfaceId,
     masterRecordSetId: payload.masterRecordSetId
   };
-  let matchResponses = payload.responses.filter((resp) => {
-    let resourceEntries = resp.message.entry.filter((e) => e.resource !== undefined);
-    let matchEvent = resourceEntries.find((e) => e.resource.event !== undefined && e.resource.event.code === "record-match");
-    return matchEvent !== undefined;
-  });
-  let allEntries = matchResponses.reduce((acc, currentValue) => acc.concat(...currentValue.message.entry), []);
-  let links = allEntries.filter((e) => e.link !== undefined);
-  newPayload.links = links.map((l) => {
-    const source = l.fullUrl;
-    const target = l.link.find((nl) => nl.relation === "related").url;
-    const score = l.search.score;
-    return {source, target, score};
-  });
+  if (payload.responses) {
+    let matchResponses = payload.responses.filter((resp) => {
+      let resourceEntries = resp.message.entry.filter((e) => e.resource !== undefined);
+      let matchEvent = resourceEntries.find((e) => e.resource.event !== undefined && e.resource.event.code === "record-match");
+      return matchEvent !== undefined;
+    });
+    let allEntries = matchResponses.reduce((acc, currentValue) => acc.concat(...currentValue.message.entry), []);
+    let links = allEntries.filter((e) => e.link !== undefined);
+    newPayload.links = links.map((l) => {
+      const source = l.fullUrl;
+      const target = l.link.find((nl) => nl.relation === "related").url;
+      const score = l.search.score;
+      return {source, target, score};
+    });
+  } else {
+    newPayload.links = [];
+  }
 
   return newPayload;
 }
