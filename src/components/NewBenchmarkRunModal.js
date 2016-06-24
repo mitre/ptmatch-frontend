@@ -3,8 +3,6 @@ import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
 
-import { createRun } from '../actions/matchRun';
-
 class NewBenchmarkRunModal extends Component {
   constructor(props) {
     super(props);
@@ -82,7 +80,7 @@ class NewBenchmarkRunModal extends Component {
     const recordMatchSystemInterfaceId = this.state.selectedRMS.id;
     const contextId = this.props.context.id;
     const note = this.state.note;
-    createRun(recordMatchSystemInterfaceId, recordSetId, contextId, note);
+    this.props.runCreator(recordMatchSystemInterfaceId, recordSetId, contextId, note);
   }
 
   render() {
@@ -128,7 +126,8 @@ NewBenchmarkRunModal.displayName = 'NewBenchmarkRunModal';
 NewBenchmarkRunModal.propTypes = {
   context: contextProps.isRequired,
   recordSets: PropTypes.arrayOf(recordSetProps).isRequired,
-  recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps).isRequired
+  recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps).isRequired,
+  runCreator: PropTypes.func.isRequired
 };
 
 export default NewBenchmarkRunModal;

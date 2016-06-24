@@ -24,7 +24,8 @@ const run = Object.assign({}, metrics, {
     score: PropTypes.number.isRequired,
     source: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired
-  }))
+  })),
+  status: PropTypes.oneOf(['responded', 'no-response'])
 });
 
 const metricsProps = PropTypes.shape(metrics);
