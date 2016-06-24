@@ -4,6 +4,8 @@ import RunHistoryChart from "./RunHistoryChart";
 import MatchLinks from "./MatchLinks";
 import _ from 'lodash';
 
+import patientProps from '../prop-types/patient';
+
 class RunList extends Component {
   mostRecentRun() {
     return _.last(this.props.runs);
@@ -31,7 +33,7 @@ class RunList extends Component {
         <div className="run-history-chart">
           <RunHistoryChart data={this.lineChartData()} />
         </div>
-        <MatchLinks links={this.mostRecentRun().links} />
+        <MatchLinks links={this.mostRecentRun().links} patients={this.props.patients}/>
       </div>
     );
   }
@@ -57,7 +59,8 @@ RunList.propTypes = {
   recordMatchingSystem: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string
-  })
+  }),
+  patients: PropTypes.objectOf(patientProps)
 };
 
 export default RunList;

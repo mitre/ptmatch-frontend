@@ -9,6 +9,7 @@ import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import { runProps } from '../prop-types/run';
+import patientProps from '../prop-types/patient';
 
 import { fetchMatchRunsByContext } from '../actions/matchRun';
 
@@ -40,7 +41,7 @@ class ChallengeContext extends Component {
     if (this.state.selectedRMS !== -1) {
       let selectedRMS = this.props.recordMatchingSystems[this.state.selectedRMS];
       let runs = this.props.matchRunsByRMS[this.state.selectedRMS];
-      return <RunList recordMatchingSystem={selectedRMS} runs={runs}/>;
+      return <RunList recordMatchingSystem={selectedRMS} runs={runs} patients={this.props.patients}/>;
     } else {
       return this.props.recordMatchingSystems.map((rms) => {
         const runs = this.props.matchRunsByRMS[rms.id];
@@ -83,6 +84,7 @@ ChallengeContext.propTypes = {
   recordSet: recordSetProps,
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRunsByRMS: PropTypes.objectOf(PropTypes.arrayOf(runProps)),
+  patients: PropTypes.objectOf(patientProps),
   fetchMatchRunsByContext: PropTypes.func
 };
 
@@ -97,7 +99,8 @@ export function mapStateToProps(state, ownProps) {
     // across all runs since this is a challange context.
     const recordSet = state.recordSets[matchRunsForContext[0].recordSetId];
     const matchRunsByRMS = _.groupBy(matchRunsForContext, 'recordMatchSystemInterfaceId');
-    return {matchRunsByRMS, recordMatchingSystems, recordSet};
+    const patients = state.patients;
+    return {matchRunsByRMS, recordMatchingSystems, recordSet, patients};
   }
 }
 
