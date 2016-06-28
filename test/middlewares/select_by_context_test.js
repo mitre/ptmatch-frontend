@@ -3,7 +3,7 @@ import MockStore from '../mock_store';
 import selectByContext from '../../src/middlewares/select_by_context';
 import {
   REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED,
-  SELECT_RECORD_SET, SELECT_RMS
+  SELECT_RECORD_SETS, SELECT_RMS
 } from '../../src/actions/types';
 import matchRun from '../fixtures/match_job';
 
@@ -15,7 +15,7 @@ describe('selectByContext', () => {
     };
     let mockStore = new MockStore({contexts: {"572cd29c1cd462994f3be5fd": {id: "572cd29c1cd462994f3be5fd", selected: true}}});
     selectByContext(mockStore)(next)(action);
-    let recordSets = mockStore.dispatchedActions.find((a) => a.type === SELECT_RECORD_SET).payload;
+    let recordSets = mockStore.dispatchedActions.find((a) => a.type === SELECT_RECORD_SETS).payload;
     expect(recordSets).to.eql(["572a18ae1cd46222f049108e"]);
     let rmss = mockStore.dispatchedActions.find((a) => a.type === SELECT_RMS).payload;
     expect(rmss).to.eql(["571f7fc11cd46222f0491082"]);

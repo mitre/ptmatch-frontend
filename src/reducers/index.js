@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { REQUEST_RMS_FULFILLED, REQUEST_RECORD_SET_FULFILLED,
          REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT, CREATE_CONTEXT_FULFILLED,
          REQUEST_MATCH_RUN_FULFILLED, CREATE_MATCH_RUN_FULFILLED,
-         SELECT_RMS, SELECT_RECORD_SET,
+         SELECT_RMS, SELECT_RECORD_SETS, SELECT_RECORD_SET,
          REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED,
          REQUEST_PATIENTS_FULFILLED } from '../actions/types';
 
@@ -36,8 +36,12 @@ function recordSets(state = {}, action) {
   switch (action.type) {
     case REQUEST_RECORD_SET_FULFILLED:
       return idReducer(action.payload);
-    case SELECT_RECORD_SET:
+    case SELECT_RECORD_SETS:
       return resetSelect(state, action.payload);
+    case SELECT_RECORD_SET:
+      let clonedState = Object.assign({}, state);
+      clonedState[action.payload].selected = true;
+      return clonedState;
     default:
       return state;
   }

@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { SELECT_RECORD_SET } from '../actions/types';
+
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
@@ -89,7 +91,10 @@ export class BenchmarkContext extends Component {
             <NewBenchmarkRunModal context={this.props.context}
                                   recordSets={this.props.recordSets}
                                   recordMatchingSystems={this.props.recordMatchingSystems}
-                                  runCreator={this.props.createRun}/>
+                                  runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
+                                                this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);
+                                                this.props.selectRecordSet(masterRecordSetId);
+                                              }}/>
           </div>
         </div>
 
@@ -115,8 +120,13 @@ BenchmarkContext.propTypes = {
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRuns: PropTypes.arrayOf(runProps),
   fetchMatchRunsByContext: PropTypes.func,
-  createRun: PropTypes.func
+  createRun: PropTypes.func,
+  selectRecordSet: PropTypes.func
 };
+
+function selectRecordSet(recordSetId) {
+  return {type: SELECT_RECORD_SET, payload: recordSetId};
+}
 
 export function mapStateToProps(state, ownProps) {
   const contextId = ownProps.context.id;
@@ -132,4 +142,4 @@ export function mapStateToProps(state, ownProps) {
   return {matchRuns, recordMatchingSystems, recordSets, patients};
 }
 
-export default connect(mapStateToProps, { fetchMatchRunsByContext, createRun })(BenchmarkContext);
+export default connect(mapStateToProps, { fetchMatchRunsByContext, createRun, selectRecordSet })(BenchmarkContext);
