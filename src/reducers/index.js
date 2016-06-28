@@ -2,9 +2,9 @@ import { combineReducers } from 'redux';
 import { routeReducer } from 'react-router-redux';
 import _ from 'lodash';
 import { REQUEST_RMS_FULFILLED, REQUEST_RECORD_SET_FULFILLED,
-         REQUEST_METRICS_FULFILLED,
          REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT, CREATE_CONTEXT_FULFILLED,
-         REQUEST_MATCH_RUN_FULFILLED, SELECT_RMS, SELECT_RECORD_SET,
+         REQUEST_MATCH_RUN_FULFILLED, CREATE_MATCH_RUN_FULFILLED,
+         SELECT_RMS, SELECT_RECORD_SETS, SELECT_RECORD_SET,
          REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED,
          REQUEST_PATIENTS_FULFILLED } from '../actions/types';
 
@@ -36,36 +36,30 @@ function recordSets(state = {}, action) {
   switch (action.type) {
     case REQUEST_RECORD_SET_FULFILLED:
       return idReducer(action.payload);
-    case SELECT_RECORD_SET:
+    case SELECT_RECORD_SETS:
       return resetSelect(state, action.payload);
-    default:
-      return state;
-  }
-}
-
-function metrics(state = {}, action) {
-  switch (action.type) {
-    case REQUEST_METRICS_FULFILLED:
-      let metricsClone = Object.assign({}, state);
-      //masterRecordSetId will be the same across the entire array, so we can
-      //just grab the first one
-      let masterRecordSetId = action.payload[0].masterRecordSetId;
-      metricsClone[masterRecordSetId] = action.payload.slice(0);
-      return metricsClone;
+    case SELECT_RECORD_SET:
+      let clonedState = Object.assign({}, state);
+      clonedState[action.payload].selected = true;
+      return clonedState;
     default:
       return state;
   }
 }
 
 function matchRuns(state = {}, action) {
+  let matchRunClone;
   switch (action.type) {
     case REQUEST_MATCH_RUN_FULFILLED:
-      let matchRunClone = Object.assign({}, state);
+    case CREATE_MATCH_RUN_FULFILLED:
+      matchRunClone = Object.assign({}, state);
       let matchRunId = action.payload.id;
       matchRunClone[matchRunId] = Object.assign({}, action.payload);
       return matchRunClone;
     case REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED:
-      return idReducer(action.payload);
+      matchRunClone = Object.assign({}, state);
+      action.payload.forEach((mr) => matchRunClone[mr.id] = mr);
+      return matchRunClone;
     default:
       return state;
   }
@@ -104,7 +98,6 @@ export function patients(state = {}, action) {
 const rootReducer = combineReducers({
   recordMatchingSystems,
   recordSets,
-  metrics,
   matchRuns,
   contexts,
   patients,

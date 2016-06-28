@@ -3,15 +3,10 @@ import fetch from 'isomorphic-fetch';
 import { retrieve } from './index';
 
 import {
-  REQUEST_METRICS,
   REQUEST_MATCH_RUN,
-  REQUEST_MATCH_RUNS_BY_CONTEXT
+  REQUEST_MATCH_RUNS_BY_CONTEXT,
+  CREATE_MATCH_RUN
 } from './types';
-
-export function fetchMetricsIfNeeded(recordSetId) {
-  return {type: REQUEST_METRICS,
-          payload: retrieve(`/RecordMatchRunMetrics?recordSetId=${recordSetId}`)};
-}
 
 export function fetchMatchRun(jobId) {
   return {type: REQUEST_MATCH_RUN,
@@ -24,7 +19,8 @@ export function fetchMatchRunsByContext(contextId) {
 }
 
 export function createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) {
-  fetch('/RecordMatchRun', {
+  const p = new Promise((resolve) => {
+    fetch('/RecordMatchRun', {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -33,5 +29,8 @@ export function createRun(recordMatchSystemInterfaceId, masterRecordSetId, recor
     body: JSON.stringify({recordMatchSystemInterfaceId, masterRecordSetId,
                           recordMatchContextId, note,
                           matchingMode: 'deduplication', recordResourceType: 'Patient'})
+    }).then(req => req.json())
+      .then(json => resolve(json));
   });
+  return {type: CREATE_MATCH_RUN, payload: p};
 }

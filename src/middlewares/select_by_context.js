@@ -3,7 +3,7 @@
 // the appropriate record sets and record matching systems
 import {
   REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED,
-  SELECT_RECORD_SET, SELECT_RMS
+  SELECT_RECORD_SETS, SELECT_RMS
 } from '../actions/types';
 import _ from 'lodash';
 
@@ -18,7 +18,7 @@ const selectByContext = store => next => action => {
       }
       const selectedRecordSets = _.map(action.payload, 'masterRecordSetId');
       const selectedRMS = _.map(action.payload, 'recordMatchSystemInterfaceId');
-      store.dispatch({type: SELECT_RECORD_SET, payload: selectedRecordSets});
+      store.dispatch({type: SELECT_RECORD_SETS, payload: selectedRecordSets});
       store.dispatch({type: SELECT_RMS, payload: selectedRMS});
     }
   }

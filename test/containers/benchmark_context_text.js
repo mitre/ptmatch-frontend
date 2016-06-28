@@ -21,10 +21,10 @@ describe('BenchmarkContext', () => {
               metrics: {matchCount: 3}},
         '2': {id: '2', note: 'Run 2', recordMatchSystemInterfaceId: '1',
               masterRecordSetId: '3', recordMatchContextId: '1', meta: {createdOn: "2016-06-15T17:45:11.429Z"},
-              metrics: {matchCount: 5}}, //note this is the last run
+              metrics: {matchCount: 5}, status: 'responded'}, //note this is the last run
         '3': {id: '3', note: 'Run 3', recordMatchSystemInterfaceId: '1',
               masterRecordSetId: '5', recordMatchContextId: '1', meta: {createdOn: "2016-06-14T17:45:11.429Z"},
-              metrics: {matchCount: 10}}
+              metrics: {matchCount: 10}, status: 'responded'}
       }
     };
   });
@@ -39,7 +39,7 @@ describe('BenchmarkContext', () => {
     props.context = {id: '1', name: 'Test Context'};
     const component = new BenchmarkContext(props);
     const chartData = component.lineChartData();
-    expect(chartData.labels).to.eql(['Sample 1', 'Sample 3', 'Sample 2']);
-    expect(chartData.datasets[0].data).to.eql([3, 10, 5]);
+    expect(chartData.labels).to.eql(['Sample 3', 'Sample 2']);
+    expect(chartData.datasets[0].data).to.eql([10, 5]);
   });
 });

@@ -5,7 +5,8 @@
 // use.
 import {
   REQUEST_MATCH_RUN_FULFILLED,
-  REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED
+  REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED,
+  CREATE_MATCH_RUN_FULFILLED
 } from '../actions/types';
 
 function restructure(payload) {
@@ -20,6 +21,7 @@ function restructure(payload) {
     masterRecordSetId: payload.masterRecordSetId
   };
   if (payload.responses) {
+    newPayload.status = 'responded';
     let matchResponses = payload.responses.filter((resp) => {
       let resourceEntries = resp.message.entry.filter((e) => e.resource !== undefined);
       let matchEvent = resourceEntries.find((e) => e.resource.event !== undefined && e.resource.event.code === "record-match");
@@ -35,6 +37,7 @@ function restructure(payload) {
     });
   } else {
     newPayload.links = [];
+    newPayload.status = 'no-response';
   }
 
   return newPayload;
@@ -42,14 +45,15 @@ function restructure(payload) {
 
 export default function() {
   return next => action => {
-    if (action.type === REQUEST_MATCH_RUN_FULFILLED &&
-        action.payload.responses !== undefined) {
-      action.payload = restructure(action.payload);
-    }
-
-    if (action.type === REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED) {
-      const restructuredArray = action.payload.map((p) => restructure(p));
-      action.payload = restructuredArray;
+    switch (action.type) {
+      case REQUEST_MATCH_RUN_FULFILLED:
+      case CREATE_MATCH_RUN_FULFILLED:
+        action.payload = restructure(action.payload);
+        break;
+      case REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED:
+        const restructuredArray = action.payload.map((p) => restructure(p));
+        action.payload = restructuredArray;
+        break;
     }
 
     return next(action);

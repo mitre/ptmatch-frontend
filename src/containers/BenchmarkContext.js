@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { SELECT_RECORD_SET } from '../actions/types';
+
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
@@ -12,7 +14,7 @@ import RunHistoryChart from "../components/RunHistoryChart";
 import NewBenchmarkRunModal from "../components/NewBenchmarkRunModal";
 import MatchLinks from '../components/MatchLinks';
 
-import { fetchMatchRunsByContext } from '../actions/matchRun';
+import { fetchMatchRunsByContext, createRun } from '../actions/matchRun';
 
 export class BenchmarkContext extends Component {
 
@@ -20,10 +22,32 @@ export class BenchmarkContext extends Component {
     this.props.fetchMatchRunsByContext(this.props.context.id);
   }
 
+  completedRuns() {
+    return this.props.matchRuns.filter((mr) => mr.status === 'responded');
+  }
+
+  unfinishedRuns() {
+    return this.props.matchRuns.filter((mr) => mr.status === 'no-response');
+  }
+
+  inProgressHeader() {
+    if (this.unfinishedRuns().length > 0) {
+      const runningJob = _.last(this.unfinishedRuns());
+      return <div className="well">Running a job against {this.props.recordSets.find((rs) => rs.id === runningJob.masterRecordSetId).name}...</div>;
+    }
+  }
+
   lineChartData() {
     let data = {};
-    data.labels = _.map(this.props.recordSets, 'name');
-    data.datasets = [{label: 'Duplicates', data: this.props.matchRuns.map((mr) => mr.metrics.matchCount)}];
+    data.labels = _.map(this.completedRuns(), (mr) => {
+      const recordSet = this.props.recordSets.find((rs) => rs.id === mr.masterRecordSetId);
+      if (recordSet) {
+        return recordSet.name;
+      } else {
+        return 'Unknown';
+      }
+    });
+    data.datasets = [{label: 'Duplicates', data: this.completedRuns().map((mr) => mr.metrics.matchCount)}];
     return data;
   }
 
@@ -42,7 +66,7 @@ export class BenchmarkContext extends Component {
 
   links() {
     if (this.props.matchRuns.length > 0) {
-      return <MatchLinks links={_.last(this.props.matchRuns).links}
+      return <MatchLinks links={_.last(this.completedRuns()).links}
                          patients={this.props.patients} />;
     } else {
       return <p>Loading links</p>;
@@ -65,13 +89,18 @@ export class BenchmarkContext extends Component {
             <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newBenchmarkRunModal">New Run</button>
 
             <NewBenchmarkRunModal context={this.props.context}
-                                  recordSets={this.props.allRecordSets}
-                                  recordMatchingSystems={this.props.recordMatchingSystems}/>
+                                  recordSets={this.props.recordSets}
+                                  recordMatchingSystems={this.props.recordMatchingSystems}
+                                  runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
+                                                this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);
+                                                this.props.selectRecordSet(masterRecordSetId);
+                                              }}/>
           </div>
         </div>
 
 
         <div className="panel-body">
+          {this.inProgressHeader()}
           <div className="run-history-chart">
             {this.chart()}
           </div>
@@ -86,13 +115,18 @@ BenchmarkContext.displayName = 'BenchmarkContext';
 
 BenchmarkContext.propTypes = {
   context: contextProps.isRequired,
-  recordSets: PropTypes.arrayOf(recordSetProps),
   patients: PropTypes.objectOf(patientProps),
-  allRecordSets: PropTypes.arrayOf(recordSetProps),
+  recordSets: PropTypes.arrayOf(recordSetProps),
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRuns: PropTypes.arrayOf(runProps),
-  fetchMatchRunsByContext: PropTypes.func
+  fetchMatchRunsByContext: PropTypes.func,
+  createRun: PropTypes.func,
+  selectRecordSet: PropTypes.func
 };
+
+function selectRecordSet(recordSetId) {
+  return {type: SELECT_RECORD_SET, payload: recordSetId};
+}
 
 export function mapStateToProps(state, ownProps) {
   const contextId = ownProps.context.id;
@@ -102,14 +136,10 @@ export function mapStateToProps(state, ownProps) {
   // All runs should have the same matching system, so we can grab the id for the
   // first one
   let recordMatchingSystems = _.values(state.recordMatchingSystems);
-  let recordSets = [];
-  if (matchRuns.length > 0) {
-    recordSets = matchRuns.map((r) => state.recordSets[r.masterRecordSetId]);
-  }
-  const allRecordSets = _.values(state.recordSets);
+  const recordSets = _.values(state.recordSets);
   const patients = state.patients;
 
-  return {matchRuns, recordMatchingSystems, recordSets, allRecordSets, patients};
+  return {matchRuns, recordMatchingSystems, recordSets, patients};
 }
 
-export default connect(mapStateToProps, { fetchMatchRunsByContext })(BenchmarkContext);
+export default connect(mapStateToProps, { fetchMatchRunsByContext, createRun, selectRecordSet })(BenchmarkContext);
