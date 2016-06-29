@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
+import NewChallengeRunModal from '../components/NewChallengeRunModal';
 import RunList from '../components/RunList';
 
 import contextProps from '../prop-types/context';
@@ -11,7 +12,7 @@ import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import { runProps } from '../prop-types/run';
 import patientProps from '../prop-types/patient';
 
-import { fetchMatchRunsByContext } from '../actions/matchRun';
+import { fetchMatchRunsByContext, createRun } from '../actions/matchRun';
 
 class ChallengeContext extends Component {
   constructor(props) {
@@ -21,16 +22,6 @@ class ChallengeContext extends Component {
 
   componentWillMount() {
     this.props.fetchMatchRunsByContext(this.props.context.id);
-  }
-
-  formatParams() {
-    if (this.props.recordSet) {
-      return this.props.recordSet.parameters.parameter.map((param) => {
-        return <div key={param.name}>{param.name} : {param.valueString.substr(0,20)}</div>;
-      });
-    } else {
-      return <div/>;
-    }
   }
 
   selectRMS(rmsId) {
@@ -65,6 +56,14 @@ class ChallengeContext extends Component {
             <div className="col-xs-3">
               <span className="format-piece">Type: {this.props.context.type}</span>
             </div>
+
+            <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#NewChallengeRun">New Run</button>
+
+            <NewChallengeRunModal title="New Challenge Run"
+                                  context={this.props.context}
+                                  recordSets={this.props.recordSets}
+                                  recordMatchingSystems={this.props.recordMatchingSystems}
+                                  runCreator={this.props.createRun}/>
           </div>
         </div>
 
@@ -81,27 +80,27 @@ ChallengeContext.displayName = 'ChallengeContext';
 
 ChallengeContext.propTypes = {
   context: contextProps.isRequired,
-  recordSet: recordSetProps,
+  recordSets: PropTypes.arrayOf(recordSetProps),
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRunsByRMS: PropTypes.objectOf(PropTypes.arrayOf(runProps)),
   patients: PropTypes.objectOf(patientProps),
-  fetchMatchRunsByContext: PropTypes.func
+  fetchMatchRunsByContext: PropTypes.func,
+  createRun: PropTypes.func
 };
 
 export function mapStateToProps(state, ownProps) {
   const contextId = ownProps.context.id;
   const matchRunsForContext = _.values(state.matchRuns).filter((mr) => mr.recordMatchContextId === contextId);
   if (matchRunsForContext.length === 0) {
-    return {recordMatchingSystems: []};
+    return {recordMatchingSystems: [], recordSets: []};
   } else {
     const recordMatchingSystems = _.uniq(matchRunsForContext.map((mr) => state.recordMatchingSystems[mr.recordMatchSystemInterfaceId]));
-    // We can grab the record set off of the first run since it should be the same
-    // across all runs since this is a challange context.
-    const recordSet = state.recordSets[matchRunsForContext[0].recordSetId];
     const matchRunsByRMS = _.groupBy(matchRunsForContext, 'recordMatchSystemInterfaceId');
     const patients = state.patients;
-    return {matchRunsByRMS, recordMatchingSystems, recordSet, patients};
+    console.log("generating the record sets");
+    const recordSets = _.values(state.recordSets);
+    return {matchRunsByRMS, recordMatchingSystems, patients, recordSets};
   }
 }
 
-export default connect(mapStateToProps, { fetchMatchRunsByContext })(ChallengeContext);
+export default connect(mapStateToProps, { fetchMatchRunsByContext, createRun })(ChallengeContext);
