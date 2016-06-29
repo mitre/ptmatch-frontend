@@ -97,7 +97,6 @@ export function mapStateToProps(state, ownProps) {
     const recordMatchingSystems = _.uniq(matchRunsForContext.map((mr) => state.recordMatchingSystems[mr.recordMatchSystemInterfaceId]));
     const matchRunsByRMS = _.groupBy(matchRunsForContext, 'recordMatchSystemInterfaceId');
     const patients = state.patients;
-    console.log("generating the record sets");
     const recordSets = _.values(state.recordSets);
     return {matchRunsByRMS, recordMatchingSystems, patients, recordSets};
   }
