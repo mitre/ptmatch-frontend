@@ -25,7 +25,6 @@ describe('ChallengeContext', () => {
 
   it('will map state to props', () => {
     const stateProps = mapStateToProps(state, {context: {id: '5', name: 'Test Context'}});
-    expect(stateProps.recordSet.name).to.equal('Test Record Set');
     expect(stateProps.recordMatchingSystems.length).to.equal(2);
     expect(stateProps.matchRunsByRMS['1'].length).to.equal(2);
     expect(stateProps.matchRunsByRMS['3']).to.be.undefined;

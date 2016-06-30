@@ -86,9 +86,10 @@ export class BenchmarkContext extends Component {
               <span className="format-piece">Type: {this.props.context.type}</span>
             </div>
 
-            <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newBenchmarkRunModal">New Run</button>
+            <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#NewBenchmarkRun">New Run</button>
 
-            <NewBenchmarkRunModal context={this.props.context}
+            <NewBenchmarkRunModal title="New Benchmark Run"
+                                  context={this.props.context}
                                   recordSets={this.props.recordSets}
                                   recordMatchingSystems={this.props.recordMatchingSystems}
                                   runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
