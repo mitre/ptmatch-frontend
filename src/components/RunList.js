@@ -26,13 +26,17 @@ class RunList extends Component {
     return (
       <div key={this.mostRecentRun().id}>
         <div className="results-overview">
-          <PerformanceRadar datasets={[{data: [this.mostRecentRun().metrics.f1, this.mostRecentRun().metrics.precision,
-                             this.mostRecentRun().metrics.MAP, this.mostRecentRun().metrics.recall],
-                            backgroundColor:"rgba(112,218,201,0.5)"}]}/>
+          <PerformanceRadar chartData={[
+             this.mostRecentRun().metrics.f1,
+             this.mostRecentRun().metrics.precision,
+             this.mostRecentRun().metrics.MAP,
+             this.mostRecentRun().metrics.recall]}/>
         </div>
+
         <div className="run-history-chart">
           <RunHistoryChart data={this.lineChartData()} />
         </div>
+        
         <MatchLinks links={this.mostRecentRun().links} patients={this.props.patients}/>
       </div>
     );

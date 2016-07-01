@@ -8,11 +8,18 @@ class MatchingSystemThumbnail extends Component {
       <div onClick={this.props.onClick}
            className="col-md-3 rms-thumbnail"
            key={this.props.recordMatchingSystem.id}>
-        <PerformanceRadar datasets={[{data: [this.props.metrics.f1, this.props.metrics.precision,
-                         this.props.metrics.MAP, this.props.metrics.recall],
-                         backgroundColor: "rgba(112,218,201,0.5)"}]}/>
+        <PerformanceRadar chartData={[
+           this.props.metrics.f1,
+           this.props.metrics.precision,
+           this.props.metrics.MAP,
+           this.props.metrics.recall]}/>
+
         <p className="rms-name">{this.props.recordMatchingSystem.name}</p>
-        <p className="last-run-age"><i className="fa fa-clock-o" aria-hidden="true"></i> {moment(this.props.createdOn).fromNow().toUpperCase()}</p>
+
+        <p className="last-run-age">
+          <i className="fa fa-clock-o" aria-hidden="true"></i>{' '}
+          {moment(this.props.createdOn).fromNow().toUpperCase()}
+        </p>
       </div>
     );
   }
