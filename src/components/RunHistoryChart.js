@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Chart from 'chart.js';
 import ReactDOM from 'react-dom';
+import _ from 'lodash';
 
 const chartOptions = {
   scales: {
@@ -34,6 +35,15 @@ const lineBorderColors = [
 ];
 
 class RunHistoryChart extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      labels: props.chartData.labels,
+      datasets: formatChartData(props.chartData.datasets)
+    };
+  }
+
   render() {
     return (<canvas/>);
   }
@@ -44,7 +54,10 @@ class RunHistoryChart extends Component {
 
     this.chart = new Chart(ctx, {
       type: 'line',
-      data: this.formatChartData(this.props.chartData),
+      data: {
+        labels: this.state.labels,
+        datasets: safeDatasets(this.state.datasets)
+      },
       options: chartOptions
     });
   }
@@ -53,26 +66,25 @@ class RunHistoryChart extends Component {
     this.chart.destroy();
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.chartData.labels.length != nextProps.chartData.labels.length) {
-      this.chart.data.labels = nextProps.chartData.labels;
-    }
-    this.chart.data.datasets = this.formatChartData(nextProps.chartData);
+  componentDidUpdate() {
+    this.chart.data.labels = this.state.labels;
+    this.chart.data.datasets = safeDatasets(this.state.datasets);
     this.chart.update();
   }
 
-  formatChartData(chartData) {
-    return {
-      labels: chartData.labels,
-      datasets: chartData.datasets.map((dataset, index) => {
-        let color = lineBorderColors[index % (lineBorderColors.length - 1)];
-        return Object.assign({
-          pointBackgroundColor: color,
-          borderColor: color,
-          backgroundColor: color
-        }, datasetOptions, dataset);
-      })
-    };
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      labels: nextProps.chartData.labels,
+      datasets: formatChartData(nextProps.chartData.datasets)
+    });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (_.isEqual(this.state.labels, nextState.labels) && _.isEqual(this.state.datasets, nextState.datasets)) {
+      return false;
+    }
+
+    return true;
   }
 }
 
@@ -87,5 +99,20 @@ RunHistoryChart.propTypes = {
 };
 
 RunHistoryChart.displayName = "RunHistoryChart";
+
+function formatChartData(datasets) {
+  return datasets.map((dataset, index) => {
+    let color = lineBorderColors[index % (lineBorderColors.length - 1)];
+    return Object.assign({
+      pointBackgroundColor: color,
+      borderColor: color,
+      backgroundColor: color
+    }, datasetOptions, dataset);
+  });
+}
+
+function safeDatasets(datasets) {
+  return datasets.map((dataset) => Object.assign({}, dataset));
+}
 
 export default RunHistoryChart;

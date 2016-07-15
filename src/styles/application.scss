@@ -74,3 +74,17 @@ a {
   line-height: 40px;
   margin: 0 1px;
 }
+
+.alert-banner {
+  border-radius: 0;
+}
+
+.panel-body .alert-banner {
+  margin-top: -15px;
+}
+
+.alert-danger {
+  background-color: $red;
+  border-color: $red;
+  color: $white;
+}

@@ -21,9 +21,20 @@ class RunList extends Component {
 
   render() {
     let mostRecentRun = _.last(this.props.runs);
+    let isRunning = mostRecentRun.status === 'no-response';
 
     return (
       <div className="row" key={mostRecentRun.id}>
+        {(() => {
+          if (isRunning) {
+            return (
+              <div className="alert alert-danger alert-banner text-center">
+                <i className="fa fa-refresh fa-spin"></i>
+                {' '}Run {this.props.runs.length} in progress...
+              </div>
+            );
+          }
+        })()}
         <div className="col-xs-5 results-overview">
           <PerformanceRadar chartData={[
              mostRecentRun.metrics.f1,
@@ -36,9 +47,15 @@ class RunList extends Component {
           <RunHistoryChart chartData={this.lineChartData()} />
         </div>
 
-        <div className="col-xs-12">
-          <MatchLinks links={mostRecentRun.links} patients={this.props.patients}/>
-        </div>
+        {(() => {
+          if (!isRunning) {
+            return (
+              <div className="col-xs-12">
+                <MatchLinks links={mostRecentRun.links} patients={this.props.patients}/>
+              </div>
+            );
+          }
+        })()}
       </div>
     );
   }
