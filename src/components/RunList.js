@@ -7,37 +7,38 @@ import _ from 'lodash';
 import patientProps from '../prop-types/patient';
 
 class RunList extends Component {
-  mostRecentRun() {
-    return _.last(this.props.runs);
-  }
-
   lineChartData() {
-    let data = {};
-    data.labels = _.times(this.props.runs.length, (i) => `Run ${i + 1}`);
-    data.datasets = _.map(['f1', 'precision', 'recall'], (term) => {
-      let set = {label: term};
-      set.data = _.map(this.props.runs, (run) => run.metrics[term]);
-      return set;
-    });
-    return data;
+    return {
+      labels: _.times(this.props.runs.length, (i) => `Run ${i + 1}`),
+      datasets: _.map(['f1', 'precision', 'recall'], (term) => {
+        return {
+          label: term,
+          data: _.map(this.props.runs, (run) => run.metrics[term])
+        };
+      })
+    };
   }
 
   render() {
+    let mostRecentRun = _.last(this.props.runs);
+
     return (
-      <div key={this.mostRecentRun().id}>
-        <div className="results-overview">
+      <div className="row" key={mostRecentRun.id}>
+        <div className="col-xs-5 results-overview">
           <PerformanceRadar chartData={[
-             this.mostRecentRun().metrics.f1,
-             this.mostRecentRun().metrics.precision,
-             this.mostRecentRun().metrics.MAP,
-             this.mostRecentRun().metrics.recall]}/>
+             mostRecentRun.metrics.f1,
+             mostRecentRun.metrics.precision,
+             mostRecentRun.metrics.MAP,
+             mostRecentRun.metrics.recall]}/>
         </div>
 
-        <div className="run-history-chart">
-          <RunHistoryChart data={this.lineChartData()} />
+        <div className="col-xs-7 run-history-chart">
+          <RunHistoryChart chartData={this.lineChartData()} />
         </div>
-        
-        <MatchLinks links={this.mostRecentRun().links} patients={this.props.patients}/>
+
+        <div className="col-xs-12">
+          <MatchLinks links={mostRecentRun.links} patients={this.props.patients}/>
+        </div>
       </div>
     );
   }

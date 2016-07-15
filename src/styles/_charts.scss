@@ -1,5 +1,8 @@
-.run-history-chart {
-  height: 300px;
-  margin: 40px auto;
-  width: 600px;
+.run-history-chart,
+.results-overview {
+  margin: 1em 0;
+}
+
+.results-overview {
+  padding-top: 20px;
 }
