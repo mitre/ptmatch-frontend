@@ -30,10 +30,6 @@ describe('RunList', () => {
     component = new RunList({recordMatchingSystem, runs, matchRuns: runs});
   });
 
-  it('will find the most recent run', () => {
-    expect(component.mostRecentRun().id).to.equal('5678');
-  });
-
   it('will provide line chart data', () => {
     let chartData = component.lineChartData();
     expect(chartData.labels).to.eql(['Run 1', 'Run 2']);
