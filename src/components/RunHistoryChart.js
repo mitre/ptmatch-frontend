@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 class RunHistoryChart extends Component {
   render() {
-    return (<canvas/>);
+    return (<canvas />);
   }
 
   componentDidMount() {
