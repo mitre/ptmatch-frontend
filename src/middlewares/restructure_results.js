@@ -51,8 +51,7 @@ export default function() {
         action.payload = restructure(action.payload);
         break;
       case REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED:
-        const restructuredArray = action.payload.map((p) => restructure(p));
-        action.payload = restructuredArray;
+        action.payload = action.payload.map((p) => restructure(p));
         break;
     }
 

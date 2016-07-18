@@ -45,7 +45,7 @@ class RunHistoryChart extends Component {
   }
 
   render() {
-    return (<canvas/>);
+    return (<canvas />);
   }
 
   componentDidMount() {
