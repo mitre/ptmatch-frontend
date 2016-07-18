@@ -38,22 +38,18 @@ export class BenchmarkContext extends Component {
   }
 
   lineChartData() {
-    let data = {};
-    data.labels = _.map(this.completedRuns(), (mr) => {
-      const recordSet = this.props.recordSets.find((rs) => rs.id === mr.masterRecordSetId);
-      if (recordSet) {
-        return recordSet.name;
-      } else {
-        return 'Unknown';
-      }
-    });
-    data.datasets = [{label: 'Duplicates', data: this.completedRuns().map((mr) => mr.metrics.matchCount)}];
-    return data;
+    return {
+      labels: _.map(this.completedRuns(), (mr) => {
+        const recordSet = this.props.recordSets.find((rs) => rs.id === mr.masterRecordSetId);
+        return recordSet ? recordSet.name : 'Unknown';
+      }),
+      datasets: [{ label: 'Duplicates', data: this.completedRuns().map((mr) => mr.metrics.matchCount) }]
+    };
   }
 
   chart() {
     if (this.props.matchRuns.length > 0) {
-      return <RunHistoryChart data={this.lineChartData()} />;
+      return <RunHistoryChart chartData={this.lineChartData()} />;
     } else {
       return (
         <div className="loader">

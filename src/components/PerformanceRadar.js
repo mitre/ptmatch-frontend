@@ -2,9 +2,35 @@ import React, { Component, PropTypes } from 'react';
 import Chart from 'chart.js';
 import ReactDOM from 'react-dom';
 
+const chartOptions = {
+  maintainAspectRatio: true,
+  legend: { display: false },
+  scale: {
+    pointLabels: { fontSize: 12 },
+    ticks: {
+      max: 1,
+      maxTicksLimit: 4,
+      showLabelBackdrop: false,
+      beginAtZero: true
+    }
+  }
+};
+
+const datasetOptions = {
+  backgroundColor: "rgba(76, 215, 192, 0.75)",
+  borderColor: "rgba(76, 215, 192, 1)",
+  borderWidth: "5",
+  pointBorderColor: "#FFF",
+  pointBackgroundColor: "rgba(76, 215, 192, 1)",
+  pointBorderWidth: "3",
+  pointRadius: "6",
+  radius: "6",
+  pointHoverRadius: "7"
+};
+
 class PerformanceRadar extends Component {
   render() {
-    return (<canvas/>);
+    return <canvas/>;
   }
 
   componentDidMount() {
@@ -14,10 +40,9 @@ class PerformanceRadar extends Component {
       type: 'radar',
       data: {
         labels : ["F", "Precision", "MAP", "Recall"],
-        datasets: this.props.datasets
+        datasets: [ Object.assign({ data: this.props.chartData }, datasetOptions) ]
       },
-      options: {legend: {display: false},
-                scale: {ticks: {max: 1, maxTicksLimit: 4}}}
+      options: chartOptions
     });
   }
 
@@ -27,7 +52,7 @@ class PerformanceRadar extends Component {
 }
 
 PerformanceRadar.propTypes = {
-  datasets: PropTypes.array.isRequired
+  chartData: PropTypes.array.isRequired
 };
 
 PerformanceRadar.displayName = "PerformanceRadar";

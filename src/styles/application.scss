@@ -28,11 +28,6 @@ a {
   margin: 0 10px 0 20px;
 }
 
-.results-overview {
-  height: 300px;
-  width: 300px;
-}
-
 .results-detail {
   .loader {
     text-align: left;
@@ -45,8 +40,8 @@ a {
   border: 3px solid $very-light-gray;
   cursor: pointer;
   margin: 5px;
-  min-height: 250px;
-  min-width: 250px;
+  min-height: 235px;
+  min-width: 225px;
   padding: 5px;
   text-align: center;
 
@@ -78,4 +73,18 @@ a {
   height: 40px;
   line-height: 40px;
   margin: 0 1px;
+}
+
+.alert-banner {
+  border-radius: 0;
+}
+
+.panel-body .alert-banner {
+  margin-top: -15px;
+}
+
+.alert-danger {
+  background-color: $red;
+  border-color: $red;
+  color: $white;
 }
