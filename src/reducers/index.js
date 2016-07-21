@@ -4,8 +4,7 @@ import _ from 'lodash';
 import { REQUEST_RMS_FULFILLED, REQUEST_RECORD_SET_FULFILLED,
          REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT, CREATE_CONTEXT_FULFILLED,
          REQUEST_MATCH_RUN_FULFILLED, CREATE_MATCH_RUN_FULFILLED,
-         SELECT_RMS, SELECT_RECORD_SETS, SELECT_RECORD_SET,
-         REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED,
+         REQUEST_MATCH_RUNS_FULFILLED, REQUEST_LINKS_FULFILLED,
          REQUEST_PATIENTS_FULFILLED } from '../actions/types';
 
 function idReducer(payloadArray) {
@@ -14,19 +13,10 @@ function idReducer(payloadArray) {
     return state;}, {});
 }
 
-function resetSelect(state, ids) {
-  let clonedState = Object.assign({}, state);
-  _.values(clonedState).forEach((obj) => obj.selected = false);
-  ids.forEach((id) => clonedState[id].selected = true);
-  return clonedState;
-}
-
 export function recordMatchingSystems(state = {}, action) {
   switch (action.type) {
     case REQUEST_RMS_FULFILLED:
       return idReducer(action.payload);
-    case SELECT_RMS:
-      return resetSelect(state, action.payload);
     default:
       return state;
   }
@@ -36,29 +26,41 @@ function recordSets(state = {}, action) {
   switch (action.type) {
     case REQUEST_RECORD_SET_FULFILLED:
       return idReducer(action.payload);
-    case SELECT_RECORD_SETS:
-      return resetSelect(state, action.payload);
-    case SELECT_RECORD_SET:
-      let clonedState = Object.assign({}, state);
-      clonedState[action.payload].selected = true;
-      return clonedState;
     default:
       return state;
   }
 }
 
 function matchRuns(state = {}, action) {
-  let matchRunClone;
+  let matchRunClone, matchRunId;
   switch (action.type) {
     case REQUEST_MATCH_RUN_FULFILLED:
     case CREATE_MATCH_RUN_FULFILLED:
       matchRunClone = Object.assign({}, state);
-      let matchRunId = action.payload.id;
+      matchRunId = action.payload.id;
       matchRunClone[matchRunId] = Object.assign({}, action.payload);
       return matchRunClone;
-    case REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED:
+    case REQUEST_MATCH_RUNS_FULFILLED:
       matchRunClone = Object.assign({}, state);
       action.payload.forEach((mr) => matchRunClone[mr.id] = mr);
+      return matchRunClone;
+    case REQUEST_LINKS_FULFILLED:
+      matchRunClone = Object.assign({}, state);
+      matchRunId = action.payload[1].runId;
+      let category = action.payload[1].category;
+      if (category) {
+        let existingLinks = matchRunClone[matchRunId].links;
+        if (existingLinks === undefined) {
+          existingLinks = [];
+        }
+        action.payload[0].forEach((l) => {
+          l.type = category;
+          existingLinks.push(l);
+        });
+        matchRunClone[matchRunId] = Object.assign(matchRunClone[matchRunId], {links: existingLinks});
+      } else {
+        matchRunClone[matchRunId] = Object.assign(matchRunClone[matchRunId], {links: action.payload[0]});
+      }
       return matchRunClone;
     default:
       return state;

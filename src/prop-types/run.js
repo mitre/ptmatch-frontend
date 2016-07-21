@@ -23,7 +23,8 @@ const run = Object.assign({}, metrics, {
   links: PropTypes.arrayOf(PropTypes.shape({
     score: PropTypes.number.isRequired,
     source: PropTypes.string.isRequired,
-    target: PropTypes.string.isRequired
+    target: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['best', 'worst'])
   })),
   status: PropTypes.oneOf(['responded', 'no-response'])
 });

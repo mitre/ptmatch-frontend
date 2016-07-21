@@ -12,16 +12,12 @@ import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import { runProps } from '../prop-types/run';
 import patientProps from '../prop-types/patient';
 
-import { fetchMatchRunsByContext, createRun } from '../actions/matchRun';
+import { createRun } from '../actions/matchRun';
 
 class ChallengeContext extends Component {
   constructor(props) {
     super(props);
     this.state = {selectedRMS: -1};
-  }
-
-  componentWillMount() {
-    this.props.fetchMatchRunsByContext(this.props.context.id);
   }
 
   selectRMS(rmsId) {
@@ -102,4 +98,4 @@ export function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, { fetchMatchRunsByContext, createRun })(ChallengeContext);
+export default connect(mapStateToProps, { createRun })(ChallengeContext);

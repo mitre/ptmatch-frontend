@@ -4,8 +4,9 @@ import { retrieve } from './index';
 
 import {
   REQUEST_MATCH_RUN,
-  REQUEST_MATCH_RUNS_BY_CONTEXT,
-  CREATE_MATCH_RUN
+  REQUEST_MATCH_RUNS,
+  CREATE_MATCH_RUN,
+  REQUEST_LINKS
 } from './types';
 
 export function fetchMatchRun(jobId) {
@@ -13,9 +14,20 @@ export function fetchMatchRun(jobId) {
           payload: retrieve(`/RecordMatchRun/${jobId}`)};
 }
 
-export function fetchMatchRunsByContext(contextId) {
-  return {type: REQUEST_MATCH_RUNS_BY_CONTEXT,
-          payload: retrieve(`/RecordMatchRun?recordMatchContextId=${contextId}`)};
+export function fetchMatchRuns() {
+  return {type: REQUEST_MATCH_RUNS,
+          payload: retrieve('/RecordMatchRunMetrics')};
+}
+
+export function fetchLinks(runId, category=null, limit=10) {
+  if (category) {
+    return {type: REQUEST_LINKS,
+            payload: retrieve(`/RecordMatchRunLinks/${runId}?category=${category}&limit=${limit}`,
+                              {runId: runId, category})};
+  } else {
+    return {type: REQUEST_LINKS,
+            payload: retrieve(`/RecordMatchRunLinks/${runId}`, {runId: runId})};
+  }
 }
 
 export function createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) {

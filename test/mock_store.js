@@ -1,5 +1,5 @@
 class MockStore {
-  constructor(state) {
+  constructor(state = {}) {
     this.state = state;
     this.dispatchedActions = [];
   }

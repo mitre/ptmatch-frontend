@@ -1,6 +1,5 @@
 import {
-  REQUEST_MATCH_RUN_FULFILLED,
-  REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED
+  REQUEST_LINKS_FULFILLED
 } from '../actions/types';
 
 import { fetchPatients } from '../actions/patient';
@@ -9,13 +8,8 @@ import { fetchPatients } from '../actions/patient';
 // at all of the links in a given match run and dispatch an action to fetch them
 // if they are not already in the store.
 const fetchLinks = store => next => action => {
-  if (action.type === REQUEST_MATCH_RUN_FULFILLED &&
-      action.payload.links !== undefined) {
-    dispatchFetchLinks(store, action.payload.links);
-  }
-
-  if (action.type === REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED) {
-    action.payload.forEach((p) => dispatchFetchLinks(store, p.links));
+  if (action.type === REQUEST_LINKS_FULFILLED) {
+    dispatchFetchLinks(store, action.payload[0]);
   }
 
   return next(action);
@@ -28,7 +22,7 @@ export function dispatchFetchLinks(store, links) {
   }
 }
 
-export function extractIdsToFetch(store, links) {
+export function extractIdsToFetch(store, links=[]) {
   let idsToFetch = [];
   links.forEach((l) => {
     idsToFetch.push(idFromLink(l.source), idFromLink(l.target));
