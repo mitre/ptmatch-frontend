@@ -1,9 +1,25 @@
 import React, { Component, PropTypes } from 'react';
 import MatchLink from './MatchLink';
 import patientProps from '../prop-types/patient';
+import { links } from '../prop-types/run';
 
 class MatchLinks extends Component {
   render() {
+    if (this.props.links.find((l) => l.type === 'best')) {
+      return (
+        <div>
+          <h2>Top 5</h2>
+          this.linkDisplay(this.props.links.filter((l) => l.type === 'best'));
+          <h2>Bottom 5</h2>
+          this.linkDisplay(this.props.links.filter((l) => l.type === 'worst'));
+        </div>
+      );
+    } else {
+      return this.linkDisplay(this.props.links);
+    }
+  }
+
+  linkDisplay(links) {
     return (
       <div>
         <div className="row links-header">
@@ -13,7 +29,7 @@ class MatchLinks extends Component {
         </div>
 
         <div>
-          {this.props.links.map((l) => {
+          {links.map((l) => {
             return (
               <MatchLink key={l.source}
                          source={l.source}
@@ -28,14 +44,11 @@ class MatchLinks extends Component {
   }
 }
 
+
 MatchLinks.displayName = 'MatchLinks';
 
 MatchLinks.propTypes = {
-  links: PropTypes.arrayOf(PropTypes.shape({
-    score: PropTypes.number.isRequired,
-    source: PropTypes.string.isRequired,
-    target: PropTypes.string.isRequired
-  })).isRequired,
+  links: links,
   patients: PropTypes.objectOf(patientProps).isRequired
 };
 
