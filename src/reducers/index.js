@@ -31,7 +31,7 @@ function recordSets(state = {}, action) {
   }
 }
 
-function matchRuns(state = {}, action) {
+export function matchRuns(state = {}, action) {
   let matchRunClone, matchRunId;
   switch (action.type) {
     case REQUEST_MATCH_RUN_FULFILLED:
