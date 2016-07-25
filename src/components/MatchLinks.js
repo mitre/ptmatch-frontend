@@ -9,9 +9,9 @@ class MatchLinks extends Component {
       return (
         <div>
           <h2>Top 5</h2>
-          this.linkDisplay(this.props.links.filter((l) => l.type === 'best'));
+          {this.linkDisplay(this.props.links.filter((l) => l.type === 'best'))}
           <h2>Bottom 5</h2>
-          this.linkDisplay(this.props.links.filter((l) => l.type === 'worst'));
+          {this.linkDisplay(this.props.links.filter((l) => l.type === 'worst'))}
         </div>
       );
     } else {
