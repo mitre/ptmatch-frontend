@@ -18,17 +18,20 @@ const metrics = {
   })
 };
 
+const links = PropTypes.arrayOf(PropTypes.shape({
+  score: PropTypes.number.isRequired,
+  source: PropTypes.string.isRequired,
+  target: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['best', 'worst'])
+}));
+
 const run = Object.assign({}, metrics, {
   note: PropTypes.string,
-  links: PropTypes.arrayOf(PropTypes.shape({
-    score: PropTypes.number.isRequired,
-    source: PropTypes.string.isRequired,
-    target: PropTypes.string.isRequired
-  })),
+  links: links,
   status: PropTypes.oneOf(['responded', 'no-response'])
 });
 
 const metricsProps = PropTypes.shape(metrics);
 const runProps = PropTypes.shape(run);
 
-export {metricsProps, runProps};
+export {metricsProps, runProps, links};

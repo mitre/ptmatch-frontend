@@ -1,6 +1,6 @@
 import { expect } from '../test_helper';
 import {
-  REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED,
+  REQUEST_LINKS_FULFILLED,
   REQUEST_PATIENTS
 } from '../../src/actions/types';
 import fetchLinks, { idFromLink, extractIdsToFetch } from '../../src/middlewares/fetch_links';
@@ -35,7 +35,7 @@ describe('fetchLinks middleware', () => {
   });
 
   it('will fetch links based on the match run', () => {
-    const action = {type: REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED, payload: [{links: links}]};
+    const action = {type: REQUEST_LINKS_FULFILLED, payload: [links, {runId: 1, category: 'worst'}]};
     const next = () => {
       1 + 1; //do nothing
     };

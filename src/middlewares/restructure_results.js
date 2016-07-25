@@ -5,11 +5,15 @@
 // use.
 import {
   REQUEST_MATCH_RUN_FULFILLED,
-  REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED,
+  REQUEST_MATCH_RUNS_FULFILLED,
   CREATE_MATCH_RUN_FULFILLED
 } from '../actions/types';
 
-function restructure(payload) {
+import { fetchLinks } from '../actions/matchRun';
+
+import _ from 'lodash';
+
+function restructure(payload, store) {
   let newPayload = {
     id: payload.id,
     meta: payload.meta,
@@ -20,38 +24,32 @@ function restructure(payload) {
     recordMatchSystemInterfaceId: payload.recordMatchSystemInterfaceId,
     masterRecordSetId: payload.masterRecordSetId
   };
-  if (payload.responses) {
-    newPayload.status = 'responded';
-    let matchResponses = payload.responses.filter((resp) => {
-      let resourceEntries = resp.message.entry.filter((e) => e.resource !== undefined);
-      let matchEvent = resourceEntries.find((e) => e.resource.event !== undefined && e.resource.event.code === "record-match");
-      return matchEvent !== undefined;
-    });
-    let allEntries = matchResponses.reduce((acc, currentValue) => acc.concat(...currentValue.message.entry), []);
-    let links = allEntries.filter((e) => e.link !== undefined);
-    newPayload.links = links.map((l) => {
-      const source = l.fullUrl;
-      const target = l.link.find((nl) => nl.relation === "related").url;
-      const score = l.search.score;
-      return {source, target, score};
-    });
-  } else {
+  if (_.isEmpty(payload.metrics)) {
     newPayload.links = [];
     newPayload.status = 'no-response';
+  } else {
+    newPayload.links = [];
+    newPayload.status = 'responded';
+    if (payload.metrics.matchCount > 10) {
+      store.dispatch(fetchLinks(payload.id, "best", 5));
+      store.dispatch(fetchLinks(payload.id, "worst", 5));
+    } else {
+      store.dispatch(fetchLinks(payload.id));
+    }
   }
 
   return newPayload;
 }
 
-export default function() {
+export default function(store) {
   return next => action => {
     switch (action.type) {
       case REQUEST_MATCH_RUN_FULFILLED:
       case CREATE_MATCH_RUN_FULFILLED:
-        action.payload = restructure(action.payload);
+        action.payload = restructure(action.payload, store);
         break;
-      case REQUEST_MATCH_RUNS_BY_CONTEXT_FULFILLED:
-        action.payload = action.payload.map((p) => restructure(p));
+      case REQUEST_MATCH_RUNS_FULFILLED:
+        action.payload = action.payload.map((p) => restructure(p, store));
         break;
     }
 

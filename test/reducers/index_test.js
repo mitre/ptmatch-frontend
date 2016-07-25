@@ -1,8 +1,9 @@
 import { expect } from '../test_helper';
 import { REQUEST_RMS_FULFILLED, REQUEST_CONTEXT_FULFILLED,
-         SELECT_CONTEXT, SELECT_RMS,
+         SELECT_CONTEXT, REQUEST_LINKS_FULFILLED,
          REQUEST_PATIENTS_FULFILLED } from '../../src/actions/types';
-import { contexts, recordMatchingSystems, patients } from '../../src/reducers';
+import { contexts, recordMatchingSystems,
+         patients, matchRuns } from '../../src/reducers';
 
 
 describe('reducers', () => {
@@ -10,14 +11,6 @@ describe('reducers', () => {
     const action = {type: REQUEST_RMS_FULFILLED, payload: [{id: '1', name: 'FRIL'}]};
     const state = recordMatchingSystems({}, action);
     expect(state['1'].name).to.equal('FRIL');
-  });
-
-  it('selects record matching systems', () => {
-    const action = {type: SELECT_RMS, payload: ['1']};
-    const state = recordMatchingSystems({'1': {id: '1', name: 'FRIL'},
-                                         '2': {id: '2', name: 'ChoiceMaker', selected: true}}, action);
-    expect(state['1'].selected).to.equal(true);
-    expect(state['2'].selected).to.equal(false);
   });
 
   it('receives contexts', () => {
@@ -43,5 +36,26 @@ describe('reducers', () => {
     const state = patients({'1': {id: '1', gender: 'male'}}, action);
     expect(state['1'].gender).to.equal('male');
     expect(state['2'].gender).to.equal('female');
+  });
+
+  it('will add links to a match run', () => {
+    const action = {type: REQUEST_LINKS_FULFILLED, payload: [
+      [{source: 'http://foo.com/1', target: 'http://foo.com/2', score: 0.75}],
+      {runId: '1'}
+    ]};
+    const state = matchRuns({'1': {id: '1'}}, action);
+    expect(state['1'].links.length).to.equal(1);
+    expect(state['1'].links[0].source).to.equal('http://foo.com/1');
+  });
+
+  it('will add links to a match run with the provided category', () => {
+    const action = {type: REQUEST_LINKS_FULFILLED, payload: [
+      [{source: 'http://foo.com/1', target: 'http://foo.com/2', score: 0.75}],
+      {runId: '1', category: 'best'}
+    ]};
+    const state = matchRuns({'1': {id: '1'}}, action);
+    expect(state['1'].links.length).to.equal(1);
+    expect(state['1'].links[0].source).to.equal('http://foo.com/1');
+    expect(state['1'].links[0].type).to.equal('best');
   });
 });

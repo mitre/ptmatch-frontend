@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { SELECT_RECORD_SET } from '../actions/types';
-
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
@@ -14,14 +12,9 @@ import RunHistoryChart from "../components/RunHistoryChart";
 import NewBenchmarkRunModal from "../components/NewBenchmarkRunModal";
 import MatchLinks from '../components/MatchLinks';
 
-import { fetchMatchRunsByContext, createRun } from '../actions/matchRun';
+import { createRun } from '../actions/matchRun';
 
 export class BenchmarkContext extends Component {
-
-  componentWillMount() {
-    this.props.fetchMatchRunsByContext(this.props.context.id);
-  }
-
   completedRuns() {
     return this.props.matchRuns.filter((mr) => mr.status === 'responded');
   }
@@ -90,7 +83,6 @@ export class BenchmarkContext extends Component {
                                   recordMatchingSystems={this.props.recordMatchingSystems}
                                   runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
                                                 this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);
-                                                this.props.selectRecordSet(masterRecordSetId);
                                               }}/>
           </div>
         </div>
@@ -121,10 +113,6 @@ BenchmarkContext.propTypes = {
   selectRecordSet: PropTypes.func
 };
 
-function selectRecordSet(recordSetId) {
-  return {type: SELECT_RECORD_SET, payload: recordSetId};
-}
-
 export function mapStateToProps(state, ownProps) {
   const contextId = ownProps.context.id;
   const matchRuns = _.sortBy(
@@ -139,4 +127,4 @@ export function mapStateToProps(state, ownProps) {
   return {matchRuns, recordMatchingSystems, recordSets, patients};
 }
 
-export default connect(mapStateToProps, { fetchMatchRunsByContext, createRun, selectRecordSet })(BenchmarkContext);
+export default connect(mapStateToProps, { createRun })(BenchmarkContext);

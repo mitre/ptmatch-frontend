@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { fetchContexts, selectContext, createContext } from '../actions/context';
 import { fetchRecordSetsIfNeeded } from '../actions/recordSet';
 import { fetchRMSIfNeeded } from '../actions/recordMatchingSystems';
+import { fetchMatchRuns } from '../actions/matchRun';
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
@@ -52,6 +53,7 @@ class Dashboard extends Component {
     this.props.fetchContexts();
     this.props.fetchRecordSetsIfNeeded();
     this.props.fetchRMSIfNeeded();
+    this.props.fetchMatchRuns();
   }
 }
 
@@ -63,6 +65,7 @@ Dashboard.propTypes = {
   fetchRMSIfNeeded: PropTypes.func,
   selectContext: PropTypes.func,
   createContext: PropTypes.func,
+  fetchMatchRuns: PropTypes.func,
   contexts: PropTypes.objectOf(contextProps),
   recordSets: PropTypes.objectOf(recordSetProps),
   recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps)
@@ -76,4 +79,4 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, { fetchContexts,
         fetchRecordSetsIfNeeded, fetchRMSIfNeeded, selectContext,
-        createContext })(Dashboard);
+        createContext, fetchMatchRuns })(Dashboard);

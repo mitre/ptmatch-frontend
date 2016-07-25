@@ -5,7 +5,7 @@ var WriteFilePlugin = require('write-file-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  devtool: 'eval-source-map',
+  devtool: 'inline-source-map',
 
   entry: [
     'bootstrap-loader',

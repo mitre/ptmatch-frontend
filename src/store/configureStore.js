@@ -6,7 +6,6 @@ import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 import promiseMiddleware from 'redux-promise-middleware';
 import restructureResults from '../middlewares/restructure_results';
-import selectByContext from '../middlewares/select_by_context';
 import fetchLinks from '../middlewares/fetch_links';
 import pollResults from '../middlewares/poll_results';
 
@@ -17,7 +16,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(promiseMiddleware(), pollResults, restructureResults, selectByContext,
+      applyMiddleware(promiseMiddleware(), pollResults, restructureResults,
                       fetchLinks, reduxRouterMiddleware, createLogger()),
       DevTools.instrument()
     )
