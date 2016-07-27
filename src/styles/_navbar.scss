@@ -19,11 +19,20 @@
   .navbar-nav {
     float: right;
 
-    a {
-      line-height: 30px;
+    li {
+      padding: 13px 20px;
 
-      &:hover, &:visited {
-        background-color: lighten($brand-secondary, 10%);
+      &.active {
+        border-bottom: 5px solid $red;
+      }
+
+      a {
+        display: inline;
+        line-height: 30px;
+
+        &:hover, &:visited {
+          background-color: lighten($brand-secondary, 10%);
+        }
       }
     }
   }
