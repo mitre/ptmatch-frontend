@@ -15,27 +15,32 @@ import BenchmarkContext from './BenchmarkContext';
 import ContextList from '../components/ContextList';
 import RecordSetList from '../components/RecordSetList';
 import MatchingSystemList from '../components/MatchingSystemList';
+import PageHeader from '../components/Header/PageHeader';
 
 class Dashboard extends Component {
   render() {
     return (
-      <div className="row">
-        <div className="col-md-4">
-          <ContextList contexts={this.props.contexts}
-                       selector={this.props.selectContext}
-                       contextCreator={this.props.createContext}/>
-          <RecordSetList recordSets={this.props.recordSets} />
-          <MatchingSystemList recordMatchingSystems={this.props.recordMatchingSystems} />
-        </div>
+      <div className="dashboard">
+        <PageHeader title="Dashboard" />
 
-        <div className="col-md-8">
-          {this.selectedChallengeContexts().map((context) => {
-              return (<ChallengeContext context={context} key={context.id} />);
-          })}
+        <div className="row">
+          <div className="col-md-4">
+            <ContextList contexts={this.props.contexts}
+                         selector={this.props.selectContext}
+                         contextCreator={this.props.createContext}/>
+            <RecordSetList recordSets={this.props.recordSets} />
+            <MatchingSystemList recordMatchingSystems={this.props.recordMatchingSystems} />
+          </div>
 
-          {this.selectedBenchmarkContexts().map((context) => {
-            return (<BenchmarkContext context={context} key={context.id} />);
-          })}
+          <div className="col-md-8">
+            {this.selectedChallengeContexts().map((context) => {
+                return (<ChallengeContext context={context} key={context.id} />);
+            })}
+
+            {this.selectedBenchmarkContexts().map((context) => {
+              return (<BenchmarkContext context={context} key={context.id} />);
+            })}
+          </div>
         </div>
       </div>
     );

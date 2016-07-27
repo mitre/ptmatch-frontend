@@ -7,5 +7,7 @@ import Dashboard from './containers/Dashboard';
 export default (
   <Route component={App}>
     <Route path="/" component={Dashboard} />
+    <Route path="/MatchingSystems" component={Dashboard} />
+    <Route path="/RecordSets" component={Dashboard} />
   </Route>
 );
