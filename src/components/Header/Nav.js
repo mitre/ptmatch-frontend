@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router';
 
-import Logo from './Logo.js';
+import Logo from './Logo';
 
 export default class Nav extends Component {
   render() {
@@ -29,7 +29,7 @@ export default class Nav extends Component {
             <ul className="nav navbar-nav">
               <li>
                 <Link to="/" activeClassName="active">
-                  <FontAwesome name="pie-chart" /> Matcher Results
+                  <FontAwesome name="pie-chart" /> Dashboard
                 </Link>
               </li>
 

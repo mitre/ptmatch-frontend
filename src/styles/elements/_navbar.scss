@@ -54,14 +54,14 @@
             margin-right: 0;
 
             a {
+              border-left: 5px solid $brand-secondary;
               color: $white;
               display: block;
               line-height: 20px;
 
               &:hover {
-                background-color: $white;
-                border: none;
-                color: $brand-secondary;
+                border-bottom: none;
+                border-left: 5px solid $red;
               }
             }
           }
