@@ -8,7 +8,7 @@ export default class Logo extends Component {
         <span><img className="header-logo" alt="PCOR logo" src="assets/images/logo-3x.png" width="25px" /></span>
         <span>PCOR Patient Matcher</span>
       </Link>
-    )
+    );
   }
 }
 

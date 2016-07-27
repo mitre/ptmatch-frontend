@@ -63,7 +63,7 @@ export default class Nav extends Component {
           </div>
         </div>
       </nav>
-    )
+    );
   }
 }
 
