@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
+import { Link } from 'react-router';
+
 import Logo from './Logo.js';
 
 export default class Nav extends Component {
@@ -25,9 +27,9 @@ export default class Nav extends Component {
 
           <div id="navbar" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li className="active"><a href="#"><FontAwesome name="pie-chart" /> Matcher Results</a></li>
-              <li><a href="#"><FontAwesome name="sitemap" /> Matching Systems</a></li>
-              <li><a href="#"><FontAwesome name="database" /> Record Sets</a></li>
+              <li><Link to="/" activeClassName="active"><FontAwesome name="pie-chart" /> Matcher Results</Link></li>
+              <li><Link to="/MatchingSystems" activeClassName="active"><FontAwesome name="sitemap" /> Matching Systems</Link></li>
+              <li><Link to="/RecordSets" activeClassName="active"><FontAwesome name="database" /> Record Sets</Link></li>
 
               <li className="dropdown">
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

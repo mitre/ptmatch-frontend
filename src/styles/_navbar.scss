@@ -20,18 +20,18 @@
     float: right;
 
     li {
-      padding: 13px 20px;
-
-      &.active {
-        border-bottom: 5px solid $red;
-      }
-
+      margin-right: 5px;
+      
       a {
         display: inline;
-        line-height: 30px;
+        line-height: 60px;
+        padding: 18px 30px;
 
-        &:hover, &:visited {
-          background-color: lighten($brand-secondary, 10%);
+        &.active,
+        &:hover,
+        &:visited {
+          background-color: $brand-secondary;
+          border-bottom: 5px solid $red;
         }
       }
     }
