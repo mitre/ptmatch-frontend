@@ -27,12 +27,31 @@ export default class Nav extends Component {
 
           <div id="navbar" className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li><Link to="/" activeClassName="active"><FontAwesome name="pie-chart" /> Matcher Results</Link></li>
-              <li><Link to="/MatchingSystems" activeClassName="active"><FontAwesome name="sitemap" /> Matching Systems</Link></li>
-              <li><Link to="/RecordSets" activeClassName="active"><FontAwesome name="database" /> Record Sets</Link></li>
+              <li>
+                <Link to="/" activeClassName="active">
+                  <FontAwesome name="pie-chart" /> Matcher Results
+                </Link>
+              </li>
 
-              <li className="dropdown">
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <li>
+                <Link to="/MatchingSystems" activeClassName="active">
+                  <FontAwesome name="sitemap" /> Matching Systems
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/RecordSets" activeClassName="active">
+                  <FontAwesome name="database" /> Record Sets
+                </Link>
+              </li>
+
+              <li role="presentation" className="dropdown">
+                <a href="#"
+                   className="dropdown-toggle"
+                   data-toggle="dropdown"
+                   role="button"
+                   aria-haspopup="true"
+                   aria-expanded="false">
                   Name <span className="caret"></span>
                 </a>
 

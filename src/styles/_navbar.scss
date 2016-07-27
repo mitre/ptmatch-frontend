@@ -10,8 +10,8 @@
   }
 
   .navbar-brand {
-    font-size: 20px;
-    font-weight: 100;
+    font-size: 22px;
+    font-weight: 200;
     letter-spacing: 1.2px;
     line-height: 30px;
   }
@@ -21,7 +21,8 @@
 
     li {
       margin-right: 5px;
-      
+      min-width: 105px;
+
       a {
         display: inline;
         line-height: 60px;
@@ -32,6 +33,38 @@
         &:visited {
           background-color: $brand-secondary;
           border-bottom: 5px solid $red;
+        }
+      }
+
+      &.dropdown {
+        &.open > a {
+          border-bottom: 5px solid $red;
+        }
+
+        .dropdown-menu {
+          background-clip: initial;
+          background-color: $brand-secondary;
+          border-radius: 0;
+          border: none;
+          box-shadow: none;
+          min-width: 110px;
+          padding: 0;
+
+          li {
+            margin-right: 0;
+
+            a {
+              color: $white;
+              display: block;
+              line-height: 20px;
+
+              &:hover {
+                background-color: $white;
+                border: none;
+                color: $brand-secondary;
+              }
+            }
+          }
         }
       }
     }
