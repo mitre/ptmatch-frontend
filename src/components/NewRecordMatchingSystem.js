@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 
-import { createRMS } from '../actions/recordMatchingSystems';
-
-class NewRecordMatchingSystem extends Component {
+export default class NewRecordMatchingSystem extends Component {
   constructor(props) {
     super(props);
     this.state = {name: '', description: '', destinationEndpoint: '',
@@ -74,5 +71,3 @@ NewRecordMatchingSystem.propTypes = {
 };
 
 NewRecordMatchingSystem.displayName = 'NewRecordMatchingSystem';
-
-export default connect(null, {createRMS})(NewRecordMatchingSystem);

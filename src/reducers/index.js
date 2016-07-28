@@ -5,7 +5,7 @@ import { REQUEST_RMS_FULFILLED, REQUEST_RECORD_SET_FULFILLED,
          REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT, CREATE_CONTEXT_FULFILLED,
          REQUEST_MATCH_RUN_FULFILLED, CREATE_MATCH_RUN_FULFILLED,
          REQUEST_MATCH_RUNS_FULFILLED, REQUEST_LINKS_FULFILLED,
-         REQUEST_PATIENTS_FULFILLED } from '../actions/types';
+         REQUEST_PATIENTS_FULFILLED, CREATE_RMS_FULFILLED } from '../actions/types';
 
 function idReducer(payloadArray) {
   return _.reduce(payloadArray, (state, obj) => {
@@ -17,6 +17,10 @@ export function recordMatchingSystems(state = {}, action) {
   switch (action.type) {
     case REQUEST_RMS_FULFILLED:
       return idReducer(action.payload);
+    case CREATE_RMS_FULFILLED:
+      let rmsClone = Object.assign({}, state);
+      rmsClone[action.payload.id] = action.payload;
+      return rmsClone;
     default:
       return state;
   }

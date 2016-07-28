@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import {retrieve} from './index';
 
 import {
-  REQUEST_RMS
+  REQUEST_RMS, CREATE_RMS
 } from './types';
 
 export function fetchRMSIfNeeded() {
@@ -11,13 +11,14 @@ export function fetchRMSIfNeeded() {
 }
 
 export function createRMS(rms) {
-  fetch('/RecordMatchSystemInterface', {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: JSON.stringify(rms)
-  });
-  return {type: REQUEST_RMS, payload: retrieve('/RecordMatchSystemInterface')};
+  return {type: CREATE_RMS, payload: new Promise((resolve) => {
+    fetch('/RecordMatchSystemInterface', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(rms)
+    }).then(req => req.json()).then(json => resolve(json));
+  })};
 }

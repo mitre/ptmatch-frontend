@@ -2,10 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { fetchContexts, selectContext, createContext } from '../actions/context';
-import { fetchRecordSetsIfNeeded } from '../actions/recordSet';
-import { fetchRMSIfNeeded } from '../actions/recordMatchingSystems';
-import { fetchMatchRuns } from '../actions/matchRun';
+import { selectContext, createContext } from '../actions/context';
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
@@ -52,23 +49,13 @@ class Dashboard extends Component {
     return _.values(this.props.contexts).filter((c) => c.selected === true && c.type === 'benchmark');
   }
 
-  componentWillMount() {
-    this.props.fetchContexts();
-    this.props.fetchRecordSetsIfNeeded();
-    this.props.fetchRMSIfNeeded();
-    this.props.fetchMatchRuns();
-  }
 }
 
 Dashboard.displayName = 'Dashboard';
 
 Dashboard.propTypes = {
-  fetchContexts: PropTypes.func,
-  fetchRecordSetsIfNeeded: PropTypes.func,
-  fetchRMSIfNeeded: PropTypes.func,
   selectContext: PropTypes.func,
   createContext: PropTypes.func,
-  fetchMatchRuns: PropTypes.func,
   contexts: PropTypes.objectOf(contextProps),
   recordSets: PropTypes.objectOf(recordSetProps),
   recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps),
@@ -82,6 +69,4 @@ function mapStateToProps(state) {
           matchRuns: state.matchRuns};
 }
 
-export default connect(mapStateToProps, { fetchContexts,
-        fetchRecordSetsIfNeeded, fetchRMSIfNeeded, selectContext,
-        createContext, fetchMatchRuns })(Dashboard);
+export default connect(mapStateToProps, { selectContext, createContext })(Dashboard);
