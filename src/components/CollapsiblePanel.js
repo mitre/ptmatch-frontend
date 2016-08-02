@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import { Collapse } from 'react-bootstrap';
 import classNames from 'classnames';
-
-import NewContextModal from './NewContextModal';
+import FontAwesome from 'react-fontawesome';
 
 export default class CollapsiblePanel extends Component {
   constructor(...args) {
@@ -15,36 +14,36 @@ export default class CollapsiblePanel extends Component {
     };
   }
 
-  modalType() {
-    if (this.props.panelTitle === "Context") {
-      return (
-        <NewContextModal contextCreator={this.props.creator}/>
-      );
-    }
-  }
-
   panelButton() {
-    if (this.props.hasButton) {
+    if (this.props.buttonText) {
       return (
         <button className="btn btn-primary btn-panel pull-right"
                 data-toggle="modal"
-                data-target={`#new${this.props.panelTitle}Modal`}>
-          New {this.props.panelTitle}
+                data-target={this.props.modalTarget}>
+          {this.props.buttonText}
         </button>
       );
     }
   }
 
+  panelSubtitle() {
+    if (this.props.subtitle) {
+      return (
+        <span className="panel-subtitle pull-right">
+          <FontAwesome name={this.props.subtitleIcon} /> {this.props.subtitle}
+        </span>
+      );
+    }
+  }
+
   render() {
-    let panelTitleClassNames = classNames('fa', 'fa-fw', 'fa-' + this.props.panelIcon);
     let chevronClassNames = classNames('fa', 'fa-chevron-down', 'rotate', { left: this.state.chevronToggle});
 
     return (
       <div className="panel panel-collapsible">
         <div className="panel-heading">
           <span className="panel-title">
-            <i className={panelTitleClassNames} aria-hidden="true"></i>
-            {this.props.panelTitle}
+            <FontAwesome name={this.props.panelIcon} /> {this.props.panelTitle}
           </span>
 
           <a onClick={ ()=> this.setState({ open: !this.state.open, chevronToggle: !this.state.chevronToggle })}
@@ -53,6 +52,8 @@ export default class CollapsiblePanel extends Component {
           </a>
 
           {this.panelButton()}
+
+          {this.panelSubtitle()}
         </div>
 
         <Collapse className="panel-collapse" in={this.state.open}>
@@ -60,8 +61,6 @@ export default class CollapsiblePanel extends Component {
             {this.props.children}
           </div>
         </Collapse>
-
-        {this.modalType()}
       </div>
     );
   }
@@ -73,6 +72,9 @@ CollapsiblePanel.propTypes = {
   panelTitle: PropTypes.string.isRequired,
   panelIcon: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
-  creator: PropTypes.func.isRequired,
-  hasButton: PropTypes.bool
+  creator: PropTypes.func,
+  subtitle: PropTypes.string,
+  subtitleIcon: PropTypes.string,
+  buttonText: PropTypes.string,
+  modalTarget: PropTypes.string
 };

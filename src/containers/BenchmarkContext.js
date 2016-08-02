@@ -2,15 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import RunHistoryChart from "../components/RunHistoryChart";
+import NewBenchmarkRunModal from "../components/NewBenchmarkRunModal";
+import MatchLinks from '../components/MatchLinks';
+import CollapsiblePanel from '../components/CollapsiblePanel';
+
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import patientProps from '../prop-types/patient';
 import { runProps } from '../prop-types/run';
-
-import RunHistoryChart from "../components/RunHistoryChart";
-import NewBenchmarkRunModal from "../components/NewBenchmarkRunModal";
-import MatchLinks from '../components/MatchLinks';
 
 import { createRun } from '../actions/matchRun';
 
@@ -64,38 +65,32 @@ export class BenchmarkContext extends Component {
 
   render() {
     return (
-      <div className="panel panel-show">
-        <div className="panel-heading">
-          <div className="row">
-            <h3 className="panel-title col-xs-5">
-              {this.props.context.name}
-            </h3>
-
-            <div className="col-xs-3">
-              <span className="format-piece">Type: {this.props.context.type}</span>
-            </div>
-
-            <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#NewBenchmarkRun">New Run</button>
-
-            <NewBenchmarkRunModal title="New Benchmark Run"
-                                  context={this.props.context}
-                                  recordSets={this.props.recordSets}
-                                  recordMatchingSystems={this.props.recordMatchingSystems}
-                                  runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
-                                                this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);
-                                              }}/>
-          </div>
-        </div>
-
+      <CollapsiblePanel panelTitle={this.props.context.name}
+                        panelIcon="line-chart"
+                        subtitle="Subtitle Goes Here"
+                        subtitleIcon="sitemap"
+                        buttonText="New Run"
+                        modalTarget="#NewBenchmarkRun"
+                        creator={this.props.contextCreator}>
 
         <div className="panel-body">
           {this.inProgressHeader()}
+
           <div className="run-history-chart">
             {this.chart()}
           </div>
+
           {this.links()}
+
+          <NewBenchmarkRunModal title="New Benchmark Run"
+                                context={this.props.context}
+                                recordSets={this.props.recordSets}
+                                recordMatchingSystems={this.props.recordMatchingSystems}
+                                runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
+                                              this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);
+                                            }}/>
         </div>
-      </div>
+      </CollapsiblePanel>
     );
   }
 }

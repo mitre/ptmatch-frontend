@@ -5,6 +5,7 @@ import _ from 'lodash';
 import MatchingSystemThumbnail from '../components/MatchingSystemThumbnail';
 import NewChallengeRunModal from '../components/NewChallengeRunModal';
 import RunList from '../components/RunList';
+import CollapsiblePanel from '../components/CollapsiblePanel';
 
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
@@ -42,32 +43,24 @@ class ChallengeContext extends Component {
 
   render() {
     return (
-      <div className="panel panel-show">
-        <div className="panel-heading">
-          <div className="row">
-            <h3 className="panel-title col-xs-5">
-              {this.props.context.name}
-            </h3>
-
-            <div className="col-xs-3">
-              <span className="format-piece">Type: {this.props.context.type}</span>
-            </div>
-
-            <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#NewChallengeRun">New Run</button>
-
-            <NewChallengeRunModal title="New Challenge Run"
-                                  context={this.props.context}
-                                  recordSets={this.props.recordSets}
-                                  recordMatchingSystems={this.props.recordMatchingSystems}
-                                  runCreator={this.props.createRun}/>
-          </div>
-        </div>
-
+      <CollapsiblePanel panelTitle={this.props.context.name}
+                        panelIcon="users"
+                        subtitle="Subtitle Goes Here"
+                        subtitleIcon="database"
+                        buttonText="New Run"
+                        modalTarget="#NewChallengeRun"
+                        creator={this.props.contextCreator}>
 
         <div className="panel-body">
           {this.displayBody()}
+
+          <NewChallengeRunModal title="New Challenge Run"
+                                context={this.props.context}
+                                recordSets={this.props.recordSets}
+                                recordMatchingSystems={this.props.recordMatchingSystems}
+                                runCreator={this.props.createRun}/>
         </div>
-      </div>
+      </CollapsiblePanel>
     );
   }
 }

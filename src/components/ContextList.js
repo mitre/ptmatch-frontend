@@ -6,6 +6,7 @@ import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import { runProps } from '../prop-types/run';
 
 import CollapsiblePanel from './CollapsiblePanel';
+import NewContextModal from './NewContextModal';
 
 import _ from 'lodash';
 import moment from 'moment';
@@ -45,7 +46,11 @@ export default class ContextList extends Component {
 
   render() {
     return (
-      <CollapsiblePanel panelTitle="Context" panelIcon="key" hasButton={true} creator={this.props.contextCreator}>
+      <CollapsiblePanel panelTitle="Context"
+                        panelIcon="key"
+                        buttonText="New Context"
+                        modalTarget="#newContextModal"
+                        creator={this.props.contextCreator}>
         <div>
           <div className="list-group">
             {_.values(this.props.contexts).map((c) => {
@@ -87,6 +92,8 @@ export default class ContextList extends Component {
             })}
           </div>
         </div>
+
+        <NewContextModal contextCreator={this.props.creator}/>
       </CollapsiblePanel>
     );
   }
