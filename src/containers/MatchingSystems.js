@@ -31,7 +31,7 @@ class MatchingSystems extends Component {
       <div className="row">
         <div className="col-md-12">
           {_.values(this.props.recordMatchingSystems).filter((rms) => rms.selected === true).map((rms) => {
-            return <MatchingSystemInfo recordMatchingSystem={rms} />;
+            return <MatchingSystemInfo recordMatchingSystem={rms} key={rms.id} />;
           })}
         </div>
       </div>

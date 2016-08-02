@@ -15,7 +15,7 @@ class RecordSetList extends Component {
             if (rs.selected) {
               className += " active";
             }
-            return (<div className={className} key={rs.id}>
+            return (<div className={className} key={rs.id} onClick={() => this.props.selectRecordSet(rs.id)}>
                       <div className="row">
                         <p className="col-md-3">{rs.name}</p>
                         <p className="col-md-3">
@@ -34,7 +34,8 @@ class RecordSetList extends Component {
 RecordSetList.displayName = "RecordSetList";
 
 RecordSetList.propTypes = {
-  recordSets: PropTypes.objectOf(recordSetProps).isRequired
+  recordSets: PropTypes.objectOf(recordSetProps).isRequired,
+  selectRecordSet: PropTypes.func.isRequired
 };
 
 export default RecordSetList;

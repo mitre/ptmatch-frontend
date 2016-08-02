@@ -5,12 +5,20 @@ import { REQUEST_RMS_FULFILLED, SELECT_RMS, REQUEST_RECORD_SET_FULFILLED,
          REQUEST_CONTEXT_FULFILLED, SELECT_CONTEXT, CREATE_CONTEXT_FULFILLED,
          REQUEST_MATCH_RUN_FULFILLED, CREATE_MATCH_RUN_FULFILLED,
          REQUEST_MATCH_RUNS_FULFILLED, REQUEST_LINKS_FULFILLED,
-         REQUEST_PATIENTS_FULFILLED, CREATE_RMS_FULFILLED } from '../actions/types';
+         REQUEST_PATIENTS_FULFILLED, CREATE_RMS_FULFILLED,
+         SELECT_RECORD_SET } from '../actions/types';
 
 function idReducer(payloadArray) {
   return _.reduce(payloadArray, (state, obj) => {
     state[obj.id] = obj;
     return state;}, {});
+}
+
+function resetSelect(originalState, id) {
+  let clonedState = Object.assign({}, originalState);
+  _.values(clonedState).forEach((obj) => obj.selected = false);
+  clonedState[id].selected = true;
+  return clonedState;
 }
 
 export function recordMatchingSystems(state = {}, action) {
@@ -22,10 +30,7 @@ export function recordMatchingSystems(state = {}, action) {
       rmsClone[action.payload.id] = action.payload;
       return rmsClone;
     case SELECT_RMS:
-      let clonedState = Object.assign({}, state);
-      _.values(clonedState).forEach((obj) => obj.selected = false);
-      clonedState[action.payload].selected = true;
-      return clonedState;
+      return resetSelect(state, action.payload);
     default:
       return state;
   }
@@ -35,6 +40,8 @@ function recordSets(state = {}, action) {
   switch (action.type) {
     case REQUEST_RECORD_SET_FULFILLED:
       return idReducer(action.payload);
+    case SELECT_RECORD_SET:
+      return resetSelect(state, action.payload);
     default:
       return state;
   }
