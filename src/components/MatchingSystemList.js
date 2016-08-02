@@ -14,7 +14,7 @@ class MatchingSystemList extends Component {
             if (rms.selected) {
               className += " active";
             }
-            return (<li className={className} key={rms.id}>{rms.name}</li>);
+            return (<li className={className} key={rms.id} onClick={() => this.props.selectRMS(rms.id)}>{rms.name}</li>);
           })}
         </ul>
       </CollapsiblePanel>
@@ -25,7 +25,8 @@ class MatchingSystemList extends Component {
 MatchingSystemList.displayName = "MatchingSystemList";
 
 MatchingSystemList.propTypes = {
-  recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps).isRequired
+  recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps).isRequired,
+  selectRMS: PropTypes.func.isRequired
 };
 
 export default MatchingSystemList;

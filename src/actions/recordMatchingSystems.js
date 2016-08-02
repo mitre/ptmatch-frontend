@@ -2,12 +2,16 @@ import fetch from 'isomorphic-fetch';
 import {retrieve} from './index';
 
 import {
-  REQUEST_RMS, CREATE_RMS
+  REQUEST_RMS, CREATE_RMS, SELECT_RMS
 } from './types';
 
 export function fetchRMSIfNeeded() {
   return {type: REQUEST_RMS,
           payload: retrieve('/RecordMatchSystemInterface')};
+}
+
+export function selectRMS(rmsId) {
+  return {type: SELECT_RMS, payload: rmsId};
 }
 
 export function createRMS(rms) {
