@@ -10,7 +10,7 @@ import { createRMS } from '../actions/recordMatchingSystems';
 
 import MatchingSystemList from '../components/MatchingSystemList';
 import PageHeader from '../components/Header/PageHeader';
-import NewRecordMatchingSystem from '../components/NewRecordMatchingSystem';
+import NewRecordMatchingSystemModal from '../components/NewRecordMatchingSystemModal';
 
 class MatchingSystems extends Component {
   render() {
@@ -21,7 +21,8 @@ class MatchingSystems extends Component {
       <div className="row">
         <div className="col-md-12">
           <MatchingSystemList {...this.props} />
-          <NewRecordMatchingSystem createRMS={this.props.createRMS} />
+          <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newRMS">New Record Matching System</button>
+          <NewRecordMatchingSystemModal createRMS={this.props.createRMS} />
         </div>
       </div>
       <div className="row">
