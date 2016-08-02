@@ -10,6 +10,7 @@ import NewContextModal from './NewContextModal';
 
 import _ from 'lodash';
 import moment from 'moment';
+import itemBeingTestedUtil from '../util/itemBeingTested';
 
 export default class ContextList extends Component {
   constructor(...args) {
@@ -21,18 +22,8 @@ export default class ContextList extends Component {
   // Provides the name of the record matching system or record set
   // under test, depending on the context.
   itemBeingTested(context) {
-    const runs = _.filter(_.values(this.props.matchRuns), {'recordMatchContextId': context.id});
-    if (_.isEmpty(runs)) {
-      return "-";
-    }
-
-    const firstRun = runs[0];
-    switch (context.type) {
-      case "benchmark":
-        return this.props.recordMatchingSystems[firstRun.recordMatchSystemInterfaceId].name;
-      case "challenge":
-        return this.props.recordSets[firstRun.masterRecordSetId].name;
-    }
+    return itemBeingTestedUtil(context, this.props.matchRuns, this.props.recordSets,
+                               this.props.recordMatchingSystems);
   }
 
   lastUpdatedOn(context) {
