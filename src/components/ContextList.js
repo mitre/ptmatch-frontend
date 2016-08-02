@@ -5,13 +5,12 @@ import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import { runProps } from '../prop-types/run';
 
-import NewContextModal from './NewContextModal';
 import CollapsiblePanel from './CollapsiblePanel';
 
 import _ from 'lodash';
 import moment from 'moment';
 
-class ContextList extends Component {
+export default class ContextList extends Component {
   constructor(...args) {
     super(...args);
 
@@ -25,6 +24,7 @@ class ContextList extends Component {
     if (_.isEmpty(runs)) {
       return "-";
     }
+
     const firstRun = runs[0];
     switch (context.type) {
       case "benchmark":
@@ -45,31 +45,47 @@ class ContextList extends Component {
 
   render() {
     return (
-      <CollapsiblePanel panelTitle="Context" panelIcon="key">
+      <CollapsiblePanel panelTitle="Context" panelIcon="key" hasButton={true} creator={this.props.contextCreator}>
         <div>
           <div className="list-group">
             {_.values(this.props.contexts).map((c) => {
               let className = "list-group-item";
+
               if (c.selected) {
                 className += " active";
               }
-              return (<div className={className} key={c.id} onClick={() => this.props.selector(c.id)}>
-                        <div className="row">
-                          <p className="col-md-3">{c.name}</p>
-                          <p className="col-md-3">{contextTypeIcon(c.type)} {c.type}</p>
-                          <p className="col-md-3">{itemIcon(c.type)} {this.itemBeingTested(c)}</p>
-                          <p className="col-md-3">
-                            <i className="fa fa-clock-o" aria-hidden="true"></i>
-                            {this.lastUpdatedOn(c)}
-                          </p>
-                        </div>
-                      </div>);
+
+              return (
+                <div className={className} key={c.id}>
+                  <div className="row context-list">
+                    <div className="col-md-4 context-name">
+                      <input type="checkbox"
+                             id={c.id}
+                             className="css-checkbox"
+                             onClick={() => this.props.selector(c.id)} />
+                      <label htmlFor={c.id} className="css-label css-label-box checkbox-label">{c.name}</label>
+                    </div>
+
+                    <div className="col-md-2 context-type">
+                      {contextTypeIcon(c.type)} {c.type}
+                    </div>
+
+                    <div className="col-md-3 context-static-item">
+                      {itemIcon(c.type)} {this.itemBeingTested(c)}
+                    </div>
+
+                    <div className="col-md-2 context-last-updated">
+                      <i className="fa fa-clock-o" aria-hidden="true"></i> {this.lastUpdatedOn(c)}
+                    </div>
+
+                    <div className="col-md-1 context-edit">
+                      <i className="fa fa-edit" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+              );
             })}
           </div>
-
-          <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newContextModal">New Context</button>
-
-          <NewContextModal contextCreator={this.props.contextCreator}/>
         </div>
       </CollapsiblePanel>
     );
@@ -104,5 +120,3 @@ ContextList.propTypes = {
   contextCreator: PropTypes.func.isRequired,
   matchRuns: PropTypes.objectOf(runProps).isRequired
 };
-
-export default ContextList;

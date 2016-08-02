@@ -1,16 +1,19 @@
 // 3rd party resources
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins";
-@import "elements/variables";
 
 // application imports
+@import "elements/variables";
+@import "components/context-list";
 @import "components/header";
 @import "elements/animation";
 @import "elements/buttons";
 @import "elements/charts";
+@import "elements/checkbox-radio";
 @import "elements/modals";
 @import "elements/navbar";
 @import "elements/panels";
+@import "elements/tables";
 
 // application styles
 body {
@@ -19,14 +22,11 @@ body {
   font-family: $font-family-sans-serif;
   font-size: $font-size-base;
   padding-top: 70px;
+  overflow-x: hidden;
 }
 
 a {
   color: $brand-primary;
-}
-
-.header-logo {
-  margin: 0 10px 0 20px;
 }
 
 .results-detail {

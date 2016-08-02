@@ -1,0 +1,23 @@
+.context-list {
+  line-height: 30px;
+  font-size: 1.1em;
+
+  .context-name > label {
+    font-weight: normal;
+  }
+
+  .context-type {
+  }
+
+  .context-static-item {
+  }
+
+  .context-last-updated {
+    font-size: 0.8em;
+  }
+
+  .context-edit {
+    text-align: right;
+    padding-right: 20px;
+  }
+}

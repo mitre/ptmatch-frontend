@@ -17,26 +17,19 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
+        <PageHeader title="Dashboard" />
+        
+        <ContextList {...this.props}
+                     selector={this.props.selectContext}
+                     contextCreator={this.props.createContext}/>
 
-      <PageHeader title="Dashboard" />
-      <div className="row">
-        <div className="col-md-12">
-          <ContextList {...this.props}
-                       selector={this.props.selectContext}
-                       contextCreator={this.props.createContext}/>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12">
-          {this.selectedChallengeContexts().map((context) => {
-              return (<ChallengeContext context={context} key={context.id} />);
-          })}
+        {this.selectedChallengeContexts().map((context) => {
+            return (<ChallengeContext context={context} key={context.id} />);
+        })}
 
-          {this.selectedBenchmarkContexts().map((context) => {
-            return (<BenchmarkContext context={context} key={context.id} />);
-          })}
-        </div>
-      </div>
+        {this.selectedBenchmarkContexts().map((context) => {
+          return (<BenchmarkContext context={context} key={context.id} />);
+        })}
       </div>
     );
   }
@@ -48,7 +41,6 @@ class Dashboard extends Component {
   selectedBenchmarkContexts() {
     return _.values(this.props.contexts).filter((c) => c.selected === true && c.type === 'benchmark');
   }
-
 }
 
 Dashboard.displayName = 'Dashboard';
@@ -63,10 +55,12 @@ Dashboard.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return {contexts: state.contexts,
-          recordSets: state.recordSets,
-          recordMatchingSystems: state.recordMatchingSystems,
-          matchRuns: state.matchRuns};
+  return {
+    contexts: state.contexts,
+    recordSets: state.recordSets,
+    recordMatchingSystems: state.recordMatchingSystems,
+    matchRuns: state.matchRuns
+  };
 }
 
 export default connect(mapStateToProps, { selectContext, createContext })(Dashboard);

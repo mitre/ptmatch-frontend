@@ -22,6 +22,7 @@
     border-radius: 0;
     border: none;
     box-shadow: none;
+    margin-top: 20px;
 
     & > .panel-heading {
       background-color: $brand-secondary;
@@ -62,56 +63,53 @@
 
     .panel-heading {
       padding: 0;
-      height: 60px;
-      line-height: 60px;
+      height: 50px;
+      line-height: 50px;
       background-color: $brand-secondary;
       border-radius: 0;
-      cursor: pointer;
-      border-bottom: 1px solid $white;
+
+      .panel-title {
+        font-size: 18px;
+        font-weight: 100;
+        letter-spacing: 1.2px;
+        color: $white;
+        padding: 0 20px;
+
+        i {
+          margin-right: 5px;
+        }
+      }
 
       a {
-        display: block;
-        text-decoration: none;
         color: $white;
         padding: 0 20px;
         font-size: 18px;
-
-        &:hover {
-
-        }
-
-        .panel-title {
-          font-size: 18px;
-          font-weight: 100;
-          letter-spacing: 1.2px;
-
-          i {
-            margin-right: 5px;
-          }
-        }
+        cursor: pointer;
 
         i {
-          line-height: 60px;
+          line-height: 50px;
         }
       }
     }
 
     .panel-collapse {
-      padding: 5px;
+      padding: 0;
 
       .list-group {
         margin: 0;
 
         .list-group-item {
-          cursor: pointer;
+          border: none;
+          margin-bottom: 0;
 
-          &:hover {
+          &:nth-child(odd),
+          &.active:nth-child(odd) {
             background-color: $very-light-gray;
           }
 
           &.active {
-            background-color: $brand-primary;
-            border: 1px solid $white;
+            color: $text-color;
+            background-color: inherit;
           }
 
           &:first-child,
@@ -124,11 +122,11 @@
   }
 }
 
-//-------------------------- GROUP PANELS -----------------------------------------//
+//-------------------------- GROUP PANELS -----------------------------------//
 .panel-group {
   margin-bottom: 2px;
 
-  //------------------------ LINK GROUP PANELS ------------------------------------//
+  //------------------------ LINK GROUP PANELS ------------------------------//
   .panel-link {
 
   }
