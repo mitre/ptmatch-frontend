@@ -10,7 +10,7 @@ import NewContextModal from './NewContextModal';
 
 import _ from 'lodash';
 import moment from 'moment';
-import itemBeingTestedUtil from '../util/itemBeingTested';
+import itemBeingTestedUtil from '../util/ItemBeingTested';
 
 export default class ContextList extends Component {
   constructor(...args) {
