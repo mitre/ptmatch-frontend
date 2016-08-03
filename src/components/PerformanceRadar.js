@@ -28,7 +28,7 @@ const datasetOptions = {
   pointHoverRadius: "7"
 };
 
-class PerformanceRadar extends Component {
+export default class PerformanceRadar extends Component {
   render() {
     return <canvas/>;
   }
@@ -56,5 +56,3 @@ PerformanceRadar.propTypes = {
 };
 
 PerformanceRadar.displayName = "PerformanceRadar";
-
-export default PerformanceRadar;

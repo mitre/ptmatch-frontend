@@ -82,9 +82,9 @@ export default class ContextList extends Component {
               );
             })}
           </div>
-        </div>
 
-        <NewContextModal contextCreator={this.props.creator}/>
+          <NewContextModal contextCreator={this.props.contextCreator}/>
+        </div>
       </CollapsiblePanel>
     );
   }
@@ -111,10 +111,10 @@ function itemIcon(contextType) {
 ContextList.displayName = "ContextList";
 
 ContextList.propTypes = {
+  selector: PropTypes.func.isRequired,
+  contextCreator: PropTypes.func.isRequired,
   contexts: PropTypes.objectOf(contextProps).isRequired,
   recordSets: PropTypes.objectOf(recordSetProps).isRequired,
   recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps).isRequired,
-  selector: PropTypes.func.isRequired,
-  contextCreator: PropTypes.func.isRequired,
   matchRuns: PropTypes.objectOf(runProps).isRequired
 };

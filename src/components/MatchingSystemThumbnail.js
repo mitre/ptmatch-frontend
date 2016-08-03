@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import PerformanceRadar from "./PerformanceRadar";
 import moment from 'moment';
 
-class MatchingSystemThumbnail extends Component {
+export default class MatchingSystemThumbnail extends Component {
   render() {
     return (
       <div onClick={this.props.onClick}
-           className="col-md-3 rms-thumbnail"
+           className="col-md-2 rms-thumbnail"
            key={this.props.recordMatchingSystem.id}>
         <PerformanceRadar chartData={[
            this.props.metrics.f1,
@@ -41,5 +41,3 @@ MatchingSystemThumbnail.propTypes = {
   onClick: PropTypes.func,
   createdOn: PropTypes.string.isRequired
 };
-
-export default MatchingSystemThumbnail;

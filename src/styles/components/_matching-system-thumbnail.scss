@@ -1,0 +1,33 @@
+@import "../elements/variables";
+
+.rms-thumbnail {
+  background-color: $very-light-gray;
+  border: 4px solid $very-light-gray;
+  cursor: pointer;
+  margin: 15px;
+  min-height: 260px;
+  min-width: 225px;
+  padding: 5px;
+  text-align: center;
+
+  canvas {
+    margin: 15px 0;
+  }
+
+  &:hover {
+    background-color: darken($very-light-gray, 2%);
+    border: 4px solid $brand-primary;
+  }
+
+  .rms-name {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 0;
+    min-height: 65px;
+  }
+
+  .last-run-age {
+    font-size: 0.9em;
+    color: lighten($text-color, 20%);
+  }
+}

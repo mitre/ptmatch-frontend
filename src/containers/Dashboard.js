@@ -18,7 +18,7 @@ class Dashboard extends Component {
     return (
       <div className="dashboard">
         <PageHeader title="Dashboard" />
-        
+
         <ContextList {...this.props}
                      selector={this.props.selectContext}
                      contextCreator={this.props.createContext}/>
@@ -48,10 +48,10 @@ Dashboard.displayName = 'Dashboard';
 Dashboard.propTypes = {
   selectContext: PropTypes.func,
   createContext: PropTypes.func,
-  contexts: PropTypes.objectOf(contextProps),
-  recordSets: PropTypes.objectOf(recordSetProps),
-  recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps),
-  matchRuns: PropTypes.objectOf(runProps)
+  contexts: PropTypes.objectOf(contextProps).isRequired,
+  recordSets: PropTypes.objectOf(recordSetProps).isRequired,
+  recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps).isRequired,
+  matchRuns: PropTypes.objectOf(runProps).isRequired
 };
 
 function mapStateToProps(state) {
