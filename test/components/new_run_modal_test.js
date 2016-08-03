@@ -1,7 +1,7 @@
 import { renderComponent, expect } from '../test_helper';
-import NewBenchmarkRunModal from '../../src/components/NewBenchmarkRunModal';
+import NewRunModal from '../../src/components/Modal/NewRunModal';
 
-describe('NewBenchmarkRunModal', () => {
+describe('NewRunModal', () => {
   let component;
 
   beforeEach(() => {
@@ -16,11 +16,11 @@ describe('NewBenchmarkRunModal', () => {
       ],
       runCreator: () => 1 + 1
     };
-    component = renderComponent(NewBenchmarkRunModal, props);
+    component = renderComponent(NewRunModal, props);
   });
 
-  it('will display the seleted record matching system', () => {
-    expect(component.find('.modal-body div div div').first()).to.have.text('Matchy Matcherton');
+  it('will display the selected record matching system', () => {
+    expect(component.find('.selected-rms').first()).to.have.text('Matchy Matcherton');
   });
 
   it('will display the record sets', () => {

@@ -11,7 +11,7 @@ import { createRMS, selectRMS } from '../actions/recordMatchingSystems';
 import MatchingSystemList from '../components/MatchingSystemList';
 import MatchingSystemInfo from '../components/MatchingSystemInfo';
 import PageHeader from '../components/Header/PageHeader';
-import NewRecordMatchingSystemModal from '../components/NewRecordMatchingSystemModal';
+import NewRecordMatchingSystemModal from '../components/Modal/NewRecordMatchingSystemModal';
 
 import _ from 'lodash';
 

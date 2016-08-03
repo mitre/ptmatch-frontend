@@ -4,9 +4,12 @@
 
 // application imports
 @import "elements/variables";
+
 @import "components/context-list";
 @import "components/header";
 @import "components/matching-system-thumbnail";
+@import "components/modals/new-context-modal";
+
 @import "elements/animation";
 @import "elements/buttons";
 @import "elements/charts";
@@ -15,6 +18,7 @@
 @import "elements/navbar";
 @import "elements/panels";
 @import "elements/tables";
+
 @import "vendors/font-awesome";
 
 // application styles

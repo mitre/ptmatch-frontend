@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import RunHistoryChart from "../components/RunHistoryChart";
-import NewBenchmarkRunModal from "../components/NewBenchmarkRunModal";
+import NewRunModal from "../components/Modal/NewRunModal";
 import MatchLinks from '../components/MatchLinks';
 import CollapsiblePanel from '../components/CollapsiblePanel';
 
@@ -70,7 +70,7 @@ export class BenchmarkContext extends Component {
                         subtitle="Subtitle Goes Here"
                         subtitleIcon="sitemap"
                         buttonText="New Run"
-                        modalTarget="#NewBenchmarkRun"
+                        modalTarget="#newRunModal"
                         creator={this.props.contextCreator}>
 
         <div className="panel-body">
@@ -82,13 +82,13 @@ export class BenchmarkContext extends Component {
 
           {this.links()}
 
-          <NewBenchmarkRunModal title="New Benchmark Run"
-                                context={this.props.context}
-                                recordSets={this.props.recordSets}
-                                recordMatchingSystems={this.props.recordMatchingSystems}
-                                runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
-                                              this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);
-                                            }}/>
+          <NewRunModal title="New Benchmark Run"
+                       context={this.props.context}
+                       recordSets={this.props.recordSets}
+                       recordMatchingSystems={this.props.recordMatchingSystems}
+                       runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
+                                    this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);
+                                  }}/>
         </div>
       </CollapsiblePanel>
     );

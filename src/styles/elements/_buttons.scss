@@ -1,10 +1,14 @@
 @import "variables";
 
 .btn {
+  border-radius: 0;
+  margin: 5px;
+  min-height: 50px;
+  min-width: 120px;
+
   &.btn-primary {
     background-color: $red;
     border: none;
-    margin: 15px;
 
     &:hover,
     &:focus,
@@ -16,8 +20,6 @@
   }
 
   &.btn-default {
-    margin: 15px;
-
     &:hover,
     &:focus,
     &:active
@@ -27,9 +29,6 @@
   }
 
   &.btn-panel {
-    border-radius: 0;
-    height: 50px;
-    width: 120px;
     margin: 0;
   }
 }

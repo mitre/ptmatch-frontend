@@ -6,7 +6,7 @@ import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import { runProps } from '../prop-types/run';
 
 import CollapsiblePanel from './CollapsiblePanel';
-import NewContextModal from './NewContextModal';
+import NewContextModal from './Modal/NewContextModal';
 
 import _ from 'lodash';
 import moment from 'moment';
