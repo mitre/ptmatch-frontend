@@ -28,20 +28,20 @@ describe('ContextList', () => {
   });
 
   it('will display the title', () => {
-    expect(component.find(".list-group-item div p").first()).to.have.text('Test Context');
+    expect(component.find(".context-name").first()).to.have.text('Test Context');
   });
 
   it('will select the first item when clicked', () => {
-    component.find(".list-group-item").first().simulate("click");
+    component.find(".context-name input").first().simulate("click");
     expect(selectedId).to.equal('1');
   });
 
   it('will display the selected item as active', () => {
-    expect(component.find(".active div p").first()).to.have.text('Selected Context');
+    expect(component.find(".active .context-name").first()).to.have.text('Selected Context');
   });
 
   it('will show the item being tested', () => {
-    expect(component.find(".list-group-item div p:nth-child(1)").first()).to.have.text('Test Context');
-    expect(component.find(".list-group-item div p:nth-child(3)").first()).to.contain('Sample 2');
+    expect(component.find(".context-name").first()).to.have.text('Test Context');
+    expect(component.find(".context-static-item").first()).to.contain('Sample 2');
   });
 });
