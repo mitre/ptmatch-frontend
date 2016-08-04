@@ -26,13 +26,6 @@ describe('NewRunModal', () => {
   });
 
   it('will display the record sets', () => {
-    expect(component.find('.list-group-item').length).to.equal(3);
-  });
-
-  it('lets a user select a record set', () => {
-    expect(component.find('.list-group-item').first()).to.not.have.class('active');
-    component.find(".list-group-item").first().simulate("click");
-    expect(component.find('.list-group-item').first()).to.have.text('Sample 1');
-    expect(component.find('.list-group-item').first()).to.have.class('active');
+    expect(component.find("select[name='recordSet'] option").length).to.equal(3);
   });
 });

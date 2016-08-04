@@ -17,7 +17,7 @@ export default class NewRunModal extends Component {
     super(props);
 
     let itemBeingTested = ItemBeingTested(this.props.context,
-                                          _.keyBy(this.props.matchRuns, 'id'),
+                                          this.props.matchRuns,
                                           _.keyBy(this.props.recordSets, 'id'),
                                           _.keyBy(this.props.recordMatchingSystems, 'id'));
     this.state = {
