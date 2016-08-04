@@ -101,14 +101,14 @@ ChallengeContext.propTypes = {
 export function mapStateToProps(state, ownProps) {
   const contextId = ownProps.context.id;
   const matchRunsForContext = _.values(state.matchRuns).filter((mr) => mr.recordMatchContextId === contextId);
+  const allRecordMatchingSystems = _.values(state.recordMatchingSystems);
+  const recordSets = _.values(state.recordSets);
   if (matchRunsForContext.length === 0) {
-    return {recordMatchingSystems: [], recordSets: []};
+    return {recordMatchingSystems: [], recordSets, allRecordMatchingSystems};
   } else {
     const recordMatchingSystems = _.uniq(matchRunsForContext.map((mr) => state.recordMatchingSystems[mr.recordMatchSystemInterfaceId]));
-    const allRecordMatchingSystems = _.values(state.recordMatchingSystems);
     const matchRunsByRMS = _.groupBy(matchRunsForContext, 'recordMatchSystemInterfaceId');
     const patients = state.patients;
-    const recordSets = _.values(state.recordSets);
     return {matchRunsByRMS, recordMatchingSystems, patients, recordSets, allRecordMatchingSystems};
   }
 }
