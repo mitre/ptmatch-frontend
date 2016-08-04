@@ -67,8 +67,7 @@ class ChallengeContext extends Component {
                         subtitle={this.state.itemBeingTested}
                         subtitleIcon="database"
                         buttonText="New Run"
-                        modalTarget="#newRunModal"
-                        creator={this.props.contextCreator}>
+                        modalTarget="#newRunModal">
 
         <div className="panel-body">
           {this.displayBody()}
@@ -76,7 +75,7 @@ class ChallengeContext extends Component {
           <NewRunModal title="New Challenge Run"
                        context={this.props.context}
                        recordSets={this.props.recordSets}
-                       recordMatchingSystems={this.props.recordMatchingSystems}
+                       recordMatchingSystems={this.props.allRecordMatchingSystems}
                        runCreator={this.props.createRun}
                        matchRuns={this.props.matchRuns} />
         </div>
@@ -91,6 +90,7 @@ ChallengeContext.propTypes = {
   context: contextProps.isRequired,
   recordSets: PropTypes.arrayOf(recordSetProps),
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
+  allRecordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRuns: PropTypes.objectOf(runProps).isRequired,
   matchRunsByRMS: PropTypes.objectOf(PropTypes.arrayOf(runProps)),
   patients: PropTypes.objectOf(patientProps),
@@ -105,10 +105,11 @@ export function mapStateToProps(state, ownProps) {
     return {recordMatchingSystems: [], recordSets: []};
   } else {
     const recordMatchingSystems = _.uniq(matchRunsForContext.map((mr) => state.recordMatchingSystems[mr.recordMatchSystemInterfaceId]));
+    const allRecordMatchingSystems = _.values(state.recordMatchingSystems);
     const matchRunsByRMS = _.groupBy(matchRunsForContext, 'recordMatchSystemInterfaceId');
     const patients = state.patients;
     const recordSets = _.values(state.recordSets);
-    return {matchRunsByRMS, recordMatchingSystems, patients, recordSets};
+    return {matchRunsByRMS, recordMatchingSystems, patients, recordSets, allRecordMatchingSystems};
   }
 }
 

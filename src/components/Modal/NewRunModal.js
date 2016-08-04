@@ -20,10 +20,28 @@ export default class NewRunModal extends Component {
                                           this.props.matchRuns,
                                           _.keyBy(this.props.recordSets, 'id'),
                                           _.keyBy(this.props.recordMatchingSystems, 'id'));
-    this.state = {
+    let state = {
       itemBeingTested: itemBeingTested,
       note: ''
     };
+    if (itemBeingTested !== '-') {
+      if (this.props.context.type === 'challenge') {
+        state.selectedRecordSet = this.props.recordSets.find((rs) => rs.name === itemBeingTested);
+      } else {
+        state.selectedRMS = this.props.recordMatchingSystems.find((rms) => rms.name === itemBeingTested);
+      }
+    }
+    this.state = state;
+  }
+
+  selectRMS(matchingSystemId) {
+    const matchingSystem = this.props.recordMatchingSystems.find((rms) => rms.id === matchingSystemId);
+    this.setState({selectedRMS: matchingSystem});
+  }
+
+  selectRecordSet(recordSetId) {
+    const recordSet = this.props.recordSets.find((rs) => rs.id === recordSetId);
+    this.setState({selectedRecordSet: recordSet});
   }
 
   buildRun() {
@@ -48,7 +66,7 @@ export default class NewRunModal extends Component {
   }
 
   recordSetDisplay() {
-    if (this.props.context.type === 'challenge') {
+    if (this.props.context.type === 'challenge' && this.state.itemBeingTested !== '-') {
       return (
         <div className="input-group">
           <span className="input-group-addon">
@@ -67,10 +85,10 @@ export default class NewRunModal extends Component {
 
           <FontAwesome name="caret-down" className="select-caret" />
 
-          <select name="recordSet">
+          <select name="recordSet" onChange={(e) => this.selectRecordSet(e.target.value)}>
             {this.props.recordSets.map(recordSet => {
               return (
-                <option value={recordSet.name} key={recordSet.id}>{recordSet.name}</option>
+                <option value={recordSet.id} key={recordSet.id}>{recordSet.name}</option>
               );
             })}
           </select>
@@ -80,7 +98,7 @@ export default class NewRunModal extends Component {
   }
 
   rmsDisplay() {
-    if (this.props.context.type === 'benchmark') {
+    if (this.props.context.type === 'benchmark' && this.state.itemBeingTested !== '-') {
       return (
         <div className="input-group">
           <span className="input-group-addon">
@@ -99,10 +117,10 @@ export default class NewRunModal extends Component {
 
           <FontAwesome name="caret-down" className="select-caret" />
 
-          <select name="rms">
+          <select name="rms" onChange={(e) => this.selectRMS(e.target.value)}>
             {this.props.recordMatchingSystems.map(rms => {
               return (
-                <option value={rms.name} key={rms.id}>{rms.name}</option>
+                <option value={rms.id} key={rms.id}>{rms.name}</option>
               );
             })}
           </select>

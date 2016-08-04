@@ -85,8 +85,7 @@ export class BenchmarkContext extends Component {
                         subtitle={this.state.itemBeingTested}
                         subtitleIcon="sitemap"
                         buttonText="New Run"
-                        modalTarget="#newRunModal"
-                        creator={this.props.contextCreator}>
+                        modalTarget="#newRunModal">
 
         <div className="panel-body">
           {this.inProgressHeader()}

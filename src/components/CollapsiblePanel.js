@@ -72,7 +72,6 @@ CollapsiblePanel.propTypes = {
   panelTitle: PropTypes.string.isRequired,
   panelIcon: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
-  creator: PropTypes.func,
   subtitle: PropTypes.string,
   subtitleIcon: PropTypes.string,
   buttonText: PropTypes.string,
