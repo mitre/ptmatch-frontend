@@ -10,18 +10,20 @@ import { runProps } from '../../prop-types/run';
 
 import ItemBeingTested from '../../util/ItemBeingTested';
 
+import _ from 'lodash';
+
 export default class NewRunModal extends Component {
   constructor(props) {
     super(props);
 
     let itemBeingTested = ItemBeingTested(this.props.context,
-                                          this.props.matchRuns,
-                                          this.props.recordSets,
-                                          this.props.recordMatchingSystems);
+                                          _.keyBy(this.props.matchRuns, 'id'),
+                                          _.keyBy(this.props.recordSets, 'id'),
+                                          _.keyBy(this.props.recordMatchingSystems, 'id'));
     this.state = {
       itemBeingTested: itemBeingTested,
       note: ''
-    }
+    };
   }
 
   buildRun() {
@@ -110,8 +112,6 @@ export default class NewRunModal extends Component {
   }
 
   noteDisplay() {
-    let note = this.state.note;
-
     return (
       <div className="input-group">
         <span className="input-group-addon" id="note">
