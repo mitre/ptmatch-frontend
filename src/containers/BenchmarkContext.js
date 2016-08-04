@@ -13,9 +13,24 @@ import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import patientProps from '../prop-types/patient';
 import { runProps } from '../prop-types/run';
 
+import ItemBeingTested from '../util/ItemBeingTested';
+
 import { createRun } from '../actions/matchRun';
 
 export class BenchmarkContext extends Component {
+  constructor(props) {
+    super(props);
+
+    let itemBeingTested = ItemBeingTested(this.props.context,
+                                          this.props.matchRuns,
+                                          this.props.recordSets,
+                                          this.props.recordMatchingSystems);
+
+    this.state = {
+      itemBeingTested: itemBeingTested
+    };
+  }
+
   completedRuns() {
     return this.props.matchRuns.filter((mr) => mr.status === 'responded');
   }
@@ -67,7 +82,7 @@ export class BenchmarkContext extends Component {
     return (
       <CollapsiblePanel panelTitle={this.props.context.name}
                         panelIcon="line-chart"
-                        subtitle="Subtitle Goes Here"
+                        subtitle={this.state.itemBeingTested}
                         subtitleIcon="sitemap"
                         buttonText="New Run"
                         modalTarget="#newRunModal"
@@ -87,8 +102,8 @@ export class BenchmarkContext extends Component {
                        recordSets={this.props.recordSets}
                        recordMatchingSystems={this.props.recordMatchingSystems}
                        runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
-                                    this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);
-                                  }}/>
+                                    this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);}}
+                       matchRuns={this.props.matchRuns} />
         </div>
       </CollapsiblePanel>
     );
@@ -102,7 +117,7 @@ BenchmarkContext.propTypes = {
   patients: PropTypes.objectOf(patientProps),
   recordSets: PropTypes.arrayOf(recordSetProps),
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
-  matchRuns: PropTypes.arrayOf(runProps),
+  matchRuns: PropTypes.arrayOf(runProps).isRequired,
   fetchMatchRunsByContext: PropTypes.func,
   createRun: PropTypes.func,
   selectRecordSet: PropTypes.func

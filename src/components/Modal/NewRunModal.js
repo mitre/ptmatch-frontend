@@ -6,34 +6,22 @@ import Modal from './Modal';
 import contextProps from '../../prop-types/context';
 import recordSetProps from '../../prop-types/record_set';
 import recordMatchingSystemProps from '../../prop-types/record_matching_system';
+import { runProps } from '../../prop-types/run';
+
+import ItemBeingTested from '../../util/ItemBeingTested';
 
 export default class NewRunModal extends Component {
   constructor(props) {
     super(props);
 
-    let preselectedRecordSet = props.recordSets.find((recordSet) => recordSet.selected === true);
-    let preselectedRMS = props.recordMatchingSystems.find((rms) => rms.selected === true);
-
-    this.state = Object.assign({ note: '' }, this.defineState(preselectedRecordSet, preselectedRMS));
-  }
-
-  componentWillReceiveProps(nextProps) {
-    let preselectedRecordSet = nextProps.recordSets.find((recordSet) => recordSet.selected === true);
-    let preselectedRMS = nextProps.recordMatchingSystems.find((rms) => rms.selected === true);
-
-    this.setState(this.defineState(preselectedRecordSet, preselectedRMS));
-  }
-
-  defineState(preselectedRecordSet, preselectedRMS) {
-    let hasPreselectedRecordSet = (preselectedRecordSet !== undefined);
-    let hasPreselectedRMS = (preselectedRMS !== undefined);
-
-    return ({
-      hasPreselectedRecordSet: hasPreselectedRecordSet,
-      selectedRecordSet: (hasPreselectedRecordSet)? preselectedRecordSet : { id: "-1" },
-      hasPreselectedRMS: hasPreselectedRMS,
-      selectedRMS: (hasPreselectedRMS)? preselectedRMS : { id: "-1" }
-    });
+    let itemBeingTested = ItemBeingTested(this.props.context,
+                                          this.props.matchRuns,
+                                          this.props.recordSets,
+                                          this.props.recordMatchingSystems);
+    this.state = {
+      itemBeingTested: itemBeingTested,
+      note: ''
+    }
   }
 
   buildRun() {
@@ -58,14 +46,14 @@ export default class NewRunModal extends Component {
   }
 
   recordSetDisplay() {
-    if (this.state.hasPreselectedRecordSet) {
+    if (this.props.context.type === 'challenge') {
       return (
         <div className="input-group">
           <span className="input-group-addon">
             <FontAwesome name="database" fixedWidth={true} /> Record Set
           </span>
 
-          <div className="modal-selection">{this.state.selectedRecordSet.name}</div>
+          <div className="modal-selection">{this.state.itemBeingTested}</div>
         </div>
       );
     } else {
@@ -90,14 +78,14 @@ export default class NewRunModal extends Component {
   }
 
   rmsDisplay() {
-    if (this.state.hasPreselectedRMS) {
+    if (this.props.context.type === 'benchmark') {
       return (
         <div className="input-group">
           <span className="input-group-addon">
             <FontAwesome name="sitemap" fixedWidth={true} /> Record Matching System
           </span>
 
-          <div className="modal-selection">{this.state.selectedRMS.name}</div>
+          <div className="modal-selection">{this.state.itemBeingTested}</div>
         </div>
       );
     } else {
@@ -168,5 +156,6 @@ NewRunModal.propTypes = {
   context: contextProps.isRequired,
   recordSets: PropTypes.arrayOf(recordSetProps).isRequired,
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps).isRequired,
-  runCreator: PropTypes.func.isRequired
+  runCreator: PropTypes.func.isRequired,
+  matchRuns: PropTypes.objectOf(runProps).isRequired
 };

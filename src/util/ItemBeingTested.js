@@ -9,8 +9,8 @@ export default function(context, matchRuns, recordSets, matchingSystems) {
   const firstRun = runs[0];
   switch (context.type) {
     case "benchmark":
-      return matchingSystems[firstRun.recordMatchSystemInterfaceId].name;
+      return _.find(matchingSystems, ['id', firstRun.recordMatchSystemInterfaceId]).name;
     case "challenge":
-      return recordSets[firstRun.masterRecordSetId].name;
+      return _.find(recordSets, ['id', firstRun.masterRecordSetId]).name;
   }
 }

@@ -24,11 +24,19 @@ class Dashboard extends Component {
                      contextCreator={this.props.createContext}/>
 
         {this.selectedChallengeContexts().map((context) => {
-            return (<ChallengeContext context={context} key={context.id} />);
+          return (
+            <ChallengeContext context={context}
+                              key={context.id}
+                              matchRuns={this.props.matchRuns} />
+          );
         })}
 
         {this.selectedBenchmarkContexts().map((context) => {
-          return (<BenchmarkContext context={context} key={context.id} />);
+          return (
+            <BenchmarkContext context={context}
+                              key={context.id}
+                              matchRuns={this.props.matchRuns} />
+          );
         })}
       </div>
     );
@@ -48,7 +56,7 @@ Dashboard.displayName = 'Dashboard';
 Dashboard.propTypes = {
   selectContext: PropTypes.func,
   createContext: PropTypes.func,
-  contexts: PropTypes.objectOf(contextProps).isRequired,
+  contexts: PropTypes.objectOf(contextProps),
   recordSets: PropTypes.objectOf(recordSetProps).isRequired,
   recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps).isRequired,
   matchRuns: PropTypes.objectOf(runProps).isRequired

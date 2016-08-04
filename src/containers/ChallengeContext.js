@@ -13,12 +13,23 @@ import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import { runProps } from '../prop-types/run';
 import patientProps from '../prop-types/patient';
 
+import ItemBeingTested from '../util/ItemBeingTested';
+
 import { createRun } from '../actions/matchRun';
 
 class ChallengeContext extends Component {
   constructor(props) {
     super(props);
-    this.state = {selectedRMS: -1};
+
+    let itemBeingTested = ItemBeingTested(this.props.context,
+                                          this.props.matchRuns,
+                                          this.props.recordSets,
+                                          this.props.recordMatchingSystems);
+
+    this.state = {
+      itemBeingTested: itemBeingTested,
+      selectedRMS: -1
+    };
   }
 
   selectRMS(rmsId) {
@@ -29,14 +40,22 @@ class ChallengeContext extends Component {
     if (this.state.selectedRMS !== -1) {
       let selectedRMS = this.props.recordMatchingSystems[this.state.selectedRMS];
       let runs = this.props.matchRunsByRMS[this.state.selectedRMS];
-      return <RunList recordMatchingSystem={selectedRMS} runs={runs} patients={this.props.patients}/>;
+      return (
+        <RunList recordMatchingSystem={selectedRMS}
+                 runs={runs}
+                 patients={this.props.patients}/>
+      );
     } else {
       return this.props.recordMatchingSystems.map((rms) => {
         const runs = this.props.matchRunsByRMS[rms.id];
         const lastRun = _.last(_.sortBy(runs, (r) => new Date(r.meta.createdOn)));
-        return <MatchingSystemThumbnail recordMatchingSystem={rms} key={rms.id}
-                 metrics={lastRun.metrics} createdOn={lastRun.meta.createdOn}
-                 onClick={() => this.selectRMS(rms.id)}/>;
+        return (
+          <MatchingSystemThumbnail recordMatchingSystem={rms}
+                                   key={rms.id}
+                                   metrics={lastRun.metrics}
+                                   createdOn={lastRun.meta.createdOn}
+                                   onClick={() => this.selectRMS(rms.id)} />
+        );
       });
     }
   }
@@ -45,7 +64,7 @@ class ChallengeContext extends Component {
     return (
       <CollapsiblePanel panelTitle={this.props.context.name}
                         panelIcon="users"
-                        subtitle="Subtitle Goes Here"
+                        subtitle={this.state.itemBeingTested}
                         subtitleIcon="database"
                         buttonText="New Run"
                         modalTarget="#newRunModal"
@@ -58,7 +77,8 @@ class ChallengeContext extends Component {
                        context={this.props.context}
                        recordSets={this.props.recordSets}
                        recordMatchingSystems={this.props.recordMatchingSystems}
-                       runCreator={this.props.createRun}/>
+                       runCreator={this.props.createRun}
+                       matchRuns={this.props.matchRuns} />
         </div>
       </CollapsiblePanel>
     );
@@ -71,6 +91,7 @@ ChallengeContext.propTypes = {
   context: contextProps.isRequired,
   recordSets: PropTypes.arrayOf(recordSetProps),
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
+  matchRuns: PropTypes.objectOf(runProps).isRequired,
   matchRunsByRMS: PropTypes.objectOf(PropTypes.arrayOf(runProps)),
   patients: PropTypes.objectOf(patientProps),
   fetchMatchRunsByContext: PropTypes.func,
