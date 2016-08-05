@@ -27,9 +27,14 @@ export default class NewRunModal extends Component {
     if (itemBeingTested !== '-') {
       if (this.props.context.type === 'challenge') {
         state.selectedRecordSet = this.props.recordSets.find((rs) => rs.name === itemBeingTested);
+        state.selectedRMS = this.props.recordMatchingSystems[0];
       } else {
+        state.selectedRecordSet = this.props.recordSets[0];
         state.selectedRMS = this.props.recordMatchingSystems.find((rms) => rms.name === itemBeingTested);
       }
+    } else {
+      state.selectedRecordSet = this.props.recordSets[0];
+      state.selectedRMS = this.props.recordMatchingSystems[0];
     }
     this.state = state;
   }
