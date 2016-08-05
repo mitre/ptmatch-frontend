@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import FontAwesome from 'react-fontawesome';
 import _ from 'lodash';
 
 import RunHistoryChart from "../components/RunHistoryChart";
 import NewRunModal from "../components/Modal/NewRunModal";
 import MatchLinks from '../components/MatchLinks';
 import CollapsiblePanel from '../components/CollapsiblePanel';
+import RunList from '../components/RunList';
 
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
@@ -39,10 +41,16 @@ export class BenchmarkContext extends Component {
     return this.props.matchRuns.filter((mr) => mr.status === 'no-response');
   }
 
-  inProgressHeader() {
+  displayAlert() {
     if (this.unfinishedRuns().length > 0) {
-      const runningJob = _.last(this.unfinishedRuns());
-      return <div className="well">Running a job against {this.props.recordSets.find((rs) => rs.id === runningJob.masterRecordSetId).name}...</div>;
+      let runningJob = _.last(this.unfinishedRuns());
+
+      return (
+        <div className="alert alert-danger alert-banner text-center">
+          <i className="fa fa-refresh fa-spin"></i>
+          {' '}Running a job against {this.props.recordSets.find((rs) => rs.id === runningJob.masterRecordSetId).name}
+        </div>
+      );
     }
   }
 
@@ -56,9 +64,32 @@ export class BenchmarkContext extends Component {
     };
   }
 
-  chart() {
+  displayChart() {
     if (this.props.matchRuns.length > 0) {
-      return <RunHistoryChart chartData={this.lineChartData()} />;
+      return (
+        <div className="run-history-chart">
+          <RunHistoryChart chartData={this.lineChartData()} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="loader">
+            <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  displayRuns() {
+    if (this.props.matchRuns.length > 0) {
+      return (
+        <RunList runs={this.props.matchRuns}
+                 recordMatchingSystem={this.state.itemBeingTested}
+                 patients={this.props.patients} />
+      );
     } else {
       return (
         <div className="loader">
@@ -66,15 +97,6 @@ export class BenchmarkContext extends Component {
           <span className="sr-only">Loading...</span>
         </div>
       );
-    }
-  }
-
-  links() {
-    if (this.props.matchRuns.length > 0) {
-      return <MatchLinks links={_.last(this.completedRuns()).links}
-                         patients={this.props.patients} />;
-    } else {
-      return <p>Loading links</p>;
     }
   }
 
@@ -87,14 +109,10 @@ export class BenchmarkContext extends Component {
                         buttonText="New Run"
                         modalTarget="#newRunModal">
 
-        <div className="panel-body">
-          {this.inProgressHeader()}
-
-          <div className="run-history-chart">
-            {this.chart()}
-          </div>
-
-          {this.links()}
+        <div className="benchmark-context">
+          {this.displayAlert()}
+          {this.displayChart()}
+          {this.displayRuns()}
 
           <NewRunModal title="New Benchmark Run"
                        context={this.props.context}
@@ -119,7 +137,8 @@ BenchmarkContext.propTypes = {
   matchRuns: PropTypes.arrayOf(runProps).isRequired,
   fetchMatchRunsByContext: PropTypes.func,
   createRun: PropTypes.func,
-  selectRecordSet: PropTypes.func
+  selectRecordSet: PropTypes.func,
+  contextCreator: PropTypes.func.isRequired
 };
 
 export function mapStateToProps(state, ownProps) {

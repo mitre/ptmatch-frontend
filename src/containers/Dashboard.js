@@ -27,7 +27,8 @@ class Dashboard extends Component {
           return (
             <ChallengeContext context={context}
                               key={context.id}
-                              matchRuns={this.props.matchRuns} />
+                              matchRuns={this.props.matchRuns}
+                              contextCreator={this.props.createContext} />
           );
         })}
 
@@ -35,7 +36,8 @@ class Dashboard extends Component {
           return (
             <BenchmarkContext context={context}
                               key={context.id}
-                              matchRuns={this.props.matchRuns} />
+                              matchRuns={this.props.matchRuns}
+                              contextCreator={this.props.createContext} />
           );
         })}
       </div>

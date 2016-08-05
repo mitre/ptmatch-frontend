@@ -10,7 +10,7 @@ describe('MatchLinks', () => {
       patients: {}
     };
     let component = renderComponent(MatchLinks, props);
-    expect(component.find(".panel-link").length).to.equal(2);
+    expect(component.find(".match-link-header").length).to.equal(2);
     expect(component.find("h2")).to.not.exist;
   });
 

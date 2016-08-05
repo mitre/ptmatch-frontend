@@ -138,3 +138,27 @@
 
   }
 }
+
+//-------------------------- SUBPANELS --------------------------------------//
+.subpanel {
+  background-color: lighten($brand-secondary, 20%);
+  height: 50px;
+
+  .subpanel-title {
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: 100;
+    letter-spacing: 1.2px;
+    color: $white;
+    padding: 0 20px;
+
+    .fa {
+      margin-right: 10px;
+    }
+
+    a {
+      padding-left: 10px;
+      color: $red;
+    }
+  }
+}

@@ -29,12 +29,4 @@ describe('RunList', () => {
   ];
     component = new RunList({recordMatchingSystem, runs, matchRuns: runs});
   });
-
-  it('will provide line chart data', () => {
-    let chartData = component.lineChartData();
-    expect(chartData.labels).to.eql(['Run 1', 'Run 2']);
-    let firstDataSet = chartData.datasets[0];
-    expect(firstDataSet.label).to.equal('f1');
-    expect(firstDataSet.data).to.eql([0.89, 0.90]);
-  });
 });

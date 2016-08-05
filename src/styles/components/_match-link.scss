@@ -1,0 +1,26 @@
+@import "../elements/variables";
+
+.match-link-header {
+  .match-link-header-panel .panel-heading {
+    background-color: $white !important;
+    border: 1px solid $brand-primary;
+    height: 30px !important;
+
+    &:hover {
+      background-color: $brand-primary !important;
+
+      .match-link-header-panel-text {
+        color: $white;
+      }
+    }
+
+    .match-link-header-panel-text {
+      color: $text-color;
+      line-height: 30px !important;
+    }
+  }
+}
+
+.match-links-header {
+  padding: 0 20px;
+}

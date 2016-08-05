@@ -1,20 +1,33 @@
 import React, { Component, PropTypes } from 'react';
 import { Accordion, Panel } from 'react-bootstrap';
+
+import { runProps } from '../prop-types/run';
+import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import patientProps from '../prop-types/patient';
+
 import { idFromLink } from '../middlewares/fetch_links';
 
-class MatchLink extends Component {
+export default class MatchLink extends Component {
+  sourcePatient() {
+    const sourceId = idFromLink(this.props.source);
+    return this.props.patients[sourceId];
+  }
+
+  targetPatient() {
+    const targetId = idFromLink(this.props.target);
+    return this.props.patients[targetId];
+  }
+
   render() {
     return (
-      <Accordion className="panel-link">
-        <Panel header={
-                <div className="row">
-                  <div className="col-xs-5">{extractName(this.sourcePatient())}</div>
-                  <div className="col-xs-5">{extractName(this.targetPatient())}</div>
-                  <div className="col-xs-2">{this.props.score}</div>
-                </div>
-               }
-               eventKey="1">
+      <Accordion className="match-link-header">
+        <Panel eventKey="1" className="match-link-header-panel" header={
+          <div className="row">
+            <div className="col-xs-5 match-link-header-panel-text">{extractName(this.sourcePatient())}</div>
+            <div className="col-xs-5 match-link-header-panel-text">{extractName(this.targetPatient())}</div>
+            <div className="col-xs-1 match-link-header-panel-text">{this.props.score}</div>
+          </div>}>
+
           <div className="row">
             <div className="col-xs-5">
               <div className="row">
@@ -36,7 +49,7 @@ class MatchLink extends Component {
               </div>
             </div>
 
-            <div className="col-xs-5">
+            <div className="col-xs-7">
               <div className="row">
                 <label className="col-xs-3">URL:</label>
                 <div className="col-xs-9">
@@ -60,16 +73,6 @@ class MatchLink extends Component {
       </Accordion>
     );
   }
-
-  sourcePatient() {
-    const sourceId = idFromLink(this.props.source);
-    return this.props.patients[sourceId];
-  }
-
-  targetPatient() {
-    const targetId = idFromLink(this.props.target);
-    return this.props.patients[targetId];
-  }
 }
 
 MatchLink.displayName = 'MatchLink';
@@ -80,8 +83,6 @@ MatchLink.propTypes = {
   score: PropTypes.number.isRequired,
   patients: PropTypes.objectOf(patientProps).isRequired
 };
-
-export default MatchLink;
 
 function loadingTag() {
   return (

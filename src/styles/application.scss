@@ -7,8 +7,10 @@
 
 @import "components/context-list";
 @import "components/header";
+@import "components/match-link";
 @import "components/matching-system-thumbnail";
 @import "components/modals/new-context-modal";
+@import "components/run-list";
 
 @import "elements/animation";
 @import "elements/buttons";
@@ -43,15 +45,6 @@ a {
 
 .loader {
   text-align: center;
-}
-
-.links-header {
-  background-color: lighten($brand-secondary, 20%);
-  color: $white;
-  font-size: 16px;
-  height: 40px;
-  line-height: 40px;
-  margin: 0 1px;
 }
 
 .alert-banner {

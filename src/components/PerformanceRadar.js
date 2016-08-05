@@ -29,10 +29,6 @@ const datasetOptions = {
 };
 
 export default class PerformanceRadar extends Component {
-  render() {
-    return <canvas/>;
-  }
-
   componentDidMount() {
     const el = ReactDOM.findDOMNode(this);
     const ctx = el.getContext("2d");
@@ -48,6 +44,10 @@ export default class PerformanceRadar extends Component {
 
   componentWillUnmount() {
     this.chart.destroy();
+  }
+
+  render() {
+    return <canvas/>;
   }
 }
 
