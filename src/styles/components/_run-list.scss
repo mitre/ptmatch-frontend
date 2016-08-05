@@ -1,0 +1,59 @@
+@import "../elements/variables";
+
+.run-list {
+  .run-list-item {
+    .run-list-item-header {
+      background-color: lighten($brand-secondary, 20%);
+      padding: 0 20px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 0;
+      color: $white;
+
+
+      .run-list-item-header-run-number {
+        font-size: 18px;
+        font-weight: 100;
+        letter-spacing: 1.2px;
+      }
+
+      .run-list-item-header-date {
+        font-size: 0.8em;
+      }
+
+      .run-list-item-header-note {
+        font-size: 0.8em;
+      }
+
+      .fa {
+        margin-left: 40px;
+      }
+    }
+
+    .run-list-item-body {
+      .run-list-item-overview {
+        padding: 40px;
+
+        .run-list-item-chart {
+
+        }
+
+        .run-list-item-metrics {
+
+        }
+      }
+
+      .run-list-item-links {
+        margin: 0 100px;
+
+        .run-list-links-item {
+
+        }
+      }
+    }
+  }
+}
+
+.run-list-item-links {
+  margin: 20px 100px;
+}

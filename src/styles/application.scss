@@ -1,16 +1,32 @@
 // 3rd party resources
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins";
-@import "elements/variables";
 
 // application imports
+@import "elements/variables";
+
+@import "components/context-list";
 @import "components/header";
+@import "components/match-link";
+@import "components/matching-system-info";
+@import "components/matching-system-thumbnail";
+@import "components/modals/new-context-modal";
+@import "components/modals/new-record-set-modal";
+@import "components/record-matching-system-list";
+@import "components/record-set-info";
+@import "components/record-set-list";
+@import "components/run-list";
+
 @import "elements/animation";
 @import "elements/buttons";
 @import "elements/charts";
+@import "elements/checkbox-radio";
 @import "elements/modals";
 @import "elements/navbar";
 @import "elements/panels";
+@import "elements/tables";
+
+@import "vendors/font-awesome";
 
 // application styles
 body {
@@ -19,14 +35,11 @@ body {
   font-family: $font-family-sans-serif;
   font-size: $font-size-base;
   padding-top: 70px;
+  overflow-x: hidden;
 }
 
 a {
   color: $brand-primary;
-}
-
-.header-logo {
-  margin: 0 10px 0 20px;
 }
 
 .results-detail {
@@ -35,45 +48,8 @@ a {
   }
 }
 
-.rms-thumbnail {
-  background-color: $very-light-gray;
-  border-radius: 10px;
-  border: 3px solid $very-light-gray;
-  cursor: pointer;
-  margin: 5px;
-  min-height: 235px;
-  min-width: 225px;
-  padding: 5px;
-  text-align: center;
-
-  canvas {
-    margin-bottom: 10px;
-  }
-
-  &:hover {
-    background-color: darken($very-light-gray, 2%);
-    border: 3px solid $brand-primary;
-  }
-
-  .rms-name {
-    border-top: 1px solid $light-gray;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 10px 0;
-  }
-}
-
 .loader {
   text-align: center;
-}
-
-.links-header {
-  background-color: lighten($brand-secondary, 20%);
-  color: $white;
-  font-size: 16px;
-  height: 40px;
-  line-height: 40px;
-  margin: 0 1px;
 }
 
 .alert-banner {
@@ -88,4 +64,8 @@ a {
   background-color: $red;
   border-color: $red;
   color: $white;
+}
+
+.icon-link {
+  color: $brand-primary;
 }

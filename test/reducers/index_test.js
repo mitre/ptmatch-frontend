@@ -1,6 +1,6 @@
 import { expect } from '../test_helper';
 import { REQUEST_RMS_FULFILLED, REQUEST_CONTEXT_FULFILLED,
-         SELECT_CONTEXT, REQUEST_LINKS_FULFILLED,
+         SELECT_CONTEXT, REQUEST_LINKS_FULFILLED, SELECT_RMS,
          REQUEST_PATIENTS_FULFILLED } from '../../src/actions/types';
 import { contexts, recordMatchingSystems,
          patients, matchRuns } from '../../src/reducers';
@@ -11,6 +11,17 @@ describe('reducers', () => {
     const action = {type: REQUEST_RMS_FULFILLED, payload: [{id: '1', name: 'FRIL'}]};
     const state = recordMatchingSystems({}, action);
     expect(state['1'].name).to.equal('FRIL');
+  });
+
+  it('selects a record matching system', () => {
+    const action = {type: SELECT_RMS, payload: '2'};
+    const originalState = {
+      '1': {id: '1', name: 'FRIL'},
+      '2': {id: '2', name: 'ChoiceMaker'}
+    };
+    const state = recordMatchingSystems(originalState, action);
+    expect(state['1'].selected).to.be.false;
+    expect(state['2'].selected).to.be.true;
   });
 
   it('receives contexts', () => {

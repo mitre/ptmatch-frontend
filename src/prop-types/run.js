@@ -14,7 +14,8 @@ const metrics = {
     f1: PropTypes.number,
     precision: PropTypes.number,
     recall: PropTypes.number,
-    MAP: PropTypes.number
+    MAP: PropTypes.number,
+    matchCount: PropTypes.number
   })
 };
 

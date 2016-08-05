@@ -1,0 +1,15 @@
+@import "../elements/variables";
+
+.record-set-info {
+  padding: 20px 300px 20px 200px;
+
+  table {
+    border: 1px solid $light-gray;
+    margin: 50px;
+
+    th {
+      background-color: lighten($brand-secondary, 20%);
+      color: $white;
+    }
+  }
+}

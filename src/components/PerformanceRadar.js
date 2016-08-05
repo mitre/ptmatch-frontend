@@ -28,11 +28,7 @@ const datasetOptions = {
   pointHoverRadius: "7"
 };
 
-class PerformanceRadar extends Component {
-  render() {
-    return <canvas/>;
-  }
-
+export default class PerformanceRadar extends Component {
   componentDidMount() {
     const el = ReactDOM.findDOMNode(this);
     const ctx = el.getContext("2d");
@@ -49,6 +45,10 @@ class PerformanceRadar extends Component {
   componentWillUnmount() {
     this.chart.destroy();
   }
+
+  render() {
+    return <canvas/>;
+  }
 }
 
 PerformanceRadar.propTypes = {
@@ -56,5 +56,3 @@ PerformanceRadar.propTypes = {
 };
 
 PerformanceRadar.displayName = "PerformanceRadar";
-
-export default PerformanceRadar;

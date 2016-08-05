@@ -2,19 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { fetchContexts, selectContext, createContext } from '../actions/context';
-import { fetchRecordSetsIfNeeded } from '../actions/recordSet';
-import { fetchRMSIfNeeded } from '../actions/recordMatchingSystems';
-import { fetchMatchRuns } from '../actions/matchRun';
+import { selectContext, createContext } from '../actions/context';
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
+import { runProps } from '../prop-types/run';
 
 import ChallengeContext from './ChallengeContext';
 import BenchmarkContext from './BenchmarkContext';
 import ContextList from '../components/ContextList';
-import RecordSetList from '../components/RecordSetList';
-import MatchingSystemList from '../components/MatchingSystemList';
 import PageHeader from '../components/Header/PageHeader';
 
 class Dashboard extends Component {
@@ -23,25 +19,27 @@ class Dashboard extends Component {
       <div className="dashboard">
         <PageHeader title="Dashboard" />
 
-        <div className="row">
-          <div className="col-md-4">
-            <ContextList contexts={this.props.contexts}
-                         selector={this.props.selectContext}
-                         contextCreator={this.props.createContext}/>
-            <RecordSetList recordSets={this.props.recordSets} />
-            <MatchingSystemList recordMatchingSystems={this.props.recordMatchingSystems} />
-          </div>
+        <ContextList {...this.props}
+                     selector={this.props.selectContext}
+                     contextCreator={this.props.createContext}/>
 
-          <div className="col-md-8">
-            {this.selectedChallengeContexts().map((context) => {
-                return (<ChallengeContext context={context} key={context.id} />);
-            })}
+        {this.selectedChallengeContexts().map((context) => {
+          return (
+            <ChallengeContext context={context}
+                              key={context.id}
+                              matchRuns={this.props.matchRuns}
+                              contextCreator={this.props.createContext} />
+          );
+        })}
 
-            {this.selectedBenchmarkContexts().map((context) => {
-              return (<BenchmarkContext context={context} key={context.id} />);
-            })}
-          </div>
-        </div>
+        {this.selectedBenchmarkContexts().map((context) => {
+          return (
+            <BenchmarkContext context={context}
+                              key={context.id}
+                              matchRuns={this.props.matchRuns}
+                              contextCreator={this.props.createContext} />
+          );
+        })}
       </div>
     );
   }
@@ -53,35 +51,26 @@ class Dashboard extends Component {
   selectedBenchmarkContexts() {
     return _.values(this.props.contexts).filter((c) => c.selected === true && c.type === 'benchmark');
   }
-
-  componentWillMount() {
-    this.props.fetchContexts();
-    this.props.fetchRecordSetsIfNeeded();
-    this.props.fetchRMSIfNeeded();
-    this.props.fetchMatchRuns();
-  }
 }
 
 Dashboard.displayName = 'Dashboard';
 
 Dashboard.propTypes = {
-  fetchContexts: PropTypes.func,
-  fetchRecordSetsIfNeeded: PropTypes.func,
-  fetchRMSIfNeeded: PropTypes.func,
   selectContext: PropTypes.func,
   createContext: PropTypes.func,
-  fetchMatchRuns: PropTypes.func,
   contexts: PropTypes.objectOf(contextProps),
-  recordSets: PropTypes.objectOf(recordSetProps),
-  recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps)
+  recordSets: PropTypes.objectOf(recordSetProps).isRequired,
+  recordMatchingSystems: PropTypes.objectOf(recordMatchingSystemProps).isRequired,
+  matchRuns: PropTypes.objectOf(runProps).isRequired
 };
 
 function mapStateToProps(state) {
-  return {contexts: state.contexts,
-          recordSets: state.recordSets,
-          recordMatchingSystems: state.recordMatchingSystems};
+  return {
+    contexts: state.contexts,
+    recordSets: state.recordSets,
+    recordMatchingSystems: state.recordMatchingSystems,
+    matchRuns: state.matchRuns
+  };
 }
 
-export default connect(mapStateToProps, { fetchContexts,
-        fetchRecordSetsIfNeeded, fetchRMSIfNeeded, selectContext,
-        createContext, fetchMatchRuns })(Dashboard);
+export default connect(mapStateToProps, { selectContext, createContext })(Dashboard);
