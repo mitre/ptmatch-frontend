@@ -44,6 +44,13 @@ class ChallengeContext extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.selectedRMS !== -1) {
+      this.setState({mostRecentRun: _.last(nextProps.matchRunsByRMS[this.state.selectedRMS]),
+                     runs: nextProps.matchRunsByRMS[this.state.selectedRMS]});
+    }
+  }
+
   displaySubpanel() {
     if (this.state.selectedRMS !== -1) {
       let recordMatchingSystem = _.find(this.props.recordMatchingSystems, ['id', this.state.selectedRMS]).name;
@@ -61,17 +68,15 @@ class ChallengeContext extends Component {
   }
 
   displayAlert() {
-    if (this.state.selectedRMS !== -1) {
-      let isRunning = (this.state.mostRecentRun.status === 'no-response');
+    let isRunning = (this.state.mostRecentRun.status === 'no-response');
 
-      if (isRunning) {
-        return (
-          <div className="alert alert-danger alert-banner text-center">
-            <i className="fa fa-refresh fa-spin"></i>
-            {' '}Run {this.state.runs.length} in progress...
-          </div>
-        );
-      }
+    if (isRunning) {
+      return (
+        <div className="alert alert-danger alert-banner text-center">
+          <i className="fa fa-refresh fa-spin"></i>
+          {' '}Run {this.state.runs.length} in progress...
+        </div>
+      );
     }
   }
 
