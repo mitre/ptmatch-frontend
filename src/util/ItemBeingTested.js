@@ -7,10 +7,19 @@ export default function(context, matchRuns, recordSets, matchingSystems) {
   }
 
   const firstRun = runs[0];
+  let name = '-';
   switch (context.type) {
     case "benchmark":
-      return _.find(matchingSystems, ['id', firstRun.recordMatchSystemInterfaceId]).name;
+      const matchingSystem = _.find(matchingSystems, ['id', firstRun.recordMatchSystemInterfaceId]);
+      if (matchingSystem) {
+        name = matchingSystem.name;
+      }
+      break;
     case "challenge":
-      return _.find(recordSets, ['id', firstRun.masterRecordSetId]).name;
+      const recordSet = _.find(recordSets, ['id', firstRun.masterRecordSetId]);
+      if (recordSet) {
+        name = recordSet.name;
+      }
   }
+  return name;
 }
