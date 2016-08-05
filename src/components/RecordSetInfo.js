@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
+import FontAwesome from 'react-fontawesome';
+
 import CollapsiblePanel from './CollapsiblePanel';
+
 import recordSetProps from '../prop-types/record_set';
 
-class RecordSetInfo extends Component {
+export default class RecordSetInfo extends Component {
   render() {
+    let panelTitle = <span>{this.props.recordSet.name} <a href="#"><FontAwesome name="link" /></a></span>;
+
     return (
-      <CollapsiblePanel panelTitle="Record Set" panelIcon="database">
-        <div className="panel panel-default">
+      <CollapsiblePanel panelTitle={panelTitle} panelIcon="database">
+        <div className="panel panel-default record-set-info">
           <table className="table">
             <tbody>
               <tr>
                 <th>Name</th>
                 <td>{this.props.recordSet.name}</td>
               </tr>
+
               <tr>
                 <th>Description</th>
                 <td>{this.props.recordSet.description}</td>
               </tr>
             </tbody>
           </table>
+
           <table className="table">
             <thead>
               <tr>
@@ -26,15 +33,16 @@ class RecordSetInfo extends Component {
                 <th>Parameter Value</th>
               </tr>
             </thead>
+
             <tbody>
-            {this.props.recordSet.parameters.parameter.map((p, i) => {
-              return (
-              <tr key={i}>
-                <td>{p.name}</td>
-                <td>{p.valueString}</td>
-              </tr>
-              );
-            })}
+              {this.props.recordSet.parameters.parameter.map((p, i) => {
+                return (
+                <tr key={i}>
+                  <td>{p.name}</td>
+                  <td>{p.valueString}</td>
+                </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -46,5 +54,3 @@ class RecordSetInfo extends Component {
 RecordSetInfo.propTypes = {
   recordSet: recordSetProps.isRequired
 };
-
-export default RecordSetInfo;
