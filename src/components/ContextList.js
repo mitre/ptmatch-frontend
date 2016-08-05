@@ -51,6 +51,7 @@ export default class ContextList extends Component {
                       <input type="checkbox"
                              id={c.id}
                              className="css-checkbox"
+                             checked={c.selected}
                              onClick={() => this.props.selector(c.id)} />
                       <label htmlFor={c.id} className="css-label css-label-box checkbox-label">{c.name}</label>
                     </div>
