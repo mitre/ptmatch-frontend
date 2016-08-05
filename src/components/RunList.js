@@ -83,7 +83,7 @@ export default class RunList extends Component {
                        <div><strong>Precision:</strong> {run.metrics.precision}</div>
                        <div><strong>MAP:</strong> {run.metrics.MAP}</div>
                        <div><strong>Recall:</strong> {run.metrics.recall}</div>
-                       <div><strong>Links Found:</strong> {run.links.length}</div>
+                       <div><strong>Links Found:</strong> {run.metrics.matchCount}</div>
                      </div>
                   </div>
 
