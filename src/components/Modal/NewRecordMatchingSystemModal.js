@@ -18,7 +18,7 @@ export default class NewRecordMatchingSystem extends Component {
 
   handleSubmit(form) {
     var newRms = {};
-    var fields = ['rmsName', 'rmsDescription', 'destinationEndpoint', 'serverEndpoint', 'responseEndpoint'];
+    var fields = ['name', 'description', 'destinationEndpoint', 'serverEndpoint', 'responseEndpoint'];
     for (var i = 0; i < fields.length; i++) {
       var field = fields[i];
       newRms[field] = form[field].value;
@@ -40,14 +40,14 @@ export default class NewRecordMatchingSystem extends Component {
             <span className="input-group-addon" id="rmsName">
               <FontAwesome name="sitemap" fixedWidth={true} /> Name
             </span>
-            <input name="rmsName" type="text" className="form-control" aria-describedby="name"/>
+            <input name="name" type="text" className="form-control" aria-describedby="name"/>
           </div>
 
           <div className="input-group">
             <span className="input-group-addon" id="rmsDescription">
               <FontAwesome name="file-text-o" fixedWidth={true} /> Description
             </span>
-            <input name="rmsDescription" type="text" className="form-control" aria-describedby="name"/>
+            <input name="description" type="text" className="form-control" aria-describedby="name"/>
           </div>
 
           <div className="input-group">
