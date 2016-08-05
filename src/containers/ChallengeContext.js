@@ -9,7 +9,6 @@ import RunList from '../components/RunList';
 import CollapsiblePanel from '../components/CollapsiblePanel';
 import PerformanceRadar from '../components/PerformanceRadar';
 import RunHistoryChart from "../components/RunHistoryChart";
-import MatchLink from '../components/MatchLink';
 
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
@@ -69,7 +68,7 @@ class ChallengeContext extends Component {
         return (
           <div className="alert alert-danger alert-banner text-center">
             <i className="fa fa-refresh fa-spin"></i>
-            {' '}Run {this.props.runs.length} in progress...
+            {' '}Run {this.state.runs.length} in progress...
           </div>
         );
       }
@@ -144,7 +143,7 @@ class ChallengeContext extends Component {
                         buttonText="New Run"
                         modalTarget="#newRunModal"
                         creator={this.props.contextCreator}>
-                        
+
         <div className="challenge-context">
           {this.displaySubpanel()}
           {this.displayAlert()}

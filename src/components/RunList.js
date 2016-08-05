@@ -6,7 +6,6 @@ import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 
 import MatchLinks from '../components/MatchLinks';
-import MatchLink from "./MatchLink";
 import PerformanceRadar from '../components/PerformanceRadar';
 
 import { runProps } from '../prop-types/run';

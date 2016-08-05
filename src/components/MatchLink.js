@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Accordion, Panel } from 'react-bootstrap';
 
-import { runProps } from '../prop-types/run';
-import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import patientProps from '../prop-types/patient';
 
 import { idFromLink } from '../middlewares/fetch_links';

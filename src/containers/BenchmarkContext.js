@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import FontAwesome from 'react-fontawesome';
 import _ from 'lodash';
 
 import RunHistoryChart from "../components/RunHistoryChart";
 import NewRunModal from "../components/Modal/NewRunModal";
-import MatchLinks from '../components/MatchLinks';
 import CollapsiblePanel from '../components/CollapsiblePanel';
 import RunList from '../components/RunList';
 
