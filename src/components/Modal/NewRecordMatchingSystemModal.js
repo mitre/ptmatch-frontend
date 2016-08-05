@@ -1,15 +1,24 @@
 import React, { Component, PropTypes } from 'react';
+import FontAwesome from 'react-fontawesome';
+
+import Modal from './Modal';
 
 export default class NewRecordMatchingSystem extends Component {
   constructor(props) {
     super(props);
-    this.state = {name: '', description: '', destinationEndpoint: '',
-      serverEndpoint: '', responseEndpoint: ''};
+
+    this.state = {
+      name: '',
+      description: '',
+      destinationEndpoint: '',
+      serverEndpoint: '',
+      responseEndpoint: ''
+    };
   }
 
   handleSubmit(form) {
     var newRms = {};
-    var fields = ['name', 'description', 'destinationEndpoint', 'serverEndpoint', 'responseEndpoint'];
+    var fields = ['rmsName', 'rmsDescription', 'destinationEndpoint', 'serverEndpoint', 'responseEndpoint'];
     for (var i = 0; i < fields.length; i++) {
       var field = fields[i];
       newRms[field] = form[field].value;
@@ -20,54 +29,49 @@ export default class NewRecordMatchingSystem extends Component {
 
   render() {
     return (
-      <div className="modal fade" tabIndex="-1" role="dialog" id="newRMS">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <form className="newSystemForm">
-              <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 className="modal-title">New Record Macthing System</h4>
-              </div>
-              <div className="modal-body">
-                <div className="row">
-                  <label>
-                    Name
-                    <input type="text" name="name"/>
-                  </label>
-                </div>
-                <div className="row">
-                  <label>
-                    Description
-                    <input type="text" name="description"/>
-                  </label>
-                </div>
-                <div className="row">
-                  <label>
-                    Destination Endpoint
-                    <input type="text" name="destinationEndpoint"/>
-                  </label>
-                </div>
-                <div className="row">
-                  <label>
-                    Server Endpoint
-                    <input type="text" name="serverEndpoint"/>
-                  </label>
-                </div>
-                <div className="row">
-                  <label>
-                    Response Endpoint
-                    <input type="text" name="responseEndpoint"/>
-                  </label>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={(e) => this.handleSubmit(e.target.form)}>Create</button>
-              </div>
-            </form>
+      <Modal modalId="newRecordMatchingSystemModal"
+             modalTitle="New Record Matching System"
+             defaultButtonText="Cancel"
+             primaryButtonText="Create"
+             primaryButtonOnClick={(e) => this.handleSubmit(e.target.form)}
+             formName="newRecordMatchingSystemForm">
+        <div className="new-context-modal modal-input-group">
+          <div className="input-group">
+            <span className="input-group-addon" id="rmsName">
+              <FontAwesome name="sitemap" fixedWidth={true} /> Name
+            </span>
+            <input name="rmsName" type="text" className="form-control" aria-describedby="name"/>
+          </div>
+
+          <div className="input-group">
+            <span className="input-group-addon" id="rmsDescription">
+              <FontAwesome name="file-text-o" fixedWidth={true} /> Description
+            </span>
+            <input name="rmsDescription" type="text" className="form-control" aria-describedby="name"/>
+          </div>
+
+          <div className="input-group">
+            <span className="input-group-addon" id="destinationEndpoint">
+              <FontAwesome name="laptop" fixedWidth={true} /> Destination Endpoint
+            </span>
+            <input name="destinationEndpoint" type="text" className="form-control" aria-describedby="name"/>
+          </div>
+
+          <div className="input-group">
+            <span className="input-group-addon" id="serverEndpoint">
+              <FontAwesome name="laptop" fixedWidth={true} /> Server Endpoint
+            </span>
+            <input name="serverEndpoint" type="text" className="form-control" aria-describedby="name"/>
+          </div>
+
+          <div className="input-group">
+            <span className="input-group-addon" id="responseEndpoint">
+              <FontAwesome name="laptop" fixedWidth={true} /> Response Endpoint
+            </span>
+            <input name="responseEndpoint" type="text" className="form-control" aria-describedby="name"/>
           </div>
         </div>
-      </div>
+      </Modal>
     );
   }
 }

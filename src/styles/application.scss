@@ -8,8 +8,10 @@
 @import "components/context-list";
 @import "components/header";
 @import "components/match-link";
+@import "components/matching-system-info";
 @import "components/matching-system-thumbnail";
 @import "components/modals/new-context-modal";
+@import "components/record-matching-system-list";
 @import "components/run-list";
 
 @import "elements/animation";
@@ -59,4 +61,8 @@ a {
   background-color: $red;
   border-color: $red;
   color: $white;
+}
+
+.icon-link {
+  color: $brand-primary;
 }

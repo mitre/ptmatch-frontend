@@ -1,10 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
-import contextProps from '../prop-types/context';
-import recordSetProps from '../prop-types/record_set';
-import recordMatchingSystemProps from '../prop-types/record_matching_system';
-import { runProps } from '../prop-types/run';
+import _ from 'lodash';
 
 import { createRMS, selectRMS } from '../actions/recordMatchingSystems';
 
@@ -13,28 +9,24 @@ import MatchingSystemInfo from '../components/MatchingSystemInfo';
 import PageHeader from '../components/Header/PageHeader';
 import NewRecordMatchingSystemModal from '../components/Modal/NewRecordMatchingSystemModal';
 
-import _ from 'lodash';
+import contextProps from '../prop-types/context';
+import recordSetProps from '../prop-types/record_set';
+import recordMatchingSystemProps from '../prop-types/record_matching_system';
+import { runProps } from '../prop-types/run';
 
 class MatchingSystems extends Component {
   render() {
     return (
-      <div className="dashboard">
+      <div className="matching-systems">
+        <PageHeader title="Matching Systems" />
+        <MatchingSystemList {...this.props} />
+        <NewRecordMatchingSystemModal createRMS={this.props.createRMS} />
 
-      <PageHeader title="Matching Systems" />
-      <div className="row">
-        <div className="col-md-12">
-          <MatchingSystemList {...this.props} />
-          <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#newRMS">New Record Matching System</button>
-          <NewRecordMatchingSystemModal createRMS={this.props.createRMS} />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12">
-          {_.values(this.props.recordMatchingSystems).filter((rms) => rms.selected === true).map((rms) => {
-            return <MatchingSystemInfo recordMatchingSystem={rms} key={rms.id} />;
-          })}
-        </div>
-      </div>
+        {_.values(this.props.recordMatchingSystems).filter((rms) => rms.selected === true).map((rms) => {
+          return (
+            <MatchingSystemInfo recordMatchingSystem={rms} key={rms.id} />
+          );
+        })}
       </div>
     );
   }

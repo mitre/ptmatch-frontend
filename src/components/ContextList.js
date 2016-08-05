@@ -1,26 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import FontAwesome from 'react-fontawesome';
+import moment from 'moment';
+import _ from 'lodash';
+
+import CollapsiblePanel from './CollapsiblePanel';
+import NewContextModal from './Modal/NewContextModal';
+
+import itemBeingTestedUtil from '../util/ItemBeingTested';
 
 import contextProps from '../prop-types/context';
 import recordSetProps from '../prop-types/record_set';
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
 import { runProps } from '../prop-types/run';
 
-import CollapsiblePanel from './CollapsiblePanel';
-import NewContextModal from './Modal/NewContextModal';
-
-import _ from 'lodash';
-import moment from 'moment';
-import itemBeingTestedUtil from '../util/ItemBeingTested';
-
 export default class ContextList extends Component {
-  constructor(...args) {
-    super(...args);
-
-    this.state = {};
-  }
-
-  // Provides the name of the record matching system or record set
-  // under test, depending on the context.
   itemBeingTested(context) {
     return itemBeingTestedUtil(context, this.props.matchRuns, this.props.recordSets,
                                this.props.recordMatchingSystems);
@@ -71,11 +64,11 @@ export default class ContextList extends Component {
                     </div>
 
                     <div className="col-md-2 context-last-updated">
-                      <i className="fa fa-clock-o" aria-hidden="true"></i> {this.lastUpdatedOn(c)}
+                      <FontAwesome name="clock-o" /> {this.lastUpdatedOn(c)}
                     </div>
 
                     <div className="col-md-1 context-edit">
-                      <i className="fa fa-edit" aria-hidden="true"></i>
+                      <FontAwesome name="edit" />
                     </div>
                   </div>
                 </div>

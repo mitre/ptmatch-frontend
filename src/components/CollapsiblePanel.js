@@ -69,7 +69,10 @@ export default class CollapsiblePanel extends Component {
 CollapsiblePanel.displayName = "CollapsiblePanel";
 
 CollapsiblePanel.propTypes = {
-  panelTitle: PropTypes.string.isRequired,
+  panelTitle: PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.object
+  ]).isRequired,
   panelIcon: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
   subtitle: PropTypes.string,

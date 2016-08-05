@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
+import FontAwesome from 'react-fontawesome';
+
 import CollapsiblePanel from './CollapsiblePanel';
+
 import recordMatchingSystemProps from '../prop-types/record_matching_system';
 
-class MatchingSystemInfo extends Component {
+export default class MatchingSystemInfo extends Component {
   render() {
+    let panelTitle = <span>{this.props.recordMatchingSystem.name} <a href="#"><FontAwesome name="link" /></a></span>;
+
     return (
-      <CollapsiblePanel panelTitle="Matching System" panelIcon="sitemap">
-        <div className="panel panel-default">
+      <CollapsiblePanel panelTitle={panelTitle}
+                        panelIcon="sitemap">
+        <div className="panel panel-default matching-system-info">
           <table className="table">
             <tbody>
               <tr>
@@ -40,5 +46,3 @@ class MatchingSystemInfo extends Component {
 MatchingSystemInfo.propTypes = {
   recordMatchingSystem: recordMatchingSystemProps.isRequired
 };
-
-export default MatchingSystemInfo;

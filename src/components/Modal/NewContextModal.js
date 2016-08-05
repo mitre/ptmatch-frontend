@@ -17,27 +17,27 @@ export default class NewContextModal extends Component {
       <Modal modalId="newContextModal"
              modalTitle="New Context"
              defaultButtonText="Cancel"
-             primaryButtonText="Create Context"
+             primaryButtonText="Create"
              primaryButtonOnClick={(e) => this.handleSubmit(e.target.form)}
              formName="newContextForm">
         <div className="new-context-modal modal-input-group">
           <div className="input-group">
             <span className="input-group-addon" id="contextName">
-              <FontAwesome name="key" fixedWidth={true} /> Context Name
+              <FontAwesome name="key" fixedWidth={true} /> Name
             </span>
             <input name="contextName" type="text" className="form-control" aria-describedby="name"/>
           </div>
 
           <div className="input-group">
             <span className="input-group-addon" id="contextDescription">
-              <FontAwesome name="file-text-o" fixedWidth={true} /> Context Description
+              <FontAwesome name="file-text-o" fixedWidth={true} /> Description
             </span>
             <input name="contextDescription" type="textarea" className="form-control" aria-describedby="description"/>
           </div>
 
           <div className="input-group">
             <span className="input-group-addon" id="contextType">
-              <FontAwesome name="cog" fixedWidth={true} /> Context Type
+              <FontAwesome name="cog" fixedWidth={true} /> Type
             </span>
 
             <FontAwesome name="caret-down" className="select-caret" />
