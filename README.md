@@ -1,5 +1,13 @@
-# ptmatch-frontend
-User interface for the PCOR Patient Matching Test Harness
+# ptmatch-frontend [![Build Status](https://api.travis-ci.org/mitre/ptmatch-frontend.svg)](https://travis-ci.org/mitre/ptmatch-frontend)
+
+User interface for the PCOR Patient Matching Test Harness. This is a [React](https://facebook.github.io/react/)
+and [Redux](http://redux.js.org/) based front end for the services provided by
+the [Patient Matching Test Harness](https://github.com/mitre/ptmatch).
+
+## Installation
+
+You can find [install instructions for Ubuntu](https://github.com/mitre/ptmatch-frontend/wiki/Ubuntu-16.04.1-Installation)
+on our wiki.
 
 ## License
 Copyright 2016 The MITRE Corporation
