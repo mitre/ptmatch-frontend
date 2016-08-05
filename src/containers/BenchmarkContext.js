@@ -72,10 +72,7 @@ export class BenchmarkContext extends Component {
     } else {
       return (
         <div>
-          <div className="loader">
-            <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-            <span className="sr-only">Loading...</span>
-          </div>
+          <p>No runs have been created for this context</p>
         </div>
       );
     }
@@ -87,13 +84,6 @@ export class BenchmarkContext extends Component {
         <RunList runs={this.props.matchRuns}
                  recordMatchingSystem={this.state.itemBeingTested}
                  patients={this.props.patients} />
-      );
-    } else {
-      return (
-        <div className="loader">
-          <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-          <span className="sr-only">Loading...</span>
-        </div>
       );
     }
   }
@@ -118,7 +108,7 @@ export class BenchmarkContext extends Component {
                        recordMatchingSystems={this.props.recordMatchingSystems}
                        runCreator={(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note) => {
                                     this.props.createRun(recordMatchSystemInterfaceId, masterRecordSetId, recordMatchContextId, note);}}
-                       matchRuns={this.props.matchRuns} />
+                       matchRuns={this.props.allMatchRuns} />
         </div>
       </CollapsiblePanel>
     );
@@ -133,7 +123,7 @@ BenchmarkContext.propTypes = {
   recordSets: PropTypes.arrayOf(recordSetProps),
   recordMatchingSystems: PropTypes.arrayOf(recordMatchingSystemProps),
   matchRuns: PropTypes.arrayOf(runProps).isRequired,
-  fetchMatchRunsByContext: PropTypes.func,
+  allMatchRuns: PropTypes.objectOf(runProps).isRequired,
   createRun: PropTypes.func,
   selectRecordSet: PropTypes.func,
   contextCreator: PropTypes.func.isRequired
@@ -141,6 +131,7 @@ BenchmarkContext.propTypes = {
 
 export function mapStateToProps(state, ownProps) {
   const contextId = ownProps.context.id;
+  const allMatchRuns = state.matchRuns;
   const matchRuns = _.sortBy(
     _.values(state.matchRuns).filter((mr) => mr.recordMatchContextId === contextId),
     (mr) => new Date(mr.meta.createdOn));
@@ -150,7 +141,7 @@ export function mapStateToProps(state, ownProps) {
   const recordSets = _.values(state.recordSets);
   const patients = state.patients;
 
-  return {matchRuns, recordMatchingSystems, recordSets, patients};
+  return {matchRuns, recordMatchingSystems, recordSets, patients, allMatchRuns};
 }
 
 export default connect(mapStateToProps, { createRun })(BenchmarkContext);
