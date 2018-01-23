@@ -30,7 +30,7 @@
     "bootstrap-loader": "^1.0.10",
     "bootstrap-sass": "^3.3.6",
     "chai": "^3.5.0",
-    "chai-jquery": "^2.0.0",
+    "chai-jquery": "^3.0.0",
     "chart.js": "^2.1.6",
     "classnames": "^2.2.5",
     "copy-webpack-plugin": "^3.0.1",
